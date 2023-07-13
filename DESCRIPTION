@@ -1,0 +1,54 @@
+Package: RRASSLER
+Type: Package
+Title: R based HEC-RAS model accounting wrestler
+Version: 0.0.01
+Authors@R: c(person(given = "Jim", family = "Coll", 
+                    role = c("aut", "cre"),
+                    email = "jamesmcoll@gmail.com"),
+             person(given = "Mike", family = "Johnson", role = "aut"),
+             person(given = "Laura", family = "Keys", role = "aut"),
+             person(given = "Andy", family = "Carter", role = "aut"),
+      person("NOAA", role = c("fnd")),
+      person("Lynker", role = c("fnd")))
+Maintainer: Jim Coll <jamesmcoll@gmail.com>
+Description: A bottoms up approach to walking CONUS scale applications back to the spesific point, cross section, and HEC-RAS model they were sourced from.  Still in alpha dont use this.
+License: MIT + file LICENSE
+URL: https://github.com/JimColl/RRASSLER
+Depends: 
+  R (>= 3.5),
+  magrittr, 
+  data.table
+Imports: 
+    AOI,
+    arrow,
+    cowplot,
+    data.table,
+    dplyr,
+    ggplot2,
+    glue,
+    gmailr,
+    holyhull,
+    httr,
+    leafem,
+    leaflet,
+    leafpop,
+    lubridate,
+    lwgeom,
+    mapview,
+    nhdplusTools,
+    rhdf5,
+    sf,
+    sfheaders,
+    stringi,
+    stringr,
+    tidyr,
+    unglue,
+    units,
+    utils
+Remotes:
+    grimbough/rhdf5,
+    mikejohnson51/AOI,
+    JimColl/holyhull,
+Encoding: UTF-8
+RoxygenNote: 7.2.3
+LazyData: true
