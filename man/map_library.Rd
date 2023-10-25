@@ -41,7 +41,8 @@ DETAILS
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+ #EXAMPLE
+ RRASSLER::map_library(path_to_ras_dbase = cat_path,NULL,name = "model_map",plot_lines = TRUE,chart_lines = TRUE,refresh = FALSE,quiet = FALSE)
  }
 }
 }

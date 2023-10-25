@@ -2,24 +2,27 @@
 % Please edit documentation in R/marco.R
 \name{marco}
 \alias{marco}
-\title{marco}
+\title{Hello world}
 \usage{
 marco()
 }
 \value{
-hello world
+a hello world message (polo!)
 }
 \description{
-Hello world
+A hello world tester
 }
 \details{
-DETAILS
+No, I did not draw this.  It has taken me longer to document this function than it did to copy-paste it from Google
 }
 \examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
- #RRASSLER::marco()
- }
+RRASSLER::marco()
 }
+\seealso{
+Other helper: 
+\code{\link{print_error_block}()},
+\code{\link{print_warning_block}()},
+\code{\link{url_exists}()},
+\code{\link{util_unzip}()}
 }
+\concept{helper}

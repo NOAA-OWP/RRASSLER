@@ -17,7 +17,7 @@ parse_model_to_xyz(
 )
 }
 \arguments{
-\item{geom_path}{PARAM_DESCRIPTION}
+\item{geom_path}{path to the base model}
 
 \item{units}{PARAM_DESCRIPTION}
 
@@ -39,7 +39,7 @@ parse_model_to_xyz(
 OUTPUT_DESCRIPTION
 }
 \description{
-FUNCTION_DESCRIPTION
+parse a model into an xyz dataframe from basenam, considers both g and g hdf files
 }
 \details{
 DETAILS

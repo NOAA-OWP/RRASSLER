@@ -4,15 +4,17 @@
 \alias{refresh_master_files}
 \title{refresh_master_files}
 \usage{
-refresh_master_files(path_to_ras_dbase, quiet = TRUE)
+refresh_master_files(path_to_ras_dbase, point_merge = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{path_to_ras_dbase}{The path to the folder in which you are building your catalog, Default: NULL}
 
-\item{quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE, Default: TRUE}
+\item{point_merge}{Dev flag to shave point processing, Default: TRUE}
+
+\item{verbose}{flag to determine whether print statements are shown - TRUE to show messages - FALSE to skip non-critical ones, Default: TRUE}
 }
 \value{
-a new set of spatial index files
+OUTPUT_DESCRIPTION
 }
 \description{
 remerge individual files into spatial model key
@@ -23,8 +25,8 @@ DETAILS
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
- RRASSLER::refresh_master_files(path_to_ras_dbase = "G:/data/ras_catalog",quiet=FALSE)
+ #EXAMPLE
+ RRASSLER::refresh_master_files(path_to_ras_dbase = "G:/data/ras_catalog",verbose=TRUE)
  }
 }
 }

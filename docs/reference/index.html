@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.01</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,9 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -41,9 +44,103 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="helpers">Helpers<a class="anchor" aria-label="anchor" href="#helpers"></a></h2>
       
       
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      <p class="section-desc"></p><p>General misc. helper functions</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="marco.html">marco()</a></code> 
+        </dt>
+        <dd>Hello world</dd>
+      </dl><dl><dt>
+          
+          <code><a href="print_error_block.html">print_error_block()</a></code> 
+        </dt>
+        <dd>prints error block</dd>
+      </dl><dl><dt>
+          
+          <code><a href="print_warning_block.html">print_warning_block()</a></code> 
+        </dt>
+        <dd>print_warning_block</dd>
+      </dl><dl><dt>
+          
+          <code><a href="util_unzip.html">util_unzip()</a></code> 
+        </dt>
+        <dd>unzip nested folders</dd>
+      </dl><dl><dt>
+          
+          <code><a href="util_url.html">url_exists()</a></code> 
+        </dt>
+        <dd>URL tester</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="data-preprocessing">Data Preprocessing<a class="anchor" aria-label="anchor" href="#data-preprocessing"></a></h3>
+      <p class="section-desc"></p><p>General preprocessing functions for BLE data found at <a href="https://webapps.usgs.gov/infrm/estBFE/" class="external-link uri">https://webapps.usgs.gov/infrm/estBFE/</a></p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="scrape_ble_lib.html">scrape_ble_lib()</a></code> 
+        </dt>
+        <dd>FEMA region 6 BLE data scraper</dd>
+      </dl><dl><dt>
+          
+          <code><a href="shotgun_proj_test.html">shotgun_proj_test()</a></code> 
+        </dt>
+        <dd>shotgun_proj_test</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="wrestling">wrestling<a class="anchor" aria-label="anchor" href="#wrestling"></a></h3>
+      <p class="section-desc"></p><p>Core RRASSLER logic</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="cloud_ingest_record.html">cloud_ingest_record()</a></code> 
+        </dt>
+        <dd>cloud_ingest_record</dd>
+      </dl><dl><dt>
+          
+          <code><a href="disk_ingest_record.html">disk_ingest_record()</a></code> 
+        </dt>
+        <dd>disk_ingest_record</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ingest_FEMA6_BLE.html">ingest_FEMA6_BLE()</a></code> 
+        </dt>
+        <dd>ingest_FEMA6_BLE</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ingest_into_database.html">ingest_into_database()</a></code> 
+        </dt>
+        <dd>ingest_into_database</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="postprocess">Postprocess<a class="anchor" aria-label="anchor" href="#postprocess"></a></h3>
+      <p class="section-desc"></p><p>Database helpers and mappers</p>
 
       
     </div><div id="" class="section level2">
@@ -60,17 +157,58 @@
           
           <code><a href="catalog_integrity_checks.html">catalog_integrity_checks()</a></code> 
         </dt>
-        <dd>catalog_integrity_checks</dd>
+        <dd>catalog integrity checks</dd>
       </dl><dl><dt>
           
           <code><a href="dedupe.html">dedupe()</a></code> 
         </dt>
-        <dd>dedupe</dd>
+        <dd>deduplicate database</dd>
       </dl><dl><dt>
           
-          <code><a href="FrankenFIM_scrape_and_unpack_ble.html">FrankenFIM_scrape_and_unpack_ble()</a></code> 
+          <code><a href="reprocess_table_row.html">reprocess_table_row()</a></code> 
         </dt>
-        <dd>scrape_and_unpack_ble</dd>
+        <dd>reprocess_table_row</dd>
+      </dl><dl><dt>
+          
+          <code><a href="update_models_from_table.html">update_models_from_table()</a></code> 
+        </dt>
+        <dd>update_models_from_table</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="full-references">Full references<a class="anchor" aria-label="anchor" href="#full-references"></a></h3>
+      <p class="section-desc"></p><p>All function documentation</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="append_catalog_fields.html">append_catalog_fields()</a></code> 
+        </dt>
+        <dd>append_catalog_fields</dd>
+      </dl><dl><dt>
+          
+          <code><a href="catalog_integrity_checks.html">catalog_integrity_checks()</a></code> 
+        </dt>
+        <dd>catalog integrity checks</dd>
+      </dl><dl><dt>
+          
+          <code><a href="cloud_ingest_record.html">cloud_ingest_record()</a></code> 
+        </dt>
+        <dd>cloud_ingest_record</dd>
+      </dl><dl><dt>
+          
+          <code><a href="dedupe.html">dedupe()</a></code> 
+        </dt>
+        <dd>deduplicate database</dd>
+      </dl><dl><dt>
+          
+          <code><a href="disk_ingest_record.html">disk_ingest_record()</a></code> 
+        </dt>
+        <dd>disk_ingest_record</dd>
       </dl><dl><dt>
           
           <code><a href="get_datum_from_crs.html">get_datum_from_crs()</a></code> 
@@ -105,7 +243,7 @@
           
           <code><a href="marco.html">marco()</a></code> 
         </dt>
-        <dd>marco</dd>
+        <dd>Hello world</dd>
       </dl><dl><dt>
           
           <code><a href="parse_and_plot_old.html">parse_and_plot_old()</a></code> 
@@ -116,6 +254,11 @@
           <code><a href="parse_model_to_xyz.html">parse_model_to_xyz()</a></code> 
         </dt>
         <dd>parse_model_to_xyz</dd>
+      </dl><dl><dt>
+          
+          <code><a href="print_error_block.html">print_error_block()</a></code> 
+        </dt>
+        <dd>prints error block</dd>
       </dl><dl><dt>
           
           <code><a href="print_warning_block.html">print_warning_block()</a></code> 
@@ -143,15 +286,36 @@
         <dd>reprocess_table_row</dd>
       </dl><dl><dt>
           
+          <code><a href="scrape_ble_lib.html">scrape_ble_lib()</a></code> 
+        </dt>
+        <dd>FEMA region 6 BLE data scraper</dd>
+      </dl><dl><dt>
+          
+          <code><a href="shotgun_proj_test.html">shotgun_proj_test()</a></code> 
+        </dt>
+        <dd>shotgun_proj_test</dd>
+      </dl><dl><dt>
+          
           <code><a href="update_models_from_table.html">update_models_from_table()</a></code> 
         </dt>
         <dd>update_models_from_table</dd>
+      </dl><dl><dt>
+          
+          <code><a href="util_unzip.html">util_unzip()</a></code> 
+        </dt>
+        <dd>unzip nested folders</dd>
+      </dl><dl><dt>
+          
+          <code><a href="util_url.html">url_exists()</a></code> 
+        </dt>
+        <dd>URL tester</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, NOAA, Lynker.</p>
+  <p></p><p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-intel.com/" class="external-link"><img src="https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

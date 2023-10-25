@@ -15,7 +15,7 @@ make_xs_hyfab_comp(path_to_ras_dbase, network_path = NULL)
 OUTPUT_DESCRIPTION
 }
 \description{
-FUNCTION_DESCRIPTION
+dev
 }
 \details{
 DETAILS

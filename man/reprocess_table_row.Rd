@@ -37,4 +37,11 @@ if(interactive()){
  [get_nhdplus][nhdplusTools::get_nhdplus]
  [aoi_get][AOI::aoi_get]
  [write_parquet][arrow::write_parquet]
+
+Other post-process: 
+\code{\link{append_catalog_fields}()},
+\code{\link{catalog_integrity_checks}()},
+\code{\link{dedupe}()},
+\code{\link{update_models_from_table}()}
 }
+\concept{post-process}

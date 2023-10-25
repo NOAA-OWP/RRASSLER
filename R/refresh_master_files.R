@@ -1,14 +1,15 @@
 #' @title refresh_master_files
 #' @description remerge individual files into spatial model key
 #' @param path_to_ras_dbase The path to the folder in which you are building your catalog, Default: NULL
-#' @param quiet flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE, Default: TRUE
-#' @return a new set of spatial index files
+#' @param point_merge Dev flag to shave point processing, Default: TRUE
+#' @param verbose flag to determine whether print statements are shown - TRUE to show messages - FALSE to skip non-critical ones, Default: TRUE
+#' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
-#'  RRASSLER::refresh_master_files(path_to_ras_dbase = "G:/data/ras_catalog",quiet=FALSE)
+#'  #EXAMPLE
+#'  RRASSLER::refresh_master_files(path_to_ras_dbase = "G:/data/ras_catalog",verbose=TRUE)
 #'  }
 #' }
 #' @seealso
@@ -20,17 +21,15 @@
 #'  \code{\link[sfheaders]{sf_linestring}}
 #' @rdname refresh_master_files
 #' @export
-#' @import magrittr
-#' @import data.table
 #' @importFrom utils glob2rx
 #' @importFrom glue glue
 #' @importFrom sf st_read st_set_crs st_crs st_write
 #' @importFrom arrow read_parquet write_parquet
 #' @importFrom data.table as.data.table rbindlist
 #' @importFrom sfheaders sf_linestring
-
 refresh_master_files <- function(path_to_ras_dbase,
-                                 quiet=TRUE) {
+                                 point_merge = TRUE,
+                                 verbose = TRUE) {
 
   # sinew::moga(file.path(getwd(),"R/refresh_master_files.R"),overwrite = TRUE)
   # devtools::document()
@@ -41,12 +40,14 @@ refresh_master_files <- function(path_to_ras_dbase,
   # refresh_master_files(path_to_ras_dbase = "/home/rstudio/g/data/ras_dbase",quiet=FALSE)
 
   ## -- Start --
+  fn_time_start <- Sys.time()
+
   if(!file.exists(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))) {
-    print_warning_block()
-    print("Not a RRASSLE'd archive")
+    print_error_block()
+    message("Not a RRASSLE'd archive")
     return(FALSE)
   }
-  if(!quiet) { print("(re)merging database outputs") }
+  if(verbose) { message("(re)merging database outputs") }
 
   ras_catalog_dbase = load_catalog_csv_as_DT(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))
 
@@ -55,8 +56,8 @@ refresh_master_files <- function(path_to_ras_dbase,
   hull_files <- list.files(path_to_ras_dbase, pattern = utils::glob2rx("*hull.fgb$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
 
   if(!(length(xyz_files)==length(hull_files))) {
-    print_warning_block()
-    print("Alert, something is off here...")
+    print_error_block()
+    message("Alert, something is off here...")
     stop()
   }
 
@@ -66,7 +67,7 @@ refresh_master_files <- function(path_to_ras_dbase,
   master_id <- 0
   rows_in_table <- length(xyz_files)
   for(index in 1:rows_in_table) {
-    if(!quiet) { print(glue::glue("Processing {index} of {rows_in_table}")) }
+    if(verbose) { message(glue::glue("Processing {index} of {rows_in_table}")) }
     # index = 1
 
     final_folder_name <- basename(dirname(hull_files[index]))
@@ -90,6 +91,7 @@ refresh_master_files <- function(path_to_ras_dbase,
     hull_concat <- rbind(hull_concat,hull)
   }
 
+  if(verbose) { message(glue::glue("Making cross sections")) }
   xs_lines <- sfheaders::sf_linestring(
     obj = point_concat,
     x = "x",
@@ -98,6 +100,7 @@ refresh_master_files <- function(path_to_ras_dbase,
     linestring_id = "master_id",
     keep = FALSE) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
 
+  if(verbose) { message(glue::glue("Writing files")) }
   unlink(file.path(path_to_ras_dbase,"point_database.parquet",fsep = .Platform$file.sep))
   unlink(file.path(path_to_ras_dbase,"XS.fgb",fsep = .Platform$file.sep))
   unlink(file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep))
@@ -105,6 +108,13 @@ refresh_master_files <- function(path_to_ras_dbase,
   arrow::write_parquet(point_concat,file.path(path_to_ras_dbase,"point_database.parquet",fsep = .Platform$file.sep))
   sf::st_write(xs_lines,file.path(path_to_ras_dbase,"XS.fgb",fsep = .Platform$file.sep))
   sf::st_write(hull_concat,file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep))
+
+  if(verbose) {
+    runtime <- Sys.time() - fn_time_start
+    units(runtime) <- "hours"
+    message(glue::glue("(re)-Merged {nrow(hull_concat)} models with {nrow(xs_lines)} cross sections and {nrow(point_concat)} points"))
+    message(glue::glue("Wall time: {round(runtime, digits = 3)} hours"))
+  }
 
   return(TRUE)
 }

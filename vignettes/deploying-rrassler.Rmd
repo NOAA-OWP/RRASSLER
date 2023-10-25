@@ -1,0 +1,67 @@
+---
+title: "Deploying RRASSLER"
+output: rmarkdown::html_vignette
+description: |
+  "How to construct and interact with your own 'HECRAS_model_catalog'"
+vignette: >
+  %\VignetteIndexEntry{deploying-rrassler}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Deploy RRASSLER over sample data
+
+This tutorial will walk you through the use of RRASSLER over some sample data and a cursory overview of the resulting data RRASSLER creates.  As outlined in the ingest steps, RRASSLER can be thought of as a two step process.  That first step is to ingest HEC-RAS models into the RRASSLE'd structure, and the second step is to generate the spatial index.
+
+## Assessing the sample data
+
+Our first set of sample data comes to us from the FEMA region 6 Base Level Engineering data from https://ebfedata.s3.amazonaws.com/ based on pointers from https://webapps.usgs.gov/infrm/estBFE/.  See also the Texas specific dashboard at https://www.arcgis.com/apps/dashboards/1e98f1e511fc40d3b08790a4251a64ee for more BLE base models.
+
+## Ingesting the sample data to a sample catalog
+
+```{r, eval=FALSE}
+RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = "G:/data/ras_catalog/",
+                           "12090301",
+                           proj_override = "EPSG:2277",
+                           apply_vdat_trans = FALSE,
+                           is_quiet = FALSE,
+                           is_verbose = FALSE,quick_check = FALSE,quick_hull = FALSE,overwrite = FALSE,
+                           parallel_proc = TRUE,
+                           free_treads = 2)
+```
+
+You might also want to just write directly to a cloud asset like so:
+
+```{r, eval=FALSE}
+RRASSLER::ingest_into_database(path_to_ras_dbase = "G:/data/ras_catalog3/",
+                     top_of_dir_to_scrape = "G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River/WILLBARGER 0516/",
+                     code_to_place_in_source = "test",
+                     proj_override = "EPSG:2277",
+                     apply_vdat_trans = FALSE,
+                     is_quiet = FALSE,
+                     is_verbose = TRUE,
+                     quick_check = FALSE,
+                     quick_hull = FALSE,
+                     overwrite = FALSE,
+                     parallel_proc = FALSE)
+```
+
+### Ingest to cloud path pattern
+
+```{r, eval=FALSE}
+RRASSLER::ingest_into_database(path_to_ras_dbase = "s3://ras-models/",
+                     top_of_dir_to_scrape = "G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River/WILLBARGER 0516/",
+                     code_to_place_in_source = "test",
+                     proj_override = "EPSG:2277",
+                     apply_vdat_trans = FALSE,
+                     is_quiet = FALSE,
+                     is_verbose = TRUE,
+                     quick_check = FALSE,
+                     quick_hull = FALSE,
+                     overwrite = FALSE,
+                     parallel_proc = FALSE)
+```
+
+## Next steps
+
+At this point in your RRASSLER workflow, we've ingested all the models we have on hand.  In a "real world" deployment, you might have hundreds or thousands more to ingest, and so you'd work your way through those before applying the rest of the PostProcess routines.  However, you can also deploy and redeploy those as needed, so the next article will walk you through how to accomplish that and what we generate with that step.

@@ -9,70 +9,78 @@ ingest_into_database(
   top_of_dir_to_scrape,
   code_to_place_in_source,
   proj_override = NULL,
-  vdat_trans = FALSE,
-  quiet = TRUE,
-  chatty = FALSE,
-  ping_me = NULL,
+  apply_vdat_trans = FALSE,
+  is_quiet = FALSE,
+  is_verbose = FALSE,
   quick_check = FALSE,
   quick_hull = FALSE,
   overwrite = FALSE,
-  refresh = TRUE
+  parallel_proc = TRUE,
+  free_treads = 2
 )
 }
 \arguments{
-\item{path_to_ras_dbase}{The path to the folder in which you are building your catalog, Default: NULL}
+\item{path_to_ras_dbase}{A path to a directory to write your RRASSLED directory to.  See Methods and Structures for more details.  is location agnostic so this can be either a local path or an s3 bucket}
 
-\item{top_of_dir_to_scrape}{The path to the top of the directory which you want to ingest}
+\item{top_of_dir_to_scrape}{The top of the directory to look for models.  Will greedy search and find all models as described in Ingest logic}
 
-\item{code_to_place_in_source}{a string which encodes the owner or maintainer of that model}
+\item{code_to_place_in_source}{a string to place into the model source column.  Useful to distinguish data authors}
 
-\item{proj_override}{an EPSG string to apply should a projection not be found, Default: NULL}
+\item{proj_override}{a string to override projection information should none be found, Default: NULL}
 
-\item{vdat_trans}{a flag to dictate whether or not to apply a vdatum transformation, TRUE to apply, FALSE to skip, Default: FALSE}
+\item{apply_vdat_trans}{Should VDATUM be applied to the HEC-RAS model geometry.  See https://vdatum.noaa.gov/, Default: FALSE}
 
-\item{quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
+\item{is_quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
 
-\item{chatty}{flag to dictate whether print statements from within the extraction are suppressed, TRUE to show messages and FALSE to suppress them, Default: FALSE}
+\item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
 
-\item{ping_me}{a string with an email used to send emails after processing. Uses gmailr and requires config, Default: NULL}
+\item{quick_check}{on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE}
 
-\item{quick_check}{a flag to dictate whether or not to perform a quick check to see if a model has already been processed based on the raw name of the file. Useful in reingesting the same directory after an error but not recommended otherwise. TRUE to see if a name matches and skips, FALSE to process all the way though, Default: FALSE}
+\item{quick_hull}{a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE}
 
-\item{quick_hull}{a flag to dictate how tightly you want the footprints wrapped, TRUE uses just end points of the linestrings to place the model, FALSE uses the full point database, Default: FALSE}
+\item{overwrite}{overwrite files if we find identical models, Default: FALSE}
 
-\item{overwrite}{not currently implemented, Default: FALSE}
+\item{parallel_proc}{Flag to determine if this should this parallel process, will check for enough free cores and boot this back if it exceeds available resources.  Will suppress all intermediate messages if active, Default: TRUE}
 
-\item{refresh}{flag to dictate whether or not to recollate spatial database after ingest process. FALSE to skip, TRUE to regenerate, Default: TRUE}
+\item{free_treads}{number of threads to leave free if parallel processing, Default: 2}
 }
 \value{
-a RRASSLED catalog of HEC-RAS models
+a RRASSLE'd catalog of models
 }
 \description{
-ingest or append a new set of HEC-RAS models into your database
+ingest files from a source directory on your drive into a formatted input directory
 }
 \details{
-DETAILS
+here 'ingest' means add to our accounting system and database refers to our folder structure
 }
 \examples{
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ RRASSLER::ingest_into_database(path_to_ras_dbase = "G:/data/ras_catalog3/",
+top_of_dir_to_scrape = "G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River/WILLBARGER 0516/",
+code_to_place_in_source = "test",
+proj_override = "EPSG:2277",
+apply_vdat_trans = FALSE,
+is_quiet = FALSE,
+is_verbose = TRUE,
+quick_check = FALSE,
+quick_hull = FALSE,
+overwrite = FALSE,
+parallel_proc = FALSE)
  }
 }
 }
 \seealso{
 \code{\link[glue]{glue}}
- \code{\link[data.table]{as.data.table}}, \code{\link[data.table]{data.table-package}}, \code{\link[data.table]{rbindlist}}, \code{\link[data.table]{fwrite}}
- \code{\link[utils]{glob2rx}}
- \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_as_sf}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_write}}
- \code{\link[stringr]{str_sub}}, \code{\link[stringr]{str_detect}}
- \code{\link[unglue]{unglue}}
- \code{\link[sfheaders]{sf_linestring}}
- \code{\link[lwgeom]{st_startpoint}}
- \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{distinct}}
- \code{\link[holyhull]{holyhull}}
- \code{\link[nhdplusTools]{get_nhdplus}}
- \code{\link[AOI]{aoi_get}}
- \code{\link[arrow]{write_parquet}}
- \code{\link[gmailr]{gm_mime}}, \code{\link[gmailr]{gm_to}}, \code{\link[gmailr]{gm_send_message}}
+ \code{\link[stringr]{str_sub}}
+ \code{\link[parallel]{detectCores}}, \code{\link[parallel]{makeCluster}}
+ \code{\link[doParallel]{registerDoParallel}}
+ \code{\link[foreach]{foreach}}
+
+Other ingest: 
+\code{\link{cloud_ingest_record}()},
+\code{\link{disk_ingest_record}()},
+\code{\link{ingest_FEMA6_BLE}()}
 }
+\concept{ingest}

@@ -17,7 +17,7 @@ process_ras_g_to_xyz(
 \arguments{
 \item{geom_path}{path to a file to parse}
 
-\item{units}{units found in the project, "foot" or "meter"}
+\item{units}{units found in the project, "English Units" or "SI Units"}
 
 \item{proj_string}{a projection string to apply}
 

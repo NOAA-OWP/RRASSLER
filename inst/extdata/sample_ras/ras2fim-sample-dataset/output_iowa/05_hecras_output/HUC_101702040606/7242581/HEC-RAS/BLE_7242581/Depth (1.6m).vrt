@@ -1,0 +1,32 @@
+<VRTDataset rasterXSize="9860" rasterYSize="7077">
+  <SRS dataAxisToSRSAxisMapping="1,2">PROJCS["NAD83 / UTM zone 15N",GEOGCS["NAD83",DATUM["North_American_Datum_1983",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY["EPSG","6269"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4269"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-93],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["Easting",EAST],AXIS["Northing",NORTH],AUTHORITY["EPSG","26915"]]</SRS>
+  <GeoTransform>  2.3621367224947311e+05,  2.1835308011189518e+00,  0.0000000000000000e+00,  4.8094493381735580e+06,  0.0000000000000000e+00, -2.1835308011189518e+00</GeoTransform>
+  <VRTRasterBand dataType="Float32" band="1">
+    <Metadata>
+      <MDI key="STATISTICS_MAXIMUM">2.3941040039062</MDI>
+      <MDI key="STATISTICS_MEAN">0.36998812911561</MDI>
+      <MDI key="STATISTICS_MINIMUM">0.001007080078125</MDI>
+      <MDI key="STATISTICS_STDDEV">0.33058230025328</MDI>
+    </Metadata>
+    <NoDataValue>-9999</NoDataValue>
+    <ColorInterp>Gray</ColorInterp>
+    <Histograms>
+      <HistItem>
+        <HistMin>0.001007080078125</HistMin>
+        <HistMax>2.39410400390625</HistMax>
+        <BucketCount>256</BucketCount>
+        <IncludeOutOfRange>1</IncludeOutOfRange>
+        <Approximate>0</Approximate>
+        <HistCounts>823|816|837|763|776|815|862|936|892|878|878|925|957|944|1015|1018|1024|1007|978|1039|1025|1050|1019|1072|1105|1195|1179|1178|1157|1170|1108|1141|1123|1112|1053|1056|1068|1101|1064|989|974|959|948|875|865|787|828|776|689|659|684|653|649|637|565|549|520|509|441|401|372|323|327|264|270|280|260|211|207|189|164|161|154|163|146|138|130|113|92|98|88|85|102|100|83|69|69|68|70|49|55|66|68|69|45|37|54|43|42|60|59|57|43|44|39|60|50|46|48|37|39|51|38|39|46|38|49|53|46|42|53|49|45|41|41|36|40|39|40|41|47|37|45|45|37|40|42|35|38|41|44|48|33|27|28|37|35|44|40|39|32|47|40|45|24|38|39|35|33|34|35|29|23|35|35|33|33|32|23|27|20|22|22|32|35|23|32|15|25|21|22|17|22|18|15|19|25|6|9|19|16|14|20|10|10|21|14|18|18|16|19|17|11|10|13|17|19|25|20|20|12|10|14|11|17|9|8|5|8|10|12|8|14|10|13|6|13|13|13|10|9|6|6|8|10|6|13|7|7|3|1|7|0|1|0|1|1|0|1|0|0|0|0|0|0|2</HistCounts>
+      </HistItem>
+    </Histograms>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">Depth (1.6m).101702040606.101702040606.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="9860" RasterYSize="7077" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="9860" ySize="7077" />
+      <DstRect xOff="0" yOff="0" xSize="9860" ySize="7077" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+  </VRTRasterBand>
+</VRTDataset>

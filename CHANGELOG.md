@@ -1,21 +1,12 @@
 All notable changes to this project will be documented in this file.
 We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 
+## 0.0.02 - 2023-10-25
 
-## x.y.z - YYYY-MM-DD
+First public release.  New code pattens to agnostically write RRASSL'd files to disk or cloud.  Updated documentation format.  More professional.
+
+## 0.0.01 - 2023-07-25
 
 ### Added
 
-- Lorem ipsum dolor sit amet
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
+- First large release

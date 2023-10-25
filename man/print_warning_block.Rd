@@ -13,12 +13,16 @@ print output
 A warning block helper
 }
 \details{
-DETAILS
+line art to draw eyes to printing notices
 }
 \examples{
-\dontrun{
-if(interactive()){
- RRASSLER::print_warning_block()
- }
+RRASSLER::print_warning_block()
 }
+\seealso{
+Other helper: 
+\code{\link{marco}()},
+\code{\link{print_error_block}()},
+\code{\link{url_exists}()},
+\code{\link{util_unzip}()}
 }
+\concept{helper}
