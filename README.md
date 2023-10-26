@@ -23,10 +23,6 @@ applications such as [T-Route](https://github.com/NOAA-OWP/t-route) and
 [RAS2FIM](https://github.com/NOAA-OWP/ras2fim). See the [package
 documentation](https://NOAA-OWP.github.io/RRASSLER/) for more details.
 
-# Publically facing “HECRAS_model_catalog”
-
-Coming Soon(ish)!
-
 # Installation
 
 It is recommended that you wait to start using this tool until parsing
