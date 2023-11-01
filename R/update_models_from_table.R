@@ -4,6 +4,7 @@
 #' @param refresh flag to dictate whether or not to recollate spatial database prior to mapping.  FALSE to skip, TRUE to regenerate, Default: TRUE
 #' @param quiet flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE
 #' @return a reRRASSLED catalog
+#' @family post-process
 #' @details DETAILS
 #' @examples
 #' \dontrun{

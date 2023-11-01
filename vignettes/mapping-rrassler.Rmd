@@ -1,0 +1,145 @@
+---
+title: "Mapping RRASSLER"
+output: rmarkdown::html_vignette
+description: |
+  "Postprocess and add context to your 'HECRAS_model_catalog'"
+vignette: >
+  %\VignetteIndexEntry{mapping-rrassler}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/Files.PNG)
+
+The primary use of RRASSLER is to spin out a accountable set of models.  This "database" has a consistent structure and the herein described metadata and assorted sidecar files which make that data more FAIR.
+
+## Model Catalog
+Users may look at the _model_catalog.csv_'s, and the models underneath, but should avoid manual manipulation of individual files, paths, or other aspects.  RRASSLER scripts will do all needed manipulation, file sorting, and cataloging for you but there is very limited error checking should the workflow be applied incorrectly.  As a general rule of thumb, once you've selected your destination for the catalog, only manipulate the csv, preferably _never_ with EXCEL, which may chew up data along edge cases.
+
+## "PostProcessing"
+
+There is not really a deliniation between processing steps wihtin RRASSLER, ones the files have been placed into the RRASSL'd structure the bulk of the work is done but it would be nice if we could put a spatial index and tracking sheet together programatically.  That is what these final steps accomplish, parsing out the different valud HUC units and RRASSL'd metadata and placing them in single files which makes them findable.  There are two primary parts to PostProcessing:
+
+## What did that make?
+
+> [in line with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html)
+
+```{r, eval=FALSE}
+cat_path <- path/to/catalog
+
+> points <- arrow::read_parquet(file.path(cat_path,"point_database.parquet",fsep = .Platform$file.sep))
+> points
+         xid    xid_length      xid_d         x        y         z    n source master_id
+      1:   1  231.8369 [m]    0.00000 -97.29359 29.98529 137.83666 0.05      3         1
+      2:   1  231.8369 [m]    0.85344 -97.29358 29.98528 137.83666 0.05      3         1
+      3:   1  231.8369 [m]    2.56032 -97.29358 29.98527 137.68426 0.05      3         1
+      4:   1  231.8369 [m]    4.23672 -97.29357 29.98525 137.62330 0.05      3         1
+      5:   1  231.8369 [m]    6.79704 -97.29356 29.98523 137.47699 0.05      3         1
+      
+> cross_sections <- sf::st_read(file.path(cat_path,"xs.fgb",fsep = .Platform$file.sep))
+Reading layer `XS' from data source `G:\data\ras_catalog\XS.fgb' using driver `FlatGeobuf'
+Simple feature collection with 24901 features and 1 field
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+> cross_sections
+Simple feature collection with 24901 features and 1 field
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+First 5 features:
+   master_id                       geometry
+1      12038 LINESTRING (-96.50289 29.71...
+2      11520 LINESTRING (-96.50289 29.71...
+3      11779 LINESTRING (-96.50289 29.71...
+4      11261 LINESTRING (-96.50289 29.71...
+5      12037 LINESTRING (-96.48813 29.73...
+
+> footprints <- sf::st_read(file.path(cat_path,"model_footprints.fgb",fsep = .Platform$file.sep))
+Reading layer `model_footprints' from data source `G:\data\ras_catalog\model_footprints.fgb' using driver `FlatGeobuf'
+Simple feature collection with 1316 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  WGS 84
+> footprints
+Simple feature collection with 1316 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  WGS 84
+First 5 features:
+   start_master_id        Name       crs units                               path        source end_master_id                       geometry
+1              897 BUCKNER 001 EPSG:2277  Foot       2_BUCKNER 001_g01_1688926581 FEMA Region 6           909 POLYGON ((-96.58433 29.7028...
+2             1111 BUCKNER 035 EPSG:2277  Foot       2_BUCKNER 035_g01_1688926582 FEMA Region 6          1125 POLYGON ((-96.53977 29.7482...
+3            23285   CLEAR 002 EPSG:2277  Foot   5791782_CLEAR 002_g01_1688926594 FEMA Region 6         23291 POLYGON ((-96.54638 29.7554...
+4            23279   CLEAR 001 EPSG:2277  Foot   5791782_CLEAR 001_g01_1688926594 FEMA Region 6         23284 POLYGON ((-96.55299 29.7509...
+5            23264 BUCKNER 034 EPSG:2277  Foot 5791782_BUCKNER 034_g01_1688926582 FEMA Region 6         23278 POLYGON ((-96.55418 29.7420...
+```
+
+## Hydrofabric cross section representations
+| Attribute     | Description                                                                          | relevant layers   |
+|---------------|--------------------------------------------------------------------------------------|-------------------|
+| hy_id         | A hydrofabric specific, globally unique flowpath/flowline identifier                 | transects, cs_pts |
+| geometry      | Simple Features Geometry (LINESTRING)                                                | transects         |
+| cs_source     | Source of transect information                                                       | transects, cs_pts |
+| cs_id         | Identifier, unique to a hy_id, that increases from the inlet to the outlet transects | transects         |
+| cs_measure    | Percent along the flowpath from inlet                                                | transects         |
+| cs_length     | Width (in meters) of cross section transect                                          | cs_pts            |
+| pt_id         | Identifier, unique to cs_id, that increases from left bank to right bank             | cs_pts            |
+| pt_measure    | Distance of cs_id, starting at 0, in meters                                          | cs_pts            |
+| relative_dist | Percent along the transect from left bank (0-1)                                      | cs_pts            |
+| X             | X coordinate in CRS of geometry                                                      | cs_pts            |
+| Y             | Y coordinate in CRS of geometry                                                      | cs_pts            |
+| Z             | Z coordinate (in meters) in CRS of geometry                                          | cs_pts            |
+| Z_source      | Source of elevation data                                                             | cs_pts            |
+| roughness     | (Optional) Estimated Manning's Roughness value                                       | cs_pts            |
+
+## RAS Source Extensions:
+| Attribute       | Description                                                                                                                                                                                                                                                                                    | relevant layers |
+|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| master_id       | A catalog specific, globally unique transect hy_id                                                                                                                                                                                                                                             | transects       |
+| mean_shift      | The amount of space added to normalize a cross section's station-elevation to geographic distance.  Positive indicates that distance was added to the station-elevation series to make it match to the line (length) as it was specified in the geography.  This is reported as a running sum. | cs_pts          |
+| roughness       | (Optional) status is now (Required)                                                                                                                                                                                                                                                            | cs_pts          |
+| Geometry        | Simple Features Geometry (POLYGON)                                                                                                                                                                                                                                                             | hulls           |
+| start_master_id | The start master_id of the model cross sections                                                                                                                                                                                                                                                | hulls           |
+| end_master_id   | The end master_id of the model cross sections                                                                                                                                                                                                                                                  | hulls           |
+| Name            | The name of the model                                                                                                                                                                                                                                                                          | hulls           |
+| path            | the folder path to the original model                                                                                                                                                                                                                                                          | hulls           |
+| crs             | the native CRS of the model                                                                                                                                                                                                                                                                    | hulls           |
+| units           | The units of the model ("Feet" or "Meter")                                                                                                                                                                                                                                                     | hulls           |
+| source          | The source of the model                                                                                                                                                                                                                                                                        | hulls           |
+
+### Add geographic context
+
+1) Remerge the generated catalog index
+
+```{r, eval=FALSE}
+RRASSLER::refresh_master_files(path_to_ras_dbase = cat_path,verbose = TRUE)
+```
+
+This will create or recreate the index files at the top of the catalog, including:  
+* Model footprints: _model_footprints.fgb_  
+* Cross sections: _XS.fgb_  
+* Points: _point_database.parquet_  
+
+![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/GIS_features.PNG)
+
+3) Create a handy map to view
+
+```{r, eval=FALSE}
+RRASSLER::map_library(path_to_ras_dbase = cat_path,NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
+```
+
+This function will create a stand alone leaflet map which is useful in "interactively" exploring the data, facilitating simple queries, and inspirational presentations.
+
+![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/map_features.PNG)
+
+### Extend database for ras2fim deployments
+
+```{r, eval=FALSE}
+RRASSLER::append_catalog_fields(path_to_ras_dbase = cat_path,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)
+```
+

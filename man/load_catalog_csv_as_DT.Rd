@@ -4,12 +4,12 @@
 \alias{load_catalog_csv_as_DT}
 \title{load_catalog_csv_as_DT}
 \usage{
-load_catalog_csv_as_DT(path_to_csv, quiet = TRUE)
+load_catalog_csv_as_DT(path_to_csv, is_quiet = TRUE)
 }
 \arguments{
 \item{path_to_csv}{path to the model_catalog.csv file under your catalog folder}
 
-\item{quiet}{if TRUE, function will suppress message, Default: TRUE}
+\item{is_quiet}{if TRUE, function will suppress message, Default: TRUE}
 }
 \value{
 returns the model_catalog as a data.table object with enforced column types

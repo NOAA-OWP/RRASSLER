@@ -1,6 +1,6 @@
 #' @title parse_model_to_xyz
-#' @description FUNCTION_DESCRIPTION
-#' @param geom_path PARAM_DESCRIPTION
+#' @description parse a model into an xyz dataframe from basenam, considers both g and g hdf files
+#' @param geom_path path to the base model
 #' @param units PARAM_DESCRIPTION
 #' @param proj_string PARAM_DESCRIPTION
 #' @param in_epoch_override PARAM_DESCRIPTION, Default: as.integer(as.POSIXct(Sys.time()))
@@ -24,16 +24,15 @@
 #' @export
 #' @importFrom stringr str_sub
 #' @importFrom unglue unglue_vec
-
 parse_model_to_xyz <- function(geom_path,
                                units,
                                proj_string,
                                in_epoch_override = as.integer(as.POSIXct(Sys.time())),
                                out_epoch_override = as.integer(as.POSIXct(Sys.time())),
-                               vdat_trans=FALSE,
-                               quiet=FALSE,
-                               default_g=FALSE,
-                               try_both=TRUE) {
+                               vdat_trans = FALSE,
+                               quiet = FALSE,
+                               default_g = FALSE,
+                               try_both = TRUE) {
 
   # sinew::moga(file.path(getwd(),"R/parse_model_to_xyz.R"),overwrite = TRUE)
   # devtools::document()
@@ -43,7 +42,7 @@ parse_model_to_xyz <- function(geom_path,
 
   # geom_path="G:/data/ras_catalog/_temp/BLE/12010005/12010005_models/EngineeringModels/Hydraulic Models/AdamsBayou_SabineRiver/ADAMS BAYOU LATERAL 18/ADAMS BAYOU LATERAL 18.g01"
   # geom_path="G:/data/ras_catalog/_temp/BLE/12010005/12010005_models/EngineeringModels/Hydraulic Models/BigCowCreek/Big Cow Creek Tributary 1/Big Cow Creek Tributary 1.g01"
-  # units = "Foot"
+  # units = "English Units"
   # proj_string="ESRI:102739"
   # in_epoch_override = as.integer(as.POSIXct(Sys.time()))
   # out_epoch_override = as.integer(as.POSIXct(Sys.time()))
@@ -61,14 +60,14 @@ parse_model_to_xyz <- function(geom_path,
   g_pts <- list()
   g_pts[[1]] <- data.frame()
   g_pts = process_ras_g_to_xyz(
-    geom_path=geom_path,
-    units=units,
-    proj_string=proj_string,
-    in_epoch_override=as.integer(as.POSIXct(file.info(geom_path)$mtime)),
+    geom_path = geom_path,
+    units = units,
+    proj_string = proj_string,
+    in_epoch_override = as.integer(as.POSIXct(file.info(geom_path)$mtime)),
     vdat = vdat_trans,
-    quiet=quiet)
+    quiet = quiet)
 
-  if(nrow(g_pts[[1]]) > 0) {
+  if( nrow(g_pts[[1]]) > 0) {
     if(vdat_trans) {
       g_ptserr <- unglue::unglue_vec(g_pts[[2]], "{}:{}:{x}") %>% as.numeric()
     } else {
@@ -86,12 +85,12 @@ parse_model_to_xyz <- function(geom_path,
   ghdf_pts[[1]] <- data.frame()
   if(cond3) {
     ghdf_pts = process_ras_hdf_to_xyz(
-      geom_path=paste0(geom_path,".hdf"),
-      units=units,
-      proj_string=proj_string,
-      in_epoch_override=as.integer(as.POSIXct(file.info(geom_path)$mtime)),
+      geom_path = paste0(geom_path,".hdf"),
+      units = units,
+      proj_string = proj_string,
+      in_epoch_override = as.integer(as.POSIXct(file.info(geom_path)$mtime)),
       vdat = vdat_trans,
-      quiet=quiet)
+      quiet = quiet)
 
     # Record errors for comp
     if(nrow(ghdf_pts[[1]]) > 0) {
@@ -118,8 +117,6 @@ parse_model_to_xyz <- function(geom_path,
       FALSE
     }
   )
-
-  # cond5 = nrow(ghdf_pts[[1]]) > 0
 
   # If we could parse both, which was a better extraction?
   if(cond4 & cond5) {

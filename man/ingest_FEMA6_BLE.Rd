@@ -6,85 +6,81 @@
 \usage{
 ingest_FEMA6_BLE(
   path_to_ras_dbase,
-  HUC8,
-  full = FALSE,
-  proj_override = NULL,
-  vdat_trans = FALSE,
-  quiet = TRUE,
-  chatty = FALSE,
-  ping_me = NULL,
+  HUCID,
+  proj_override = proj_override,
+  apply_vdat_trans = FALSE,
+  is_quiet = TRUE,
+  is_verbose = FALSE,
   quick_check = FALSE,
   quick_hull = FALSE,
   overwrite = FALSE,
-  refresh = TRUE
+  parallel_proc = TRUE,
+  free_treads = 2,
+  clean = FALSE,
+  opt_local_path = NULL
 )
 }
 \arguments{
 \item{path_to_ras_dbase}{The path to the folder in which you are building your catalog, Default: NULL}
 
-\item{HUC8}{The HUC8 string you'd like to ingest}
+\item{HUCID}{string to huc8}
 
-\item{full}{PARAM_DESCRIPTION, Default: FALSE}
+\item{proj_override}{a CRS string to apply should a projection not be found, Default: NULL}
 
-\item{proj_override}{an EPSG string to apply should a projection not be found, Default: NULL}
+\item{apply_vdat_trans}{a flag to dictate whether or not to apply a vdatum transformation, TRUE to apply, FALSE to skip, Default: FALSE}
 
-\item{vdat_trans}{a flag to dictate whether or not to apply a vdatum transformation, TRUE to apply, FALSE to skip, Default: FALSE}
+\item{is_quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
 
-\item{quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
+\item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
 
-\item{chatty}{flag to dictate whether print statements from within the extraction are suppressed, TRUE to show messages and FALSE to suppress them, Default: FALSE}
+\item{quick_check}{on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE}
 
-\item{ping_me}{a string with an email used to send emails after processing.  Uses gmailr and requires config, Default: NULL}
+\item{quick_hull}{a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE}
 
-\item{quick_check}{a flag to dictate whether or not to perform a quick check to see if a model has already been processed based on the raw name of the file.  Useful in reingesting the same directory after an error but not recommended otherwise.  TRUE to see if a name matches and skips, FALSE to process all the way though, Default: FALSE}
+\item{overwrite}{overwrite files if we find identical models, Default: FALSE}
 
-\item{quick_hull}{a flag to dictate how tightly you want the footprints wrapped, TRUE uses just end points of the linestrings to place the model, FALSE uses the full point database, Default: FALSE}
+\item{parallel_proc}{Flag to determine if this should this parallel process, will check for enough free cores and boot this back if it exceeds available resources.  Will suppress all intermediate messages if active, Default: TRUE}
 
-\item{overwrite}{not currently implemented, Default: FALSE}
+\item{free_treads}{number of threads to leave free if parallel processing, Default: 2}
 
-\item{refresh}{flag to dictate whether or not to recollate spatial database after ingest process.  FALSE to skip, TRUE to regenerate, Default: TRUE}
+\item{clean}{number of threads to leave free if parallel processing, Default: 2}
 }
 \value{
-a RRASSLED catalog of HEC-RAS models
+a RRASSLE'd catalog of models or added desired HUC8 models
 }
 \description{
-ingest or append a new set of HEC-RAS models from FEMA region 6 Base Level Engineering (BLE) into your database
+helper to ingest FEMA region 6 BLE data
 }
 \details{
-DETAILS
+As one of the best centralized and accessible databases, the FEMA region 6 BLE data are perfect candidates to RRASSL.  This provides a wrapper around BLE scrapers and the ingest_into_database function.
 }
 \examples{
 \dontrun{
 if(interactive()){
  #EXAMPLE1
- RRASSLER::ingest_FEMA6_BLE(
-path_to_ras_dbase="/home/rstudio/g/data/ras_catalog/",
-HUC8="12090301",
-full=FALSE,
-proj_override="EPSG:2277",
-vdat_trans=FALSE,
-quiet=FALSE,
-chatty = TRUE,
-quick_check=FALSE,
+ RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = "G:/data/ras_catalog/",
+"12090301",
+proj_override = "EPSG:2277",
+apply_vdat_trans = FALSE,
+is_quiet = FALSE,
+is_verbose = FALSE,
+quick_check = FALSE,
 quick_hull = FALSE,
 overwrite = FALSE,
-refresh = TRUE)
+parallel_proc = TRUE,
+free_treads = 2)
  }
 }
 }
 \seealso{
 \code{\link[glue]{glue}}
- \code{\link[data.table]{as.data.table}}, \code{\link[data.table]{data.table-package}}, \code{\link[data.table]{rbindlist}}, \code{\link[data.table]{fwrite}}
- \code{\link[utils]{glob2rx}}
- \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_as_sf}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_write}}
- \code{\link[stringr]{str_sub}}, \code{\link[stringr]{str_detect}}
- \code{\link[unglue]{unglue}}
- \code{\link[sfheaders]{sf_linestring}}
- \code{\link[lwgeom]{st_startpoint}}
- \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{distinct}}
- \code{\link[holyhull]{holyhull}}
- \code{\link[nhdplusTools]{get_nhdplus}}
- \code{\link[AOI]{aoi_get}}
- \code{\link[arrow]{write_parquet}}
- \code{\link[gmailr]{gm_mime}}, \code{\link[gmailr]{gm_to}}, \code{\link[gmailr]{gm_send_message}}
+ \code{\link[utils]{unzip}}
+ \code{\link[rgdal]{rgdal-deprecated}}
+ \code{\link[sf]{st_crs}}
+
+Other ingest: 
+\code{\link{cloud_ingest_record}()},
+\code{\link{disk_ingest_record}()},
+\code{\link{ingest_into_database}()}
 }
+\concept{ingest}
