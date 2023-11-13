@@ -11,8 +11,7 @@
 #' @param overwrite PARAM_DESCRIPTION, Default: TRUE
 #' @param quiet PARAM_DESCRIPTION, Default: FALSE
 #' @return OUTPUT_DESCRIPTION
-#' @family post-process
-#' @details in dev
+#' @details DETAILS
 #' @examples
 #' \dontrun{
 #' if(interactive()){

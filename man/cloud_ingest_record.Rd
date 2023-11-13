@@ -13,6 +13,8 @@ cloud_ingest_record(
   apply_vdat_trans = FALSE,
   is_quiet = FALSE,
   is_verbose = FALSE,
+  quick_check = FALSE,
+  quick_hull = FALSE,
   overwrite = FALSE
 )
 }
@@ -33,16 +35,12 @@ cloud_ingest_record(
 
 \item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
 
-\item{overwrite}{overwrite files if we find identical models, Default: FALSE}
-}
-\value{
-a set of files in a newly RRASSLE'd record.
+\item{quick_check}{on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE}
+
+\item{quick_hull}{a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE}
 }
 \description{
 add a file as a record in the RRASSLED structure
-}
-\details{
-the cloud version of the ingest process
 }
 \examples{
 \dontrun{
@@ -56,11 +54,12 @@ if(interactive()){
  \code{\link[aws.s3]{get_bucket}}, \code{\link[aws.s3]{delete_object}}, \code{\link[aws.s3]{put_object}}
  \code{\link[glue]{glue}}
  \code{\link[utils]{glob2rx}}
- \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{geos_unary}}, \code{\link[sf]{st_write}}
- \code{\link[dplyr]{select}}, \code{\link[dplyr]{pull}}
+ \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_as_sf}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_write}}
+ \code{\link[dplyr]{select}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{distinct}}
  \code{\link[data.table]{data.table-package}}, \code{\link[data.table]{fwrite}}
- \code{\link[sfheaders]{sf_linestring}}, \code{\link[sfheaders]{sf_polygon}}
+ \code{\link[sfheaders]{sf_linestring}}
  \code{\link[lwgeom]{st_startpoint}}
+ \code{\link[holyhull]{holyhull}}
  \code{\link[nhdplusTools]{get_nhdplus}}
  \code{\link[AOI]{aoi_get}}
  \code{\link[arrow]{write_parquet}}

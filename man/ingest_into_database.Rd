@@ -34,6 +34,10 @@ ingest_into_database(
 
 \item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
 
+\item{quick_check}{on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE}
+
+\item{quick_hull}{a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE}
+
 \item{overwrite}{overwrite files if we find identical models, Default: FALSE}
 
 \item{parallel_proc}{Flag to determine if this should this parallel process, will check for enough free cores and boot this back if it exceeds available resources.  Will suppress all intermediate messages if active, Default: TRUE}
@@ -53,21 +57,17 @@ here 'ingest' means add to our accounting system and database refers to our fold
 \dontrun{
 if(interactive()){
  #EXAMPLE1
- # ras_dbase <- file.path("~/data/ras_catalog/")
- ras_dbase <- file.path("./inst/extdata/sample_output/ras_catalog/")
-
- dir_to_scrape <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"
- RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
-
- dir_to_scrape <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/"
- RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: Iowa input",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
-
- dir_to_scrape <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/output_iowa/"
- RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: RAS2FIM V1",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
-
- # Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
- dir_to_scrape <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"
- RRASSLER::ingest_into_database(path_to_ras_dbase = "s3://ras-models/",top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+ RRASSLER::ingest_into_database(path_to_ras_dbase = "G:/data/ras_catalog3/",
+top_of_dir_to_scrape = "G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River/WILLBARGER 0516/",
+code_to_place_in_source = "test",
+proj_override = "EPSG:2277",
+apply_vdat_trans = FALSE,
+is_quiet = FALSE,
+is_verbose = TRUE,
+quick_check = FALSE,
+quick_hull = FALSE,
+overwrite = FALSE,
+parallel_proc = FALSE)
  }
 }
 }

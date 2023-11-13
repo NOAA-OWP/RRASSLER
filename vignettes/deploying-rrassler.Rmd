@@ -11,20 +11,14 @@ vignette: >
 
 # Deploy RRASSLER over sample data
 
-This tutorial will walk you through the use of RRASSLER over some sample data and a cursory overview of the resulting data RRASSLER creates.  As outlined in the ingest steps, RRASSLER can be thought of as a two step process.  That first step is to ingest HEC-RAS models into the RRASSLE'd structure, and the second step is to generate the spatial index.  We'll make the assumption you are at least passingly familiar with the form and function of HEC-RAS data, but if not go back and read [Ingest steps](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html).
+This tutorial will walk you through the use of RRASSLER over some sample data and a cursory overview of the resulting data RRASSLER creates.  As outlined in the ingest steps, RRASSLER can be thought of as a two step process.  That first step is to ingest HEC-RAS models into the RRASSLE'd structure, and the second step is to generate the spatial index.
 
 ## Assessing the sample data
 
-### Sample data from BLE
-Our first set of sample data comes to us from the FEMA region 6 Base Level Engineering data from https://ebfedata.s3.amazonaws.com/ based on pointers from https://webapps.usgs.gov/infrm/estBFE/.  See also the Texas specific dashboard at https://www.arcgis.com/apps/dashboards/1e98f1e511fc40d3b08790a4251a64ee for more BLE models.  For testing purposes, we've selected 3 models from HUC 12090301 and left them in their original folder structure ("\12090301\12090301_models\Model\Alum Creek-Colorado River").  All models use English units and are assumed to have "[EPSG:2277](https://epsg.io/2277)" as their projection.
-
-### Sample RAS2FIM data
-
-Our last set of sample data is taken directly from the [RAS2FIM](https://github.com/NOAA-OWP/ras2fim) repo from Iowa.  This folder ("ras2fim-sample-dataset") has both the input and output from a RAS2FIM (v1) run, and the models are given to us in "SI Units" and in "[EPSG:26915](https://epsg.io/26915)".
+Our first set of sample data comes to us from the FEMA region 6 Base Level Engineering data from https://ebfedata.s3.amazonaws.com/ based on pointers from https://webapps.usgs.gov/infrm/estBFE/.  See also the Texas specific dashboard at https://www.arcgis.com/apps/dashboards/1e98f1e511fc40d3b08790a4251a64ee for more BLE base models.
 
 ## Ingesting the sample data to a sample catalog
 
-One of the first steps you need to do is chose a location to write your database out to.  We'll use our sample data directory and place these in 
 ```{r, eval=FALSE}
 RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = "G:/data/ras_catalog/",
                            "12090301",

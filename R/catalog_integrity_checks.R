@@ -16,7 +16,8 @@
 #' @import magrittr
 #' @import data.table
 #' @export
-catalog_integrity_checks <- function(path_to_ras_dbase, quiet = TRUE) {
+catalog_integrity_checks <-
+  function(path_to_ras_dbase, quiet = TRUE) {
     # sinew::moga(file.path(getwd(),"R/catalog_integrity_checks.R"),overwrite = TRUE)
     # devtools::document()
     # pkgdown::build_site(new_process=TRUE)

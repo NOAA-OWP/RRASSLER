@@ -12,7 +12,6 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
-#'  database_path <- file.path("~/data/ras_catalog/")
 #'  RRASSLER::scrape_ble_lib(database_path,'12090301',is_quiet = FALSE,overwrite = FALSE,files = "ms")
 #'  }
 #' }
@@ -36,7 +35,6 @@ scrape_ble_lib <-
     # pkgdown::build_site(new_process=FALSE)
     # devtools::load_all()
 
-    ## -- Start --
     fn_time_start <- Sys.time()
 
     output_dir <-

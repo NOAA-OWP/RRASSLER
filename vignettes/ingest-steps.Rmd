@@ -83,8 +83,7 @@ As mentioned, the form of the RRASSL'd record is based on hydrofabric specificat
 
 | Attribute       | Description                                                                                                                                                                                                                                                                                    | relevant layers |
 |-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| xid             | A model specific transect id                                                                                                                                                                                                                                                                   | transects       |
-| master_id       | A catalog specific, globally unique transect id                                                                                                                                                                                                                                                | transects       |
+| master_id       | A catalog specific, globally unique transect hy_id                                                                                                                                                                                                                                             | transects       |
 | mean_shift      | The amount of space added to normalize a cross section's station-elevation to geographic distance.  Positive indicates that distance was added to the station-elevation series to make it match to the line (length) as it was specified in the geography.  This is reported as a running sum. | cs_pts          |
 | roughness       | (Optional) status is now (Required)                                                                                                                                                                                                                                                            | cs_pts          |
 | Geometry        | Simple Features Geometry (POLYGON)                                                                                                                                                                                                                                                             | hulls           |
@@ -96,7 +95,7 @@ As mentioned, the form of the RRASSL'd record is based on hydrofabric specificat
 | units           | The units of the model ("Feet" or "Meter")                                                                                                                                                                                                                                                     | hulls           |
 | source          | The source of the model                                                                                                                                                                                                                                                                        | hulls           |
 
-Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which look like so (in R):
+Go ahead and look at the index files we created with code like so:
 
 ```{r, eval=FALSE}
 cat_path <- path/to/catalog
@@ -151,14 +150,4 @@ First 5 features:
 3            23285   CLEAR 002 EPSG:2277  Foot   5791782_CLEAR 002_g01_1688926594 FEMA Region 6         23291 POLYGON ((-96.54638 29.7554...
 4            23279   CLEAR 001 EPSG:2277  Foot   5791782_CLEAR 001_g01_1688926594 FEMA Region 6         23284 POLYGON ((-96.55299 29.7509...
 5            23264 BUCKNER 034 EPSG:2277  Foot 5791782_BUCKNER 034_g01_1688926582 FEMA Region 6         23278 POLYGON ((-96.55418 29.7420...
-```
-
-or like so if python is your preferred tooling:
-
-```{python, eval=FALSE}
-import os
-import geopandas as gpd
-dat = gpd("../inst/extdata/sample_output/ras_catalog/model_footprints.fgb")
-head(dat)
-exit
 ```

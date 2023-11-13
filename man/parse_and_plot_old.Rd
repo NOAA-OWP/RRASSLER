@@ -45,7 +45,7 @@ OUTPUT_DESCRIPTION
 FUNCTION_DESCRIPTION
 }
 \details{
-in dev
+DETAILS
 }
 \examples{
 \dontrun{
@@ -61,13 +61,4 @@ if(interactive()){
  \code{\link[sfheaders]{sf_linestring}}
  \code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{aes}}, \code{\link[ggplot2]{geom_path}}, \code{\link[ggplot2]{geom_point}}, \code{\link[ggplot2]{ggtheme}}, \code{\link[ggplot2]{labs}}, \code{\link[ggplot2]{CoordSf}}
  \code{\link[cowplot]{plot_grid}}, \code{\link[cowplot]{ggdraw}}, \code{\link[cowplot]{draw_label}}, \code{\link[cowplot]{save_plot}}
-
-Other post-process: 
-\code{\link{append_catalog_fields}()},
-\code{\link{catalog_integrity_checks}()},
-\code{\link{dedupe}()},
-\code{\link{refresh_master_files}()},
-\code{\link{reprocess_table_row}()},
-\code{\link{update_models_from_table}()}
 }
-\concept{post-process}

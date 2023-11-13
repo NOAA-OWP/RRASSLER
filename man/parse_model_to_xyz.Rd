@@ -12,13 +12,14 @@ parse_model_to_xyz(
   out_epoch_override = as.integer(as.POSIXct(Sys.time())),
   vdat_trans = FALSE,
   quiet = FALSE,
-  is_verbose = FALSE
+  default_g = FALSE,
+  try_both = TRUE
 )
 }
 \arguments{
 \item{geom_path}{path to the base model}
 
-\item{units}{units found in the project, "English Units" or "SI Units"}
+\item{units}{PARAM_DESCRIPTION}
 
 \item{proj_string}{PARAM_DESCRIPTION}
 
@@ -28,15 +29,17 @@ parse_model_to_xyz(
 
 \item{vdat_trans}{PARAM_DESCRIPTION, Default: FALSE}
 
-\item{quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
+\item{quiet}{PARAM_DESCRIPTION, Default: FALSE}
 
-\item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
+\item{default_g}{PARAM_DESCRIPTION, Default: FALSE}
+
+\item{try_both}{PARAM_DESCRIPTION, Default: TRUE}
 }
 \value{
 OUTPUT_DESCRIPTION
 }
 \description{
-parse a model into an xyz dataframe from basename, considers both g## and g##.hdf files
+parse a model into an xyz dataframe from basenam, considers both g and g hdf files
 }
 \details{
 DETAILS
@@ -45,12 +48,6 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE1
- # g_path <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/12090301/12090301_models/Model/Alum Creek-Colorado River/ALUM 006/ALUM 006.g01"
- g_path <- fs::path_package("extdata/shapes.fgb", package = "mypkg")
- pts <- parse_model_to_xyz(geom_path = g_path,units = "English Units",proj_string = "EPSG:2277",quiet = FALSE)
-
- g_path <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/10170204000897/Hydraulic_Models/Simulations/10170204000897.g01"
- pts <- parse_model_to_xyz(geom_path = g_path,units = "SI Units",proj_string = "EPSG:26915",quiet = FALSE)
  }
 }
 }

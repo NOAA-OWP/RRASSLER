@@ -36,7 +36,6 @@ Scraping data from https://ebfedata.s3.amazonaws.com/ based on pointers from htt
 \dontrun{
 if(interactive()){
  #EXAMPLE1
- database_path <- file.path("~/data/ras_catalog/")
  RRASSLER::scrape_ble_lib(database_path,'12090301',is_quiet = FALSE,overwrite = FALSE,files = "ms")
  }
 }

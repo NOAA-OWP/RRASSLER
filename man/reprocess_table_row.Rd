@@ -18,7 +18,7 @@ updates a row to hopefully place the model in a better space
 regenerate a row in the catalog
 }
 \details{
-in dev
+DETAILS
 }
 \examples{
 \dontrun{
@@ -42,8 +42,6 @@ Other post-process:
 \code{\link{append_catalog_fields}()},
 \code{\link{catalog_integrity_checks}()},
 \code{\link{dedupe}()},
-\code{\link{parse_and_plot_old}()},
-\code{\link{refresh_master_files}()},
 \code{\link{update_models_from_table}()}
 }
 \concept{post-process}

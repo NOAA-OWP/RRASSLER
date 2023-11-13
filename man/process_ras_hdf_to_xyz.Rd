@@ -42,9 +42,6 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE1
- # ghdf_path <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/12090301/12090301_models/Model/Alum Creek-Colorado River/ALUM 006/ALUM 006.g01.hdf"
- ghdf_path <- fs::path_package("extdata/shapes.fgb", package = "mypkg")
- pts <- process_ras_hdf_to_xyz(geom_path = ghdf_path,units = "English Units",proj_string = "EPSG:2277",vdat = FALSE,quiet = FALSE)
  }
 }
 }

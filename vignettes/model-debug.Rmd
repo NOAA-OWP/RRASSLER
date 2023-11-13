@@ -19,6 +19,111 @@ knitr::opts_chunk$set(
 
 > A set of code chunks, procedures, and utilities for a RRASSLER execution.
 
+## Model debug helper
+
+```{r, eval=FALSE}
+geom_path="G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Walnut Creek-Colorado River/CEDAR CREEK/CEDAR CREEK.g01"
+units="Foot"
+proj_string="EPSG:2277"
+in_epoch_override = as.integer(as.POSIXct(Sys.time()))
+out_epoch_override = as.integer(as.POSIXct(Sys.time()))
+vdat_trans=FALSE
+quiet=FALSE
+default_g=FALSE
+try_both=TRUE
+# extrated_pts <- parse_model_to_xyz(geom_path=geom_path,
+#                                    units=units,
+#                                    proj_string=proj_string,
+#                                    in_epoch_override = as.integer(as.POSIXct(Sys.time())),
+#                                    out_epoch_override = as.integer(as.POSIXct(Sys.time())),
+#                                    vdat_trans=vdat_trans,
+#                                    quiet=quiet,
+#                                    default_g=default_g,
+#                                    try_both=try_both)
+extrated_pts <- try({
+  parse_model_to_xyz(geom_path=geom_path,
+                     units=units,
+                     proj_string=proj_string,
+                     in_epoch_override = as.integer(as.POSIXct(Sys.time())),
+                     out_epoch_override = as.integer(as.POSIXct(Sys.time())),
+                     vdat_trans=vdat_trans,
+                     quiet=quiet,
+                     default_g=default_g,
+                     try_both=try_both)
+})
+if(nrow(extrated_pts[[1]])==0){
+  current_initial_name <- paste0("unknown_",current_model_name,"_",current_g_value,"_",current_last_modified)
+  current_final_name_key <- NA
+
+  if(sum(stringr::str_detect(na.omit(ras_catalog_dbase$initial_scrape_name), current_initial_name)) == 0) {
+    new_row <- data.table::data.table(current_nhdplus_comid,
+                                      current_model_name,
+                                      current_g_value,
+                                      current_last_modified,
+                                      code_to_place_in_source,
+                                      current_model_units,
+                                      current_model_projection,
+                                      current_initial_name,
+                                      current_final_name_key,
+                                      "unparsed_units_proj")
+    names(new_row) <- names
+    ras_catalog_dbase <- data.table::rbindlist(list(ras_catalog_dbase,new_row))
+
+    dir.create(file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,fsep = .Platform$file.sep), showWarnings = FALSE, recursive = TRUE)
+    file.copy(c(g_file ,paste0(g_file,".hdf") ,p_files ,f_files ,h_files, v_files, prj_files,o_files,r_files,u_files,x_files,rasmap_files),
+              file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,fsep = .Platform$file.sep))
+    data.table::fwrite(ras_catalog_dbase,file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep), row.names = FALSE)
+    process_count = process_count + 1
+  } else {
+    if(!quiet) { print("Model with inital scrape name already in the que") }
+    duplicate_count = duplicate_count + 1
+  }
+  next
+}
+
+# Footprint the points we extracted
+ls = sfheaders::sf_linestring(
+  obj = extrated_pts[[1]]
+  , x = "x"
+  , y = "y"
+  # , z = "z"
+  , linestring_id = "xid"
+  , keep = FALSE
+) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
+#
+if(quick_hull) {
+  end_points <- c(ls %>% lwgeom::st_endpoint(), ls %>% lwgeom::st_startpoint())
+  end_points <- sf::st_coordinates(end_points) %>%
+    as.data.frame(extrated_pts[[1]]) %>%
+    dplyr::group_by(X,Y) %>%
+    dplyr::distinct() %>%
+    sf::st_as_sf(coords = c("X","Y")) %>%
+    sf::st_set_crs(sf::st_crs("EPSG:6349")) %>%
+    sf::st_transform(sf::st_crs("EPSG:4326"))
+} else {
+  end_points <- sf::st_coordinates(ls) %>%
+    as.data.frame(extrated_pts[[1]]) %>%
+    dplyr::group_by(X,Y) %>%
+    dplyr::distinct() %>%
+    sf::st_as_sf(coords = c("X","Y")) %>%
+    sf::st_set_crs(sf::st_crs("EPSG:6349")) %>%
+    sf::st_transform(sf::st_crs("EPSG:4326"))
+}
+
+ahull_poly = holyhull::holyhull(sf_frame=end_points, method='convave', alpha_value=0.01, concavity = 2, length_threshold = 0)
+
+flowline_list <- try({
+  nhdplusTools::get_nhdplus(AOI::aoi_get(ahull_poly),realization = "flowline")
+})
+
+# Join to comids
+if(length(flowline_list) == 0) {
+  current_nhdplus_comid = 2
+} else {
+  current_nhdplus_comid = flowline_list[flowline_list$streamorde == max(flowline_list$streamorde),][1,]$comid
+}
+```
+
 ## ras_xyz.parquet to line transform
 
 ```{r, eval=FALSE}
@@ -32,70 +137,7 @@ ls = sfheaders::sf_linestring(
   , linestring_id = "xid"
   , keep = FALSE
 ) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
-sf::st_write(ls,"~/temp/ras_xyz_lines.fgb")
-```
-
-## model info into cross sections
-
-```{r, eval=FALSE}
-xs_t <- data.table::as.data.table(sf::st_drop_geometry(xs))
-feet_t <- data.table::as.data.table(sf::st_drop_geometry(feet))
-xs_t <- xs_t[, dummy := master_id] 
-data.table::setkey(xs_t, master_id, dummy)
-data.table::setkey(feet_t, start_master_id, end_master_id)
-temp_table <- data.table::foverlaps(xs_t, feet_t, nomatch=0L, mult="first")[, dummy := NULL]
-xs_j <- xs %>% dplyr::left_join(temp_table)
-mapview::mapview(xs_j)
-```
-
-## hydrofabric conflation
-
-```{r, eval=FALSE}
-extrated_pts <- try({
-      parse_model_to_xyz(
-        geom_path = g_file,
-        units = current_model_units,
-        proj_string = current_model_projection,
-        in_epoch_override = as.integer(as.POSIXct(Sys.time())),
-        out_epoch_override = as.integer(as.POSIXct(Sys.time())),
-        vdat_trans = FALSE,
-        quiet = is_verbose
-      )
-    })
-
-ls = sfheaders::sf_linestring(
-      obj = extrated_pts[[1]],
-      x = "x",
-      y = "y",
-      linestring_id = "xid",
-      keep = FALSE) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
-    ls_final_line_index <- nrow(ls)
-    ls_end_index <- nrow(ls)-1
-    ls_middlel_lines_end <- ls[2:ls_end_index,] |> lwgeom::st_endpoint()
-    ls_middlel_lines_start <- ls[2:ls_end_index,] %>% lwgeom::st_startpoint()
-
-    df_hull_pts <- rbind(
-      sf::st_coordinates(ls[1,]$geometry)[, -c(3)],
-      sf::st_coordinates(ls_middlel_lines_end),
-      apply(sf::st_coordinates(ls[ls_final_line_index,]$geometry)[, -c(3)], 2, rev),
-      apply(sf::st_coordinates(ls_middlel_lines_start), 2, rev))
-    hull = sfheaders::sf_polygon(
-      obj = df_hull_pts,
-      x = "X",
-      y = "Y",
-      keep = FALSE) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
-
-flow_catch_list <- try({
-  nhdplusTools::get_nhdplus(AOI::aoi_get(hull), realization = "catchment")
-}) |> suppressMessages()
-flow_line_list <- try({
-  nhdplusTools::get_nhdplus(AOI::aoi_get(hull), realization = "flowline")
-}) |> suppressMessages()
-
-flow_catch_intersect <- flow_catch_list[sf::st_transform(hull,crs = sf::st_crs(flow_catch_list)),]
-flow_line_intersect <- flow_line_list[sf::st_transform(hull,crs = sf::st_crs(flow_line_list)),]
-
-mapview::mapview(extrated_pts[[3]]) + mapview::mapview(hull) + mapview::mapview(ls) + mapview::mapview(flow_line_intersect)
+sf::st_write(ls,"~/temp/ras_xyz__lines.fgb")
 ```
 
 ## Push a local catalog to the cloud
@@ -107,8 +149,8 @@ aws s3 cp --recursive G:/data/ras_catalog s3://.../ras_models ---exclude G:/data
 ## Proj finder
 
 ```{r, eval=FALSE}
-path_to_gdb <- file.path("~/data/ras_catalog/_temp/BLE/12090301/12090301_SpatialData/Spatial/BLE_LowColoradoCummins.gdb")
-fc <- sf::st_read(path_to_gdb,layer="BLE_DEP01PCT")
+path_to_gdb <- file.path("G:/data/ras_catalog/_temp/BLE/12030109/12030109_SpatialData/12030109_Chambers.gdb")
+fc <- rgdal::readOGR(dsn=path_to_gdb,layer="BLE_DEP01PCT")
 print(sf::st_crs(fc))
 ```
 
@@ -178,27 +220,4 @@ aws.s3::save_object(
   bucket = "s3://.../.../HUC8.fgb",
   file = "<path to your catalog>/HUC8.fgb"
 )
-```
-
-## Model extraction tests
-
-```{r, eval = FALSE}
-root_path <- "../inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/12090301/12090301_models/Model/Alum Creek-Colorado River/ALUM 006/ALUM 006.g01"
-units = "English Units"
-proj_string = "EPSG:2277"
-# root_path <- "../inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/10170204000897/Hydraulic_Models/Simulations/10170204000897.g01"
-# units = "SI Units"
-# proj_string = "EPSG:26915"
-
-pts_g <- process_ras_g_to_xyz(geom_path = root_path,units = units,proj_string = proj_string,vdat = FALSE,quiet = FALSE)
-pts_ghdf <- process_ras_hdf_to_xyz(geom_path = paste0(root_path,".hdf"),units = units,proj_string = proj_string,vdat = FALSE,quiet = FALSE)
-
-sf::st_write(pts_g[[3]],"../inst/extdata/sample_output/riv_g.fgb")
-sf::st_write(pts_ghdf[[3]],"../inst/extdata/sample_output/riv_ghdf.fgb")
-
-sf::st_write(xyz_to_ls(dat = pts_g[[1]],is_quiet = FALSE),"../inst/extdata/sample_output/xs_g.fgb")
-sf::st_write(xyz_to_ls(dat = pts_ghdf[[1]],is_quiet = FALSE),"../inst/extdata/sample_output/xs_ghdf.fgb")
-
-data.table::fwrite(pts_g[[1]],"../inst/extdata/sample_output/xs.csv")
-data.table::fwrite(pts_ghdf[[1]],"../inst/extdata/sample_output/xsghdf.csv")
 ```
