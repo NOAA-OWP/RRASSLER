@@ -4,7 +4,7 @@
 #' @param excel_row if you opened this up in excel (1 based index) the row you want to process
 #' @return updates a row to hopefully place the model in a better space
 #' @family post-process
-#' @details DETAILS
+#' @details in dev
 #' @examples
 #' \dontrun{
 #' if(interactive()){

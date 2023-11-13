@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/JimColl/RRASSLER/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/NOAA-OWP/RRASSLER/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -41,7 +41,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>ingest_into_database</h1>
-      <small class="dont-index">Source: <a href="https://github.com/JimColl/RRASSLER/blob/HEAD/R/ingest_into_database.R" class="external-link"><code>R/ingest_into_database.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NOAA-OWP/RRASSLER/blob/HEAD/R/ingest_into_database.R" class="external-link"><code>R/ingest_into_database.R</code></a></small>
       <div class="d-none name"><code>ingest_into_database.Rd</code></div>
     </div>
 
@@ -97,14 +97,6 @@
 <dd><p>flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE</p></dd>
 
 
-<dt>quick_check</dt>
-<dd><p>on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE</p></dd>
-
-
-<dt>quick_hull</dt>
-<dd><p>a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE</p></dd>
-
-
 <dt>overwrite</dt>
 <dd><p>overwrite files if we find identical models, Default: FALSE</p></dd>
 
@@ -145,17 +137,21 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span> <span class="co">#EXAMPLE1</span></span></span>
-<span class="r-in"><span> <span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">ingest_into_database</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="st">"G:/data/ras_catalog3/"</span>,</span></span>
-<span class="r-in"><span>top_of_dir_to_scrape <span class="op">=</span> <span class="st">"G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River/WILLBARGER 0516/"</span>,</span></span>
-<span class="r-in"><span>code_to_place_in_source <span class="op">=</span> <span class="st">"test"</span>,</span></span>
-<span class="r-in"><span>proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,</span></span>
-<span class="r-in"><span>apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>quick_check <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>quick_hull <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="co"># ras_dbase &lt;- file.path("~/data/ras_catalog/")</span></span></span>
+<span class="r-in"><span> <span class="va">ras_dbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"./inst/extdata/sample_output/ras_catalog/"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="va">dir_to_scrape</span> <span class="op">&lt;-</span> <span class="st">"./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"</span></span></span>
+<span class="r-in"><span> <span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">ingest_into_database</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,top_of_dir_to_scrape <span class="op">=</span> <span class="va">dir_to_scrape</span>,code_to_place_in_source <span class="op">=</span> <span class="st">"test: FEMA6"</span>,proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="va">dir_to_scrape</span> <span class="op">&lt;-</span> <span class="st">"./inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/"</span></span></span>
+<span class="r-in"><span> <span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">ingest_into_database</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,top_of_dir_to_scrape <span class="op">=</span> <span class="va">dir_to_scrape</span>,code_to_place_in_source <span class="op">=</span> <span class="st">"test: Iowa input"</span>,proj_override <span class="op">=</span> <span class="st">"EPSG:26915"</span>,apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="va">dir_to_scrape</span> <span class="op">&lt;-</span> <span class="st">"./inst/extdata/sample_ras/ras2fim-sample-dataset/output_iowa/"</span></span></span>
+<span class="r-in"><span> <span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">ingest_into_database</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,top_of_dir_to_scrape <span class="op">=</span> <span class="va">dir_to_scrape</span>,code_to_place_in_source <span class="op">=</span> <span class="st">"test: RAS2FIM V1"</span>,proj_override <span class="op">=</span> <span class="st">"EPSG:26915"</span>,apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span> <span class="co"># Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")</span></span></span>
+<span class="r-in"><span> <span class="va">dir_to_scrape</span> <span class="op">&lt;-</span> <span class="st">"./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"</span></span></span>
+<span class="r-in"><span> <span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">ingest_into_database</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="st">"s3://ras-models/"</span>,top_of_dir_to_scrape <span class="op">=</span> <span class="va">dir_to_scrape</span>,code_to_place_in_source <span class="op">=</span> <span class="st">"test: FEMA6"</span>,proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="op">}</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>

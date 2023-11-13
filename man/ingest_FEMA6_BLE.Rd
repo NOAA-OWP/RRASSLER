@@ -11,8 +11,6 @@ ingest_FEMA6_BLE(
   apply_vdat_trans = FALSE,
   is_quiet = TRUE,
   is_verbose = FALSE,
-  quick_check = FALSE,
-  quick_hull = FALSE,
   overwrite = FALSE,
   parallel_proc = TRUE,
   free_treads = 2,
@@ -33,10 +31,6 @@ ingest_FEMA6_BLE(
 
 \item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
 
-\item{quick_check}{on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE}
-
-\item{quick_hull}{a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE}
-
 \item{overwrite}{overwrite files if we find identical models, Default: FALSE}
 
 \item{parallel_proc}{Flag to determine if this should this parallel process, will check for enough free cores and boot this back if it exceeds available resources.  Will suppress all intermediate messages if active, Default: TRUE}
@@ -44,6 +38,8 @@ ingest_FEMA6_BLE(
 \item{free_treads}{number of threads to leave free if parallel processing, Default: 2}
 
 \item{clean}{number of threads to leave free if parallel processing, Default: 2}
+
+\item{opt_local_path}{PARAM_DESCRIPTION, Default: NULL}
 }
 \value{
 a RRASSLE'd catalog of models or added desired HUC8 models
@@ -58,25 +54,15 @@ As one of the best centralized and accessible databases, the FEMA region 6 BLE d
 \dontrun{
 if(interactive()){
  #EXAMPLE1
- RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = "G:/data/ras_catalog/",
-"12090301",
-proj_override = "EPSG:2277",
-apply_vdat_trans = FALSE,
-is_quiet = FALSE,
-is_verbose = FALSE,
-quick_check = FALSE,
-quick_hull = FALSE,
-overwrite = FALSE,
-parallel_proc = TRUE,
-free_treads = 2)
+ RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = "G:/data/ras_catalog/","12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = FALSE,overwrite = FALSE,parallel_proc = TRUE,free_treads = 2)
  }
 }
 }
 \seealso{
-\code{\link[glue]{glue}}
+\code{\link[stringr]{str_sub}}
+ \code{\link[glue]{glue}}
  \code{\link[utils]{unzip}}
- \code{\link[rgdal]{rgdal-deprecated}}
- \code{\link[sf]{st_crs}}
+ \code{\link[sf]{st_read}}, \code{\link[sf]{st_crs}}
 
 Other ingest: 
 \code{\link{cloud_ingest_record}()},

@@ -7,8 +7,6 @@
 #' @param apply_vdat_trans Should VDATUM be applied to the HEC-RAS model geometry.  See https://vdatum.noaa.gov/, Default: FALSE
 #' @param is_quiet flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE
 #' @param is_verbose flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE
-#' @param quick_check on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE
-#' @param quick_hull a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE
 #' @param overwrite overwrite files if we find identical models, Default: FALSE
 #' @param parallel_proc Flag to determine if this should this parallel process, will check for enough free cores and boot this back if it exceeds available resources.  Will suppress all intermediate messages if active, Default: TRUE
 #' @param free_treads number of threads to leave free if parallel processing, Default: 2
@@ -19,17 +17,21 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
-#'  RRASSLER::ingest_into_database(path_to_ras_dbase = "G:/data/ras_catalog3/",
-#'top_of_dir_to_scrape = "G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River/WILLBARGER 0516/",
-#'code_to_place_in_source = "test",
-#'proj_override = "EPSG:2277",
-#'apply_vdat_trans = FALSE,
-#'is_quiet = FALSE,
-#'is_verbose = TRUE,
-#'quick_check = FALSE,
-#'quick_hull = FALSE,
-#'overwrite = FALSE,
-#'parallel_proc = FALSE)
+#'  # ras_dbase <- file.path("~/data/ras_catalog/")
+#'  ras_dbase <- file.path("./inst/extdata/sample_output/ras_catalog/")
+#'
+#'  dir_to_scrape <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"
+#'  RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+#'
+#'  dir_to_scrape <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/"
+#'  RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: Iowa input",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+#'
+#'  dir_to_scrape <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/output_iowa/"
+#'  RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: RAS2FIM V1",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+#'
+#'  # Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
+#'  dir_to_scrape <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"
+#'  RRASSLER::ingest_into_database(path_to_ras_dbase = "s3://ras-models/",top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 #'  }
 #' }
 #' @seealso
@@ -47,6 +49,7 @@
 #' @importFrom foreach foreach
 #' @importFrom foreach `%do%`
 #' @importFrom foreach `%dopar%`
+
 ingest_into_database <- function(path_to_ras_dbase,
                                  top_of_dir_to_scrape,
                                  code_to_place_in_source,
@@ -62,58 +65,26 @@ ingest_into_database <- function(path_to_ras_dbase,
   # sinew::moga(file.path(getwd(),"R/ingest_into_database.R"),overwrite = TRUE)
   # devtools::document()
   # pkgdown::build_site(new_process=FALSE)
-  #
   # devtools::load_all()
   #
-  # path_to_ras_dbase
-  # top_of_dir_to_scrape = "G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River"
-  # code_to_place_in_source = "test"
+  # path_to_ras_dbase = "s3://ras-models/"
+  # top_of_dir_to_scrape = "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"
+  # code_to_place_in_source = "test: testing"
   # proj_override = "EPSG:2277"
   # apply_vdat_trans = FALSE
   # is_quiet = FALSE
-  # is_verbose = FALSE
-  # quick_check = FALSE
-  # quick_hull = FALSE
-  # overwrite = FALSE
-  # parallel_proc = TRUE
-  # free_treads = 2
-
-  # path_to_ras_dbase = "G:/data/ras_catalog3"
-  # top_of_dir_to_scrape = "G:/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Willbarger Creek-Colorado River/WILLBARGER 0516/"
-  # code_to_place_in_source = "test"
-  # proj_override = NULL
-  # apply_vdat_trans = FALSE
-  # is_quiet = FALSE
   # is_verbose = TRUE
-  # quick_check = FALSE
-  # quick_hull = FALSE
   # overwrite = FALSE
   # parallel_proc = FALSE
-
-  # gmailr::gm_auth_configure(path = "C:/Users/jimma/Desktop/client_secret_765662520275-iduoi88oke14pqst3ebukn5rb2qf0895.apps.googleusercontent.com.json")
 
   ## -- Start --
   fn_time_start <- Sys.time()
   if (!is_quiet) {
-    message(glue::glue(
-      "Parsing {top_of_dir_to_scrape} to place in {path_to_ras_dbase}"
-    ))
+    message(glue::glue("Parsing {top_of_dir_to_scrape} to place in {path_to_ras_dbase}"))
   }
 
   # Global constants
-  names <-
-    c(
-      "nhdplus_comid",
-      "model_name",
-      "g_file",
-      "last_modified",
-      "source",
-      "units",
-      "crs",
-      "initial_scrape_name",
-      "final_name_key",
-      "notes"
-    )
+  names <- c("nhdplus_comid","model_name","g_file","last_modified","source","units","crs","initial_scrape_name","final_name_key","notes")
 
   # Input sanitize
   code_to_place_in_source <- as.character(code_to_place_in_source)
@@ -122,44 +93,24 @@ ingest_into_database <- function(path_to_ras_dbase,
   cloud <- FALSE
   if (stringr::str_sub(path_to_ras_dbase, 1, 2) %in% c('s3', 'ht')) {
     ls_srt_folders_file <- strsplit(path_to_ras_dbase, "/")[[1]]
-    ls_srt_folders_file <-
-      ls_srt_folders_file[ls_srt_folders_file != ""]
-    path_to_root_bucket <-
-      paste0("s3://", ls_srt_folders_file[2], "/")
-    if (!is_quiet) {
-      message(
-        glue::glue(
-          "Parsing {top_of_dir_to_scrape} to place in bucket {path_to_root_bucket}"
-        )
-      )
-    }
+    ls_srt_folders_file <- ls_srt_folders_file[ls_srt_folders_file != ""]
+    path_to_root_bucket <- paste0("s3://", ls_srt_folders_file[2], "/")
     cloud <- TRUE
   } else {
-    path_to_ras_dbase <-
-      substr(path_to_ras_dbase, 1, nchar(path_to_ras_dbase) - 1)
-    dir.create(
-      file.path(
-        path_to_ras_dbase,
-        "models",
-        "_unprocessed",
-        fsep = .Platform$file.sep
-      ),
-      recursive = TRUE
-    )
+    path_to_ras_dbase <- substr(path_to_ras_dbase, 1, nchar(path_to_ras_dbase) - 1)
+    dir.create(file.path(path_to_ras_dbase,"models","_unprocessed",fsep = .Platform$file.sep), recursive = TRUE)
   }
 
   # Find a list of all the .prj files
-  list_of_prj_files <-
-    list.files(
-      top_of_dir_to_scrape,
-      pattern = glob2rx("*.prj$"),
-      full.names = TRUE,
-      ignore.case = TRUE,
-      recursive = TRUE
-    )
+  list_of_prj_files <- list.files(top_of_dir_to_scrape,pattern = glob2rx("*.prj$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
   n_files_to_process <- length(list_of_prj_files)
   if (!is_quiet) {
     message(glue::glue("Found {n_files_to_process} potential ras files"))
+  }
+  if(n_files_to_process == 0) {
+    print_warning_block()
+    message(glue::glue("No files to ingest from {top_of_dir_to_scrape}"))
+    return(TRUE)
   }
 
   # Is it worth/safe to parallel_proc?
@@ -168,11 +119,7 @@ ingest_into_database <- function(path_to_ras_dbase,
     if (no_cores < 1) {
       if (!is_quiet) {
         print_warning_block()
-        message(
-          glue::glue(
-            "Not enough cores to make parallel processing work, running as a single thread instead"
-          )
-        )
+        message(glue::glue("Not enough cores to make parallel processing work, running as a single thread instead"))
       }
       parallel_proc <- FALSE
     }
@@ -188,19 +135,40 @@ ingest_into_database <- function(path_to_ras_dbase,
     cl <- parallel::makeCluster(no_cores)
     if (cloud) {
       if (!is_quiet) { message("par proc to cloud") }
-      foreach::foreach(x = 1:n_files_to_process) %dopar% cloud_ingest_record(
+      # foreach::foreach(x = 1:n_files_to_process) %dopar% cloud_ingest_record(
+      #   in_file = list_of_prj_files[x],
+      #   ras_dbase = path_to_ras_dbase,
+      #   root_bucket = path_to_root_bucket,
+      #   code_to_place_in_source = code_to_place_in_source,
+      #   proj_override = proj_override,
+      #   apply_vdat_trans = apply_vdat_trans,
+      #   is_quiet = TRUE,
+      #   is_verbose = FALSE,
+      #   overwrite = overwrite
+      # )
+      temp_dir_to_write <- tempdir()
+      dir.create(file.path(temp_dir_to_write,"models","_unprocessed",fsep = .Platform$file.sep), recursive = TRUE)
+      foreach::foreach(x = 1:n_files_to_process) %dopar% disk_ingest_record(
         in_file = list_of_prj_files[x],
-        ras_dbase = path_to_ras_dbase,
-        root_bucket = path_to_root_bucket,
+        path_to_ras_dbase = temp_dir_to_write,
         code_to_place_in_source = code_to_place_in_source,
         proj_override = proj_override,
         apply_vdat_trans = apply_vdat_trans,
         is_quiet = TRUE,
         is_verbose = FALSE,
-        quick_check = quick_check,
-        quick_hull = quick_hull,
         overwrite = overwrite
       )
+      rest_of_bucket_prefix <- stringr::str_sub(path_to_ras_dbase, nchar(path_to_root_bucket)+1, nchar(path_to_ras_dbase)-1)
+      all_rrassled_files <- list.files(temp_dir_to_write, full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
+      for(file_to_copy in all_rrassled_files) {
+        if (!is_verbose) { message(glue::glue("Trying to move:{file_to_copy}")) }
+        aws.s3::put_object(
+          file = file_to_copy,
+          object = glue::glue("{rest_of_bucket_prefix}{stringr::str_sub(file_to_copy, nchar(temp_dir_to_write)+1, nchar(file_to_copy))}"),
+          bucket = path_to_root_bucket
+        )
+      }
+      unlink(temp_dir_to_write,recursive = TRUE)
     } else {
       foreach::foreach(x = 1:n_files_to_process) %dopar% disk_ingest_record(
         in_file = list_of_prj_files[x],
@@ -210,32 +178,52 @@ ingest_into_database <- function(path_to_ras_dbase,
         apply_vdat_trans = apply_vdat_trans,
         is_quiet = TRUE,
         is_verbose = FALSE,
-        quick_check = quick_check,
-        quick_hull = quick_hull,
         overwrite = overwrite
       )
     }
     parallel::stopCluster(cl)
+
   } else {
     if (cloud) {
+      # for (x in 1:n_files_to_process) {
+      #   cloud_ingest_record(
+      #     in_file = list_of_prj_files[x],
+      #     ras_dbase = path_to_ras_dbase,
+      #     root_bucket = path_to_root_bucket,
+      #     code_to_place_in_source = code_to_place_in_source,
+      #     proj_override = proj_override,
+      #     apply_vdat_trans = apply_vdat_trans,
+      #     is_quiet = is_quiet,
+      #     is_verbose = is_verbose,
+      #     overwrite = overwrite
+      #   )
+      temp_dir_to_write <- tempdir()
+      dir.create(file.path(temp_dir_to_write,"models","_unprocessed",fsep = .Platform$file.sep), recursive = TRUE)
       for (x in 1:n_files_to_process) {
-        cloud_ingest_record(
+        disk_ingest_record(
           in_file = list_of_prj_files[x],
-          ras_dbase = path_to_ras_dbase,
-          root_bucket = path_to_root_bucket,
+          path_to_ras_dbase = temp_dir_to_write,
           code_to_place_in_source = code_to_place_in_source,
           proj_override = proj_override,
           apply_vdat_trans = apply_vdat_trans,
           is_quiet = is_quiet,
           is_verbose = is_verbose,
-          quick_check = quick_check,
-          quick_hull = quick_hull,
           overwrite = overwrite
         )
       }
+      rest_of_bucket_prefix <- stringr::str_sub(path_to_ras_dbase, nchar(path_to_root_bucket)+1, nchar(path_to_ras_dbase)-1)
+      all_rrassled_files <- list.files(temp_dir_to_write, full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
+      for(file_to_copy in all_rrassled_files) {
+        if (!is_verbose) { message(glue::glue("Trying to move:{file_to_copy}")) }
+        aws.s3::put_object(
+          file = file_to_copy,
+          object = glue::glue("{rest_of_bucket_prefix}{stringr::str_sub(file_to_copy, nchar(temp_dir_to_write)+1, nchar(file_to_copy))}"),
+          bucket = path_to_root_bucket
+        )
+      }
+      unlink(temp_dir_to_write,recursive = TRUE)
     } else {
       for (x in 1:n_files_to_process) {
-        # x = 1
         disk_ingest_record(
           in_file = list_of_prj_files[x],
           path_to_ras_dbase = path_to_ras_dbase,
@@ -244,18 +232,14 @@ ingest_into_database <- function(path_to_ras_dbase,
           apply_vdat_trans = apply_vdat_trans,
           is_quiet = is_quiet,
           is_verbose = is_verbose,
-          quick_check = quick_check,
-          quick_hull = quick_hull,
           overwrite = overwrite
         )
       }
     }
   }
 
-  #
-
   # Wrap up
-  if (is_quiet) {
+  if (!is_quiet) {
     runtime <- Sys.time() - fn_time_start
     units(runtime) <- "hours"
     message(paste("RAS Library appended in", round(runtime, digits = 3), "hours"))

@@ -46,6 +46,9 @@
     <loc>/reference/cloud_ingest_record.html</loc>
   </url>
   <url>
+    <loc>/reference/crosswalk_hull_to_hydrofabric_value.html</loc>
+  </url>
+  <url>
     <loc>/reference/dedupe.html</loc>
   </url>
   <url>
@@ -113,5 +116,8 @@
   </url>
   <url>
     <loc>/reference/util_url.html</loc>
+  </url>
+  <url>
+    <loc>/reference/xyz_to_ls.html</loc>
   </url>
 </urlset>

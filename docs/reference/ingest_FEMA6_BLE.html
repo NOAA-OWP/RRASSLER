@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/JimColl/RRASSLER/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/NOAA-OWP/RRASSLER/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -41,7 +41,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>ingest_FEMA6_BLE</h1>
-      <small class="dont-index">Source: <a href="https://github.com/JimColl/RRASSLER/blob/HEAD/R/ingest_FEMA6_BLE.R" class="external-link"><code>R/ingest_FEMA6_BLE.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NOAA-OWP/RRASSLER/blob/HEAD/R/ingest_FEMA6_BLE.R" class="external-link"><code>R/ingest_FEMA6_BLE.R</code></a></small>
       <div class="d-none name"><code>ingest_FEMA6_BLE.Rd</code></div>
     </div>
 
@@ -58,8 +58,6 @@
 <span>  apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  is_quiet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  is_verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  quick_check <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  quick_hull <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  parallel_proc <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  free_treads <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -94,14 +92,6 @@
 <dd><p>flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE</p></dd>
 
 
-<dt>quick_check</dt>
-<dd><p>on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE</p></dd>
-
-
-<dt>quick_hull</dt>
-<dd><p>a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE</p></dd>
-
-
 <dt>overwrite</dt>
 <dd><p>overwrite files if we find identical models, Default: FALSE</p></dd>
 
@@ -117,6 +107,10 @@
 <dt>clean</dt>
 <dd><p>number of threads to leave free if parallel processing, Default: 2</p></dd>
 
+
+<dt>opt_local_path</dt>
+<dd><p>PARAM_DESCRIPTION, Default: NULL</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -130,10 +124,10 @@
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></code>
+    <div class="dont-index"><p><code><a href="https://stringr.tidyverse.org/reference/str_sub.html" class="external-link">str_sub</a></code>
+ <code><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></code>
  <code><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></code>
- <code><a href="http://rgdal.r-forge.r-project.org/reference/rgdal-deprecated.html" class="external-link">rgdal-deprecated</a></code>
- <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></code></p>
+ <code><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></code>, <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></code></p>
 <p>Other ingest: 
 <code><a href="cloud_ingest_record.html">cloud_ingest_record</a>()</code>,
 <code><a href="disk_ingest_record.html">disk_ingest_record</a>()</code>,
@@ -145,17 +139,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span> <span class="co">#EXAMPLE1</span></span></span>
-<span class="r-in"><span> <span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">ingest_FEMA6_BLE</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="st">"G:/data/ras_catalog/"</span>,</span></span>
-<span class="r-in"><span><span class="st">"12090301"</span>,</span></span>
-<span class="r-in"><span>proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,</span></span>
-<span class="r-in"><span>apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>is_verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>quick_check <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>quick_hull <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>parallel_proc <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>free_treads <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">ingest_FEMA6_BLE</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="st">"G:/data/ras_catalog/"</span>,<span class="st">"12090301"</span>,proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">FALSE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,parallel_proc <span class="op">=</span> <span class="cn">TRUE</span>,free_treads <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span> <span class="op">}</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>

@@ -12,8 +12,6 @@ disk_ingest_record(
   apply_vdat_trans = FALSE,
   is_quiet = FALSE,
   is_verbose = FALSE,
-  quick_check = FALSE,
-  quick_hull = FALSE,
   overwrite = FALSE
 )
 }
@@ -29,10 +27,6 @@ disk_ingest_record(
 \item{is_quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
 
 \item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
-
-\item{quick_check}{on initial ingest, if the model name is found we assume the models are the same without fully spatializing them which saves processing time, Default: FALSE}
-
-\item{quick_hull}{a flag to dictate whether the end points of a models cross sections are used or if the entire point database is fed to the hull creation, Default: FALSE}
 
 \item{overwrite}{overwrite files if we find identical models, Default: FALSE}
 
@@ -51,21 +45,26 @@ the disk version of the ingest process
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ # ras_dbase <- "./inst/extdata/sample_output/ras_catalog/"
+ # dir_to_scrape <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"
+ dir_to_scrape <- fs::path_package("extdata/shapes.fgb", package = "mypkg")
+ list_of_prj_files <- list.files(dir_to_scrape,pattern = glob2rx("*.prj$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
+ disk_ingest_record(in_file = list_of_prj_files[1], path_to_ras_dbase = ras_dbase,code_to_place_in_source = "test",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = FALSE,overwrite = FALSE)
+
+ dir_to_scrape <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/"
+ list_of_prj_files <- list.files(dir_to_scrape,pattern = glob2rx("*.prj$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
+ disk_ingest_record(in_file = list_of_prj_files[1], path_to_ras_dbase = ras_dbase,code_to_place_in_source = "test",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE)
  }
 }
 }
 \seealso{
-\code{\link[glue]{glue}}
- \code{\link[utils]{glob2rx}}
- \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_as_sf}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_write}}
+\code{\link[utils]{glob2rx}}
+ \code{\link[glue]{glue}}
+ \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_write}}
  \code{\link[stringr]{str_sub}}, \code{\link[stringr]{str_detect}}
- \code{\link[data.table]{data.table-package}}, \code{\link[data.table]{rbindlist}}, \code{\link[data.table]{fwrite}}
- \code{\link[sfheaders]{sf_linestring}}
+ \code{\link[data.table]{data.table-package}}, \code{\link[data.table]{fwrite}}
+ \code{\link[sfheaders]{sf_linestring}}, \code{\link[sfheaders]{sf_polygon}}
  \code{\link[lwgeom]{st_startpoint}}
- \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{distinct}}
- \code{\link[holyhull]{holyhull}}
- \code{\link[nhdplusTools]{get_nhdplus}}
- \code{\link[AOI]{aoi_get}}
  \code{\link[arrow]{write_parquet}}
 
 Other ingest: 

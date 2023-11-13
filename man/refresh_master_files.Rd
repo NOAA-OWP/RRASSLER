@@ -4,17 +4,15 @@
 \alias{refresh_master_files}
 \title{refresh_master_files}
 \usage{
-refresh_master_files(path_to_ras_dbase, point_merge = TRUE, verbose = TRUE)
+refresh_master_files(path_to_ras_dbase, is_verbose = TRUE)
 }
 \arguments{
-\item{path_to_ras_dbase}{The path to the folder in which you are building your catalog, Default: NULL}
+\item{path_to_ras_dbase}{The path to the folder in which you are building your catalog, is also location agnostic (disk or cloud), Default: NULL}
 
-\item{point_merge}{Dev flag to shave point processing, Default: TRUE}
-
-\item{verbose}{flag to determine whether print statements are shown - TRUE to show messages - FALSE to skip non-critical ones, Default: TRUE}
+\item{is_verbose}{flag to determine whether print statements are shown - TRUE to show messages - FALSE to skip non-critical ones, Default: TRUE}
 }
 \value{
-OUTPUT_DESCRIPTION
+updated master index files including accounting.csv, point_database.parque, XS.fgb, and model_footprints.fgb
 }
 \description{
 remerge individual files into spatial model key
@@ -25,16 +23,32 @@ DETAILS
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE
- RRASSLER::refresh_master_files(path_to_ras_dbase = "G:/data/ras_catalog",verbose=TRUE)
+ # ras_dbase <- file.path("~/data/ras_catalog/")
+ ras_dbase <- file.path("./inst/extdata/sample_output/ras_catalog/")
+
+ RRASSLER::refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
+
+ RRASSLER::refresh_master_files(path_to_ras_dbase = "s3://ras-models/",is_verbose = TRUE)
  }
 }
 }
 \seealso{
-\code{\link[utils]{glob2rx}}
+\code{\link[stringr]{str_sub}}
+ \code{\link[aws.s3]{get_bucket}}, \code{\link[aws.s3]{get_object}}, \code{\link[aws.s3]{delete_object}}, \code{\link[aws.s3]{put_object}}
+ \code{\link[data.table]{as.data.table}}, \code{\link[data.table]{fwrite}}, \code{\link[data.table]{rbindlist}}
+ \code{\link[readr]{read_delim}}
+ \code{\link[utils]{glob2rx}}
  \code{\link[glue]{glue}}
  \code{\link[sf]{st_read}}, \code{\link[sf]{st_crs}}, \code{\link[sf]{st_write}}
  \code{\link[arrow]{read_parquet}}, \code{\link[arrow]{write_parquet}}
- \code{\link[data.table]{as.data.table}}, \code{\link[data.table]{rbindlist}}
  \code{\link[sfheaders]{sf_linestring}}
+
+Other post-process: 
+\code{\link{append_catalog_fields}()},
+\code{\link{catalog_integrity_checks}()},
+\code{\link{dedupe}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{reprocess_table_row}()},
+\code{\link{update_models_from_table}()}
 }
+\concept{post-process}

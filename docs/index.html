@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/JimColl/RRASSLER/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/NOAA-OWP/RRASSLER/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -64,17 +64,12 @@
 <div class="section level1">
 <div class="page-header"><h1 id="executive-summary">Executive Summary<a class="anchor" aria-label="anchor" href="#executive-summary"></a>
 </h1></div>
-<p>The HEC-RAS model format, both as stand alone models or in archive formats, are incompatable for end users whose use case includes widespread accounting and deployment of that data as inputs into other workflows. This tool should be deployed to ingest HEC-RAS models into a “HECRAS_model_catalog”, a normalized and spatialized representation of those models with the requisite metadata and formatted structure needed to mesh seamlessly with <a href="https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html" class="external-link">national scale hydrofabric efforts and data models</a>, and applications such as <a href="https://github.com/NOAA-OWP/t-route" class="external-link">T-Route</a> and <a href="https://github.com/NOAA-OWP/ras2fim" class="external-link">RAS2FIM</a>. See the <a href="https://NOAA-OWP.github.io/RRASSLER/" class="external-link">package documentation</a> for more details.</p>
-</div>
-<div class="section level1">
-<h1 id="publically-facing-hecras_model_catalog">Publically facing “HECRAS_model_catalog”<a class="anchor" aria-label="anchor" href="#publically-facing-hecras_model_catalog"></a>
-</h1>
-<p>Coming Soon(ish)!</p>
+<p>The HEC-RAS model format, both as stand alone models or in archive formats, are incompatible for end users whose use case includes widespread accounting and deployment of that data as inputs into other workflows. This tool should be deployed to ingest HEC-RAS models into a “HECRAS_model_catalog”, a normalized and spatialized representation of those models with the requisite metadata and formatted structure needed to mesh seamlessly with <a href="https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html" class="external-link">national scale hydrofabric efforts and data models</a>, and applications such as <a href="https://github.com/NOAA-OWP/t-route" class="external-link">T-Route</a> and <a href="https://github.com/NOAA-OWP/ras2fim" class="external-link">RAS2FIM</a>. See the <a href="https://NOAA-OWP.github.io/RRASSLER/" class="external-link">package documentation</a> for more details.</p>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p>It is recommended that you wait to start using this tool until parsing accuracy, edge case handling, and accounting is fully ironed out, the final form of these tables is still in flux. Per package notes: “Still in alpha don’t use this.” If that doesn’t dissuade you, install the development version of <a href="https://github.com/NOAA-OWP/RRASSLER" class="external-link">RRASSLER from GitHub</a> with:</p>
+<p>It is recommended that you wait to start using this tool until parsing accuracy, edge case handling, and accounting is fully ironed out, the final form of these tables is still in flux. As the badges above indicate, this package is still undergoing formatting, although the core logic of record creation has been stabalized. If the cutting edge nature of this doesn’t dissuade you, install the development version of <a href="https://github.com/NOAA-OWP/RRASSLER" class="external-link">RRASSLER from GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")                  # You only need this if this is your very first time opening RStudio</span></span>
 <span><span class="co"># install.packages("BiocManager")               # You only need this if this is your very first time opening RStudio</span></span>
@@ -87,8 +82,16 @@
 <div class="section level1">
 <h1 id="tutorials">Tutorials<a class="anchor" aria-label="anchor" href="#tutorials"></a>
 </h1>
-<p>There are several tutorials available at the <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/index.html" class="external-link">Article index</a> including: * <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html" class="external-link">Ingest steps</a>: What RRASSLER is doing to data? * <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Deploying-RRASSLER.html" class="external-link">Deploying RRASSLER</a>: How to make your own “HEC-RAS model catalog”. * <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Mapping-RRASSLER.html" class="external-link">Mapping RRASSLER</a>: Adding (geographic) context to our data.</p>
-<p>See the <a href="https://NOAA-OWP.github.io/RRASSLER/index.html" class="external-link">package documentation</a> for <a href="https://NOAA-OWP.github.io/RRASSLER/reference/index.html" class="external-link">function references</a> and additional articles.</p>
+<p>There are several tutorials available at the <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/index.html" class="external-link">Article index</a> including:</p>
+<ul>
+<li>
+<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html" class="external-link">Ingest steps</a>: What is a “hydrofabric cross section”, what is HEC-RAS data, and what RRASSLER is doing to that data?</li>
+<li>
+<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Deploying-RRASSLER.html" class="external-link">Deploying RRASSLER</a>: How to make your own “HEC-RAS model catalog”.</li>
+<li>
+<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Mapping-RRASSLER.html" class="external-link">Mapping RRASSLER</a>: Adding (geographic) context to our data.</li>
+</ul>
+<p>See the <a href="https://NOAA-OWP.github.io/RRASSLER/index.html" class="external-link">package documentation</a> for <a href="https://NOAA-OWP.github.io/RRASSLER/reference/index.html" class="external-link">function references</a> and additional information.</p>
 </div>
 <div class="section level1">
 <h1 id="referneces">Referneces<a class="anchor" aria-label="anchor" href="#referneces"></a>
@@ -118,7 +121,7 @@
 <div class="section level4">
 <h4 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
 </h4>
-<p>Aligning the different model surfaces is hard. Although every effort was made to account for standard edge cases and unit cohesion, you will, more often than not, find that a surface you use and a model do not align. That is not particularly surprising, but it is often disconcerting. 3DEP timestamps, resolutions, and even order of reprojection operations may alter the surfaces slightly, even if they are stated to have come from the same input database. Do your own sanity checks and try not to lose your mind, it’s probably easier to go out and measure it again. Finally, this was developed, tested, and deployed over primarily 1D data. Although 2D model will ingest, there was no consideration for those and is not accounting or copying <em>.tif</em> files so the value of these models is greatly diminished.</p>
+<p>Aligning the different model surfaces is hard. Although every effort was made to account for standard edge cases and unit cohesion, you will, more often than not, find that a surface you use and a model do not align. That is not particularly surprising, but it is often disconcerting. 3DEP timestamps, resolutions, and even order of reprojection operations may alter the surfaces slightly, even if they are stated to have come from the same input database. Finally, this was developed, tested, and deployed over primarily 1D data. Although 2D model will ingest, there was no consideration for those and is not accounting or copying <em>.tif</em> files so the value of RRASSLing these models is greatly diminished.</p>
 </div>
 <div class="section level4">
 <h4 id="getting-involved">Getting involved<a class="anchor" aria-label="anchor" href="#getting-involved"></a>
@@ -131,7 +134,7 @@
 <div class="section level5">
 <h5 id="hardening-and-extention">Hardening and extention<a class="anchor" aria-label="anchor" href="#hardening-and-extention"></a>
 </h5>
-<p>I code out of necessity, not out of love, and I’ve been told my more than a few that I write awful code. More than half of the community will also think this is written in the wrong language. Efforts to harden the workflow and algorithm, extend this workflow into Python, and general improvements would all be uses of time.</p>
+<p>Efforts to harden the workflow and algorithm, extend this workflow into Python, and general improvements would all be uses of time.</p>
 </div>
 <div class="section level5">
 <h5 id="rrastac">RRASTAC<a class="anchor" aria-label="anchor" href="#rrastac"></a>
@@ -143,7 +146,7 @@
 <div class="section level3">
 <h3 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
 </h3>
-<p>Built using <a href="https://posit.co/downloads/" class="external-link">RStudio</a> and <a href="https://github.com/rocker-org/rocker-versioned2" class="external-link">rocker-versioned2</a>, docker file provided for reproducibility. Typically deployed alongside <a href="https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md" class="external-link">a RAS2FIM conda environment</a> in Windows.</p>
+<p>Built using <a href="https://posit.co/downloads/" class="external-link">RStudio</a> and <a href="https://github.com/rocker-org/rocker-versioned2" class="external-link">rocker-versioned2</a>, <em>geodev.Dockerfile</em> docker file provided for reproducibility. Typically deployed alongside <a href="https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md" class="external-link">a RAS2FIM conda environment</a> in Windows.</p>
 </div>
 </div>
 <div class="section level2">
@@ -157,7 +160,7 @@
 <div class="section level2">
 <h2 id="credits-and-references">Credits and references<a class="anchor" aria-label="anchor" href="#credits-and-references"></a>
 </h2>
-<p>Credit to the packages used in the development, testing, and deployment of RRASSLER including but not exclusive of the following packages: <em>AOI, arrow, cowplot, data.table, dplyr, ggplot2, glue, gmailr, holyhull, httr, leafem, leaflet, leafpop, lubridate, lwgeom, mapview, nhdplusTools, sf, sfheaders, stringi, stringr, tidyr, unglue, units, utils, and rhdf5</em>. We are appreciative of the <a href="https://webapps.usgs.gov/infrm/estBFE/" class="external-link">FEMA region 6 group and the BLE data</a> they make publicly available. Built copying patterns from <a href="https://github.com/NOAA-OWP/ras2fim/blob/dev/src/create_shapes_from_hecras.py" class="external-link">RAS2FIM</a>.</p>
+<p>Credit to the packages used in the development, testing, and deployment of RRASSLER including but not exclusive of: <em>AOI, arrow, cowplot, data.table, dplyr, ggplot2, glue, gmailr, httr, leafem, leaflet, leafpop, lubridate, lwgeom, mapview, nhdplusTools, sf, sfheaders, stringi, stringr, tidyr, unglue, units, utils, and rhdf5</em>. We are appreciative of the <a href="https://webapps.usgs.gov/infrm/estBFE/" class="external-link">FEMA region 6 group and the BLE data</a> they make publicly available. Built copying patterns from <a href="https://github.com/NOAA-OWP/ras2fim/blob/dev/src/create_shapes_from_hecras.py" class="external-link">RAS2FIM</a>.</p>
 <div class="section level3">
 <h3 id="for-questions">For questions<a class="anchor" aria-label="anchor" href="#for-questions"></a>
 </h3>
@@ -169,8 +172,8 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/JimColl/RRASSLER/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/JimColl/RRASSLER" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/NOAA-OWP/RRASSLER/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/NOAA-OWP/RRASSLER" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 

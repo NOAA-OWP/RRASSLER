@@ -12,7 +12,7 @@ Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 # Executive Summary
 
 The HEC-RAS model format, both as stand alone models or in archive
-formats, are incompatable for end users whose use case includes
+formats, are incompatible for end users whose use case includes
 widespread accounting and deployment of that data as inputs into other
 workflows. This tool should be deployed to ingest HEC-RAS models into a
 “HECRAS_model_catalog”, a normalized and spatialized representation of
@@ -27,10 +27,11 @@ documentation](https://NOAA-OWP.github.io/RRASSLER/) for more details.
 
 It is recommended that you wait to start using this tool until parsing
 accuracy, edge case handling, and accounting is fully ironed out, the
-final form of these tables is still in flux. Per package notes: “Still
-in alpha don’t use this.” If that doesn’t dissuade you, install the
-development version of [RRASSLER from
-GitHub](https://github.com/NOAA-OWP/RRASSLER) with:
+final form of these tables is still in flux. As the badges above
+indicate, this package is still undergoing formatting, although the core
+logic of record creation has been stabalized. If the cutting edge nature
+of this doesn’t dissuade you, install the development version of
+[RRASSLER from GitHub](https://github.com/NOAA-OWP/RRASSLER) with:
 
 ``` r
 # install.packages("devtools")                  # You only need this if this is your very first time opening RStudio
@@ -46,19 +47,24 @@ RRASSLER::marco()                           # A "hello world" test
 
 There are several tutorials available at the [Article
 index](https://NOAA-OWP.github.io/RRASSLER/docs/articles/index.html)
-including: \* [Ingest
-steps](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html):
-What RRASSLER is doing to data? \* [Deploying
-RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Deploying-RRASSLER.html):
-How to make your own “HEC-RAS model catalog”. \* [Mapping
-RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Mapping-RRASSLER.html):
-Adding (geographic) context to our data.
+including:
+
+- [Ingest
+  steps](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html):
+  What is a “hydrofabric cross section”, what is HEC-RAS data, and what
+  RRASSLER is doing to that data?
+- [Deploying
+  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Deploying-RRASSLER.html):
+  How to make your own “HEC-RAS model catalog”.
+- [Mapping
+  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Mapping-RRASSLER.html):
+  Adding (geographic) context to our data.
 
 See the [package
 documentation](https://NOAA-OWP.github.io/RRASSLER/index.html) for
 [function
 references](https://NOAA-OWP.github.io/RRASSLER/reference/index.html)
-and additional articles.
+and additional information.
 
 # Referneces
 
@@ -106,12 +112,11 @@ more often than not, find that a surface you use and a model do not
 align. That is not particularly surprising, but it is often
 disconcerting. 3DEP timestamps, resolutions, and even order of
 reprojection operations may alter the surfaces slightly, even if they
-are stated to have come from the same input database. Do your own sanity
-checks and try not to lose your mind, it’s probably easier to go out and
-measure it again. Finally, this was developed, tested, and deployed over
-primarily 1D data. Although 2D model will ingest, there was no
-consideration for those and is not accounting or copying *.tif* files so
-the value of these models is greatly diminished.
+are stated to have come from the same input database. Finally, this was
+developed, tested, and deployed over primarily 1D data. Although 2D
+model will ingest, there was no consideration for those and is not
+accounting or copying *.tif* files so the value of RRASSLing these
+models is greatly diminished.
 
 #### Getting involved
 
@@ -125,11 +130,8 @@ specifically, the following are known shortcomings and next steps.
 
 ##### Hardening and extention
 
-I code out of necessity, not out of love, and I’ve been told my more
-than a few that I write awful code. More than half of the community will
-also think this is written in the wrong language. Efforts to harden the
-workflow and algorithm, extend this workflow into Python, and general
-improvements would all be uses of time.
+Efforts to harden the workflow and algorithm, extend this workflow into
+Python, and general improvements would all be uses of time.
 
 ##### RRASTAC
 
@@ -150,8 +152,8 @@ clear and could also be explored.
 
 Built using [RStudio](https://posit.co/downloads/) and
 [rocker-versioned2](https://github.com/rocker-org/rocker-versioned2),
-docker file provided for reproducibility. Typically deployed alongside
-[a RAS2FIM conda
+*geodev.Dockerfile* docker file provided for reproducibility. Typically
+deployed alongside [a RAS2FIM conda
 environment](https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md)
 in Windows.
 
@@ -163,12 +165,12 @@ in Windows.
 ## Credits and references
 
 Credit to the packages used in the development, testing, and deployment
-of RRASSLER including but not exclusive of the following packages: *AOI,
-arrow, cowplot, data.table, dplyr, ggplot2, glue, gmailr, holyhull,
-httr, leafem, leaflet, leafpop, lubridate, lwgeom, mapview,
-nhdplusTools, sf, sfheaders, stringi, stringr, tidyr, unglue, units,
-utils, and rhdf5*. We are appreciative of the [FEMA region 6 group and
-the BLE data](https://webapps.usgs.gov/infrm/estBFE/) they make publicly
+of RRASSLER including but not exclusive of: *AOI, arrow, cowplot,
+data.table, dplyr, ggplot2, glue, gmailr, httr, leafem, leaflet,
+leafpop, lubridate, lwgeom, mapview, nhdplusTools, sf, sfheaders,
+stringi, stringr, tidyr, unglue, units, utils, and rhdf5*. We are
+appreciative of the [FEMA region 6 group and the BLE
+data](https://webapps.usgs.gov/infrm/estBFE/) they make publicly
 available. Built copying patterns from
 [RAS2FIM](https://github.com/NOAA-OWP/ras2fim/blob/dev/src/create_shapes_from_hecras.py).
 
