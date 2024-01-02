@@ -2,7 +2,7 @@
 % Please edit documentation in R/catalog_integrity_checks.R
 \name{catalog_integrity_checks}
 \alias{catalog_integrity_checks}
-\title{catalog_integrity_checks}
+\title{catalog integrity checks}
 \usage{
 catalog_integrity_checks(path_to_ras_dbase, quiet = TRUE)
 }
@@ -15,7 +15,7 @@ catalog_integrity_checks(path_to_ras_dbase, quiet = TRUE)
 OUTPUT_DESCRIPTION
 }
 \description{
-Check the status of the catalog
+Check the status of the catalog for errors and inconsistencies
 }
 \details{
 DETAILS
@@ -28,3 +28,13 @@ if(interactive()){
  }
 }
 }
+\seealso{
+Other post-process: 
+\code{\link{append_catalog_fields}()},
+\code{\link{dedupe}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{refresh_master_files}()},
+\code{\link{reprocess_table_row}()},
+\code{\link{update_models_from_table}()}
+}
+\concept{post-process}

@@ -41,4 +41,13 @@ if(interactive()){
  \code{\link[nhdplusTools]{get_nhdplus}}
  \code{\link[AOI]{aoi_get}}
  \code{\link[arrow]{write_parquet}}
+
+Other post-process: 
+\code{\link{append_catalog_fields}()},
+\code{\link{catalog_integrity_checks}()},
+\code{\link{dedupe}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{refresh_master_files}()},
+\code{\link{reprocess_table_row}()}
 }
+\concept{post-process}

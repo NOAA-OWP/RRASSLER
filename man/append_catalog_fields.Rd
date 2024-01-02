@@ -8,7 +8,7 @@ append_catalog_fields(
   path_to_ras_dbase = NULL,
   out_name = NULL,
   overwrite = FALSE,
-  quiet = FALSE
+  is_verbose = TRUE
 )
 }
 \arguments{
@@ -18,13 +18,13 @@ append_catalog_fields(
 
 \item{overwrite}{flag to dictate whether or not to overwrite the out_name, should it exist. set to TRUE to delete and (re)generate, FALSE to safely exit, Default: FALSE}
 
-\item{quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
+\item{verbose}{flag to determine whether print statements are suppressed, TRUE to show messages and FALSE to surpress them, Default: TRUE}
 }
 \value{
 a new csv with helper columns
 }
 \description{
-adds helper fields to accounting.csv
+adds helper fields to accounting.csv.  Request based on https://github.com/NOAA-OWP/ras2fim/issues/34
 }
 \details{
 DETAILS
@@ -32,7 +32,8 @@ DETAILS
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+ #EXAMPLE
+ RRASSLER::append_catalog_fields(path_to_ras_dbase = "G:/data/ras_catalog",out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,verbose = TRUE)
  }
 }
 }
@@ -41,4 +42,13 @@ if(interactive()){
  \code{\link[dplyr]{mutate}}
  \code{\link[sf]{s2}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_read}}, \code{\link[sf]{st_crs}}
  \code{\link[data.table]{fwrite}}
+
+Other post-process: 
+\code{\link{catalog_integrity_checks}()},
+\code{\link{dedupe}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{refresh_master_files}()},
+\code{\link{reprocess_table_row}()},
+\code{\link{update_models_from_table}()}
 }
+\concept{post-process}

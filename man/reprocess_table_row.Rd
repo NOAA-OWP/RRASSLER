@@ -4,7 +4,12 @@
 \alias{reprocess_table_row}
 \title{reprocess_table_row}
 \usage{
-reprocess_table_row(path_to_ras_dbase, excel_row)
+reprocess_table_row(
+  path_to_ras_dbase,
+  excel_row = NULL,
+  zero_row = NULL,
+  path_name = NULL
+)
 }
 \arguments{
 \item{path_to_ras_dbase}{The path to the top level folder of the ras_catalog structure}
@@ -18,7 +23,7 @@ updates a row to hopefully place the model in a better space
 regenerate a row in the catalog
 }
 \details{
-DETAILS
+in dev
 }
 \examples{
 \dontrun{
@@ -37,4 +42,13 @@ if(interactive()){
  [get_nhdplus][nhdplusTools::get_nhdplus]
  [aoi_get][AOI::aoi_get]
  [write_parquet][arrow::write_parquet]
+
+Other post-process: 
+\code{\link{append_catalog_fields}()},
+\code{\link{catalog_integrity_checks}()},
+\code{\link{dedupe}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{refresh_master_files}()},
+\code{\link{update_models_from_table}()}
 }
+\concept{post-process}

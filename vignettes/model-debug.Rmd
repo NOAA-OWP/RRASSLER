@@ -1,0 +1,240 @@
+---
+title: "Model-debug"
+output: rmarkdown::html_vignette
+description: |
+  "Debug and testing scripts"
+vignette: >
+  %\VignetteIndexEntry{model-debug}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+> A set of code chunks, procedures, and utilities for a RRASSLER execution.
+
+# Unit and PR testing
+
+```{r, eval = FALSE}
+devtools::load_all()
+ras_dbase <- "../inst/extdata/sample_output/ras_catalog/"
+# ras_dbase <- file.path("~/data/ras_catalog/")
+# Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
+# ras_dbase <- "s3://ras-models/"
+## Note: paste HUC8 key into folder
+```
+
+## Model extraction tests
+
+```{r, eval = FALSE}
+root_path <- "../inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/12090301/12090301_models/Model/Alum Creek-Colorado River/ALUM 006/ALUM 006.g01"
+# root_path <- "~/data/ras_catalog/_temp/BLE/12090301/12090301_models/Model/Alum Creek-Colorado River/ALUM CREEK/ALUM CREEK.g01"
+units = "English Units"
+# proj_string = "EPSG:2277"
+# proj_string = "~/data/temp/projtest.prj"
+
+# root_path <- "../inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/10170204000897/Hydraulic_Models/Simulations/10170204000897.g01"
+# units = "SI Units"
+# proj_string = "EPSG:26915"
+
+# root_path <- "../inst/extdata/sample_ras/ras2fim-sample-dataset/output_iowa//05_hecras_output/HUC_101702040606/7242483/HEC-RAS/7242483.g01"
+# units = "SI Units"
+# proj_string = "EPSG:26915"
+
+# root_path <- "/home/rstudio/data/ras_catalog//_temp/BLE/12030202/12030202_models/12030202_Models/Boggy Creek/UNT 069 IN BOCR/UNT 069 IN BOCR.g01"
+# units = "English Units"
+# proj_string = "ESRI:102739"
+
+pts <- parse_model_to_xyz(geom_path = root_path,units = units,proj_string = proj_string,quiet = FALSE,is_verbose = TRUE)
+pts_g <- process_ras_g_to_xyz(geom_path = root_path,units = units,proj_string = proj_string,vdat = FALSE,quiet = FALSE)
+pts_ghdf <- process_ras_hdf_to_xyz(geom_path = paste0(root_path,".hdf"),units = units,proj_string = proj_string,vdat = FALSE,quiet = FALSE)
+
+lines <- xyz_to_ls(dat = pts_g[[1]],is_quiet = FALSE)
+
+ls = sfheaders::sf_linestring(
+  obj = pts[[1]],
+  x = "x",
+  y = "y",
+  linestring_id = "xid",
+  keep = FALSE) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
+ls_final_line_index <- nrow(ls)
+ls_end_index <- nrow(ls)-1
+ls_middle_lines_end <- ls[2:ls_end_index,] |> lwgeom::st_endpoint()
+ls_middle_lines_start <- ls[2:ls_end_index,] %>% lwgeom::st_startpoint()
+
+df_hull_pts <- rbind(
+  sf::st_coordinates(ls[1,]$geometry)[, -c(3)],
+  sf::st_coordinates(ls_middle_lines_end),
+  apply(sf::st_coordinates(ls[ls_final_line_index,]$geometry)[, -c(3)], 2, rev),
+  apply(sf::st_coordinates(ls_middle_lines_start), 2, rev))
+hull = sfheaders::sf_polygon(
+  obj = df_hull_pts,
+  x = "X",
+  y = "Y",
+  keep = FALSE) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
+
+river <- pts[[3]]
+current_nhdplus_comid <- crosswalk_hull_to_hydrofabric_value(hull,river)
+
+```
+
+## run sample data in a new folder
+
+```{r, eval = FALSE}
+dir_to_scrape <- "../inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"
+ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+
+dir_to_scrape <- "../inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/"
+ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = dir_to_scrape,code_to_place_in_source = "test: Iowa input",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+```
+
+## run 12090301 in a new folder
+
+```{r, eval = FALSE}
+## Note: paste HUC8 key into folder
+ingest_FEMA6_BLE(path_to_ras_dbase = ras_dbase,"12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+```
+
+## Colorado river accounting helpers
+```{r, eval = FALSE}
+list_of_all_colorado_river_models <- list.files(file.path("~/data/ras_catalog","_temp","BLE","12090301","12090301_models", fsep = .Platform$file.sep),pattern = glob2rx("*colorado*.g??$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
+list_of_all_colorado_river_models
+list_of_all_rrassled_colorado_river_models <- list.files(file.path("~/data/ras_catalog","models", fsep = .Platform$file.sep),pattern = glob2rx("*colorado*.g??$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
+list_of_all_rrassled_colorado_river_models
+hulls <- sf::st_read("~/data/ras_catalog/model_footprints.fgb")
+
+ls_srt_folders_file <- strsplit(list_of_all_rrassled_colorado_river_models, "/")[[1]]
+
+# By name
+colorado_hulls <- hulls[hulls$Name %in% unique(tools::file_path_sans_ext(basename(list_of_all_rrassled_colorado_river_models))),]
+
+# By path in key (extrapolated from file name)
+matrix_filelist <- strsplit(list_of_all_rrassled_colorado_river_models, "/")
+target_keys <- c()
+for(index in 1:length(matrix_filelist)) {
+  target_keys <- rbind(target_keys,matrix_filelist[[index]][[length(matrix_filelist[[index]])-1]])
+}
+colorado_hulls <- hulls[hulls$path %in% target_keys,]
+
+mapview::mapview(colorado_hulls)
+```
+
+# Data helpers and others
+
+## ras_xyz.parquet to line transform
+
+```{r, eval=FALSE}
+xyz = arrow::read_parquet("~/temp/ras_xyz.parquet")
+utils::head(xyz,5)
+ls = sfheaders::sf_linestring(
+  obj = xyz
+  , x = "x"
+  , y = "y"
+  # , z = "z"
+  , linestring_id = "xid"
+  , keep = FALSE
+) |> sf::st_set_crs(sf::st_crs("EPSG:6349"))
+sf::st_write(ls,"~/temp/ras_xyz_lines.fgb")
+```
+
+## model info into cross sections
+
+```{r, eval=FALSE}
+xs_t <- data.table::as.data.table(sf::st_drop_geometry(xs))
+feet_t <- data.table::as.data.table(sf::st_drop_geometry(feet))
+xs_t <- xs_t[, dummy := master_id] 
+data.table::setkey(xs_t, master_id, dummy)
+data.table::setkey(feet_t, start_master_id, end_master_id)
+temp_table <- data.table::foverlaps(xs_t, feet_t, nomatch=0L, mult="first")[, dummy := NULL]
+xs_j <- xs %>% dplyr::left_join(temp_table)
+mapview::mapview(xs_j)
+```
+
+## Push a local catalog to the cloud
+
+```{{bash, eval=FALSE}}
+aws s3 cp --recursive G:/data/ras_catalog s3://.../ras_models ---exclude G:/data/ras_catalog/_temp --dryrun
+```
+
+## Proj finder
+
+```{r, eval=FALSE}
+path_to_gdb <- file.path("~/data/ras_catalog/_temp/BLE/12090301/12090301_SpatialData/Spatial/BLE_LowColoradoCummins.gdb")
+fc <- sf::st_read(path_to_gdb,layer="BLE_DEP01PCT")
+print(sf::st_crs(fc))
+```
+
+## RAS zip scraper
+
+```{python, python.reticulate = FALSE, eval = FALSE}
+import argparse
+import tarfile
+import os
+from pathlib import Path
+# file="C:\Users\rdp-user\Projects\data\ras_models\_temp\IFC\07020009.tar.gz"
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+def unpacker(str_huc8_arg,str_tar_file):
+    str_out_dir = os.path.join(os.path.dirname(str_tar_file),str_huc8_arg)
+ 
+    if not os.path.exists(str_tar_file):
+        print('File does not exist?')
+        print(str_tar_file)
+        return
+        
+    if os.path.exists(str_out_dir):
+        print('File already unpacked')
+        return
+    
+    os.mkdir(str_out_dir)
+
+    # read the tar.gz file... this takes some time
+    t = tarfile.open(str_tar_file, "r:gz")
+
+    for member in t.getmembers():
+        if member.name[-3:-2] == 'g' or member.name[-3:-2] == 'p' or member.name[-3:-2] == 'f' or member.name[-3:-2] == 'h' or member.name[-3:-2] == 'v':
+            #print(member.name)
+            t.extract(member, str_out_dir)
+
+    print(" Done ")
+    return
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='========== IFC by (HUC8) ==========')
+
+    parser.add_argument('-w',
+                        dest = "str_huc8_arg",
+                        help = 'REQUIRED: HUC-8 watershed that is being evaluated: Example: 10170204',
+                        required = True,
+                        type = str)  # has to be string so it doesn't strip the leading zero
+
+    parser.add_argument('-i',
+                        dest = "str_tar_file",
+                        help = r'OPTIONAL: path containing the HEC_RAS files: Example -i C:\HEC\input_folder\my_models.' \
+                               r' Defaults to c:\ras2fim_datas\OWP_ras_models\models.',
+                        required = False,
+                        type = str)
+    
+    args = vars(parser.parse_args())
+    
+    unpacker(**args)
+```
+
+## Grab spatial key file (huc8 bounds & names) from s3
+
+```{r, eval = FALSE}
+Sys.setenv("AWS_ACCESS_KEY_ID" = "mykey",
+           "AWS_SECRET_ACCESS_KEY" = "mysecretkey",
+           "AWS_DEFAULT_REGION" = "us-east-1")
+aws.s3::save_object(
+  object = ".../HUC8.fgb",
+  bucket = "s3://.../.../HUC8.fgb",
+  file = "<path to your catalog>/HUC8.fgb"
+)
+```
+

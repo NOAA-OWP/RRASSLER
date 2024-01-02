@@ -1,0 +1,164 @@
+---
+title: "RRASSLER Ingest Steps"
+output: rmarkdown::html_vignette
+description: |
+  "What is RRASSLER doing?"
+vignette: >
+  %\VignetteIndexEntry{ingest-steps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Making an "RRASSLE'd Catalog"
+
+Dispite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the tasks and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
+
+### Ingest logic
+
+In order to wrassle that friction, RRASSLER has a few theoretical value judgments that need to be described in order to help understand why it does what it does and how to use it properly.  RRASSLER is focused on making the critical data objects needed to run a HEC-RAS model readily available and accountable as a model, as opposed to as individual data points or large clusters of otherwise "vistigal" data; and with an emphasis on the particular geometric realization of the model.  It is also designed to be a standardized and centralized source of models, regardless of their origin.  For that reason, RRASSLER expects to operate within it's own controlled directory, or "HECRAS_model_catalog".   Users first download and unpack desired models into a temporary location, and then point RRASSLER at that directory and the place which you want to store your catalog.  It will:  
+
+1) Greedly scrape the entire directory structure for any HEC-RAS model projects  (defined as *.prj)
+2) for each geometric realization of that model (variation of *.g##), grab all files such that:  
+
+| File grep Pattern (# denotes single numeric wildcard) | HEC-RAS Model Use                                                        |
+|-------------------------------------------------------|--------------------------------------------------------------------------|
+| .g##                                                  | Geometry definitions                                                     |
+| .prj                                                  | Projection (can be non-standard proj4 string defined file)               |
+| .prj                                                  | Project (same extension, defines how RAS models are wired)               |
+| .p##                                                  | Plan file, used to drive the model                                       |
+| .f##                                                  | Steady Flow file. Profile information, flow data and boundary conditions |
+| .h##                                                  | Hydraulic Design data file                                               |
+| .v##                                                  | Velocity file                                                            |
+| .o##                                                  | Output file                                                              |
+| .r##                                                  | Run file for steady flow                                                 |
+| .u##                                                  | Steady Flow file. Profile information, flow data and boundary conditions |
+| .x##                                                  | Run file for unsteady flow                                               |
+| .dss                                                  | Data files                                                               |
+| .rasmap                                               | Output plan                                                              |
+
+3) Attempt to place the model in space.  This is done by attempting to parse the g** and g**.hdf files, intelligently guess at projections, and pulling and collating the data into an xid-xyz table. 
+4) Using that extracted geometry, attempt to create a model footprint (hull).
+    5) If that process errors out, the model is appended with a 3_, and placed into the catalog.  The resulting extracted geometry will allow you to determine why a footprint was unable to be created.
+    6) If the hull was created, we then attempt to joint that model the the reference hydrofabric and locate the "Primary downstream divergence" (the first COMID from the maximum levelpath underneath that footprint).  If that process errors out for any reason, the model is appended with a 1_, 
+    7) If there was no feature to join, the model is 
+    8) If the model was joined, the ID of the primary downstream divergence is appended to the model key.
+    9) If that can be constructed, the model was assumed to be correctly placed in space.  The relevant model files are copied to the uniquely parsed "final_model_name_key" folder under the _/models/_ folder.  
+5) If the creation of the model hull errors out, the model is placed in the _/models/_unprocessed_ folder for further investigation, correction, and rewrassling.
+6) After all iterations of files are done, RRASSLER will (re)generate a unified source for model footprints, cross sections, and points (now in spatial form) from the HEC-RAS model, and pointers back to the copied source data which remains unaltered. 
+
+This workflow is loosely diagrammed as follows:
+
+![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png)
+
+Let's take a look at a few "real life" examples of these outputs and how we should interpret them.
+
+![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_names.png)
+
+Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, although you will be operating over local files you may RRASSLE those into ether a local directory or an s3 bucket using the same commands.  RRASSLER also handles all "folder structure" differences between S3 protocols and disk representations, so the "bucket" argument can look just like a folder path or can be the "root" folder in an S3 URL and both are intelligently parsed out.
+
+## The "minimal" catalog entry form
+
+As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are:
+
+## Hydrofabric cross section representations
+
+| Attribute     | Description                                                                          | relevant layers   |
+|---------------|--------------------------------------------------------------------------------------|-------------------|
+| hy_id         | A hydrofabric specific, globally unique flowpath/flowline identifier                 | transects, cs_pts |
+| geometry      | Simple Features Geometry (LINESTRING)                                                | transects         |
+| cs_source     | Source of transect information                                                       | transects, cs_pts |
+| cs_id         | Identifier, unique to a hy_id, that increases from the inlet to the outlet transects | transects         |
+| cs_measure    | Percent along the flowpath from inlet                                                | transects         |
+| cs_length     | Width (in meters) of cross section transect                                          | cs_pts            |
+| pt_id         | Identifier, unique to cs_id, that increases from left bank to right bank             | cs_pts            |
+| pt_measure    | Distance of cs_id, starting at 0, in meters                                          | cs_pts            |
+| relative_dist | Percent along the transect from left bank (0-1)                                      | cs_pts            |
+| X             | X coordinate in CRS of geometry                                                      | cs_pts            |
+| Y             | Y coordinate in CRS of geometry                                                      | cs_pts            |
+| Z             | Z coordinate (in meters) in CRS of geometry                                          | cs_pts            |
+| Z_source      | Source of elevation data                                                             | cs_pts            |
+| roughness     | (Optional) Estimated Manning's Roughness value                                       | cs_pts            |
+
+## RAS Source Extensions:
+
+| Attribute       | Description                                                                                                                                                                                                                                                                                    | relevant layers |
+|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| xid             | A model specific transect id                                                                                                                                                                                                                                                                   | transects       |
+| master_id       | A catalog specific, globally unique transect id                                                                                                                                                                                                                                                | transects       |
+| mean_shift      | The amount of space added to normalize a cross section's station-elevation to geographic distance.  Positive indicates that distance was added to the station-elevation series to make it match to the line (length) as it was specified in the geography.  This is reported as a running sum. | cs_pts          |
+| roughness       | (Optional) status is now (Required)                                                                                                                                                                                                                                                            | cs_pts          |
+| Geometry        | Simple Features Geometry (POLYGON)                                                                                                                                                                                                                                                             | hulls           |
+| start_master_id | The start master_id of the model cross sections                                                                                                                                                                                                                                                | hulls           |
+| end_master_id   | The end master_id of the model cross sections                                                                                                                                                                                                                                                  | hulls           |
+| Name            | The name of the model                                                                                                                                                                                                                                                                          | hulls           |
+| path            | the folder path to the original model                                                                                                                                                                                                                                                          | hulls           |
+| crs             | the native CRS of the model                                                                                                                                                                                                                                                                    | hulls           |
+| units           | The units of the model ("Feet" or "Meter")                                                                                                                                                                                                                                                     | hulls           |
+| source          | The source of the model                                                                                                                                                                                                                                                                        | hulls           |
+
+Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which look like so (in R):
+
+```{r, eval=FALSE}
+cat_path <- path/to/catalog
+
+> points <- arrow::read_parquet(file.path(cat_path,"point_database.parquet",fsep = .Platform$file.sep))
+> points
+         xid    xid_length      xid_d         x        y         z    n source master_id
+      1:   1  231.8369 [m]    0.00000 -97.29359 29.98529 137.83666 0.05      3         1
+      2:   1  231.8369 [m]    0.85344 -97.29358 29.98528 137.83666 0.05      3         1
+      3:   1  231.8369 [m]    2.56032 -97.29358 29.98527 137.68426 0.05      3         1
+      4:   1  231.8369 [m]    4.23672 -97.29357 29.98525 137.62330 0.05      3         1
+      5:   1  231.8369 [m]    6.79704 -97.29356 29.98523 137.47699 0.05      3         1
+      
+> cross_sections <- sf::st_read(file.path(cat_path,"xs.fgb",fsep = .Platform$file.sep))
+Reading layer `XS' from data source `G:\data\ras_catalog\XS.fgb' using driver `FlatGeobuf'
+Simple feature collection with 24901 features and 1 field
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+> cross_sections
+Simple feature collection with 24901 features and 1 field
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+First 5 features:
+   master_id                       geometry
+1      12038 LINESTRING (-96.50289 29.71...
+2      11520 LINESTRING (-96.50289 29.71...
+3      11779 LINESTRING (-96.50289 29.71...
+4      11261 LINESTRING (-96.50289 29.71...
+5      12037 LINESTRING (-96.48813 29.73...
+
+> footprints <- sf::st_read(file.path(cat_path,"model_footprints.fgb",fsep = .Platform$file.sep))
+Reading layer `model_footprints' from data source `G:\data\ras_catalog\model_footprints.fgb' using driver `FlatGeobuf'
+Simple feature collection with 1316 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  WGS 84
+> footprints
+Simple feature collection with 1316 features and 7 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
+Geodetic CRS:  WGS 84
+First 5 features:
+   start_master_id        Name       crs units                               path        source end_master_id                       geometry
+1              897 BUCKNER 001 EPSG:2277  Foot       2_BUCKNER 001_g01_1688926581 FEMA Region 6           909 POLYGON ((-96.58433 29.7028...
+2             1111 BUCKNER 035 EPSG:2277  Foot       2_BUCKNER 035_g01_1688926582 FEMA Region 6          1125 POLYGON ((-96.53977 29.7482...
+3            23285   CLEAR 002 EPSG:2277  Foot   5791782_CLEAR 002_g01_1688926594 FEMA Region 6         23291 POLYGON ((-96.54638 29.7554...
+4            23279   CLEAR 001 EPSG:2277  Foot   5791782_CLEAR 001_g01_1688926594 FEMA Region 6         23284 POLYGON ((-96.55299 29.7509...
+5            23264 BUCKNER 034 EPSG:2277  Foot 5791782_BUCKNER 034_g01_1688926582 FEMA Region 6         23278 POLYGON ((-96.55418 29.7420...
+```
+
+or like so if python is your preferred tooling:
+
+```{python, eval=FALSE}
+import os
+import geopandas as gpd
+dat = gpd("../inst/extdata/sample_output/ras_catalog/model_footprints.fgb")
+head(dat)
+exit
+```

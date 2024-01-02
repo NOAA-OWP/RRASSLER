@@ -2,7 +2,7 @@
 % Please edit documentation in R/dedupe.R
 \name{dedupe}
 \alias{dedupe}
-\title{dedupe}
+\title{deduplicate database}
 \usage{
 dedupe(path_to_ras_dbase = NULL, quiet = FALSE)
 }
@@ -27,3 +27,13 @@ if(interactive()){
  }
 }
 }
+\seealso{
+Other post-process: 
+\code{\link{append_catalog_fields}()},
+\code{\link{catalog_integrity_checks}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{refresh_master_files}()},
+\code{\link{reprocess_table_row}()},
+\code{\link{update_models_from_table}()}
+}
+\concept{post-process}

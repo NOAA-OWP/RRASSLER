@@ -4,6 +4,33 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/CHANGELOG.html</loc>
+  </url>
+  <url>
+    <loc>/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>/SECURITY.html</loc>
+  </url>
+  <url>
+    <loc>/TERMS.html</loc>
+  </url>
+  <url>
+    <loc>/articles/deploying-rrassler.html</loc>
+  </url>
+  <url>
+    <loc>/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>/articles/ingest-steps.html</loc>
+  </url>
+  <url>
+    <loc>/articles/mapping-rrassler.html</loc>
+  </url>
+  <url>
+    <loc>/articles/model-debug.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -16,10 +43,16 @@
     <loc>/reference/catalog_integrity_checks.html</loc>
   </url>
   <url>
+    <loc>/reference/cloud_ingest_record.html</loc>
+  </url>
+  <url>
+    <loc>/reference/crosswalk_hull_to_hydrofabric_value.html</loc>
+  </url>
+  <url>
     <loc>/reference/dedupe.html</loc>
   </url>
   <url>
-    <loc>/reference/FrankenFIM_scrape_and_unpack_ble.html</loc>
+    <loc>/reference/disk_ingest_record.html</loc>
   </url>
   <url>
     <loc>/reference/get_datum_from_crs.html</loc>
@@ -52,6 +85,9 @@
     <loc>/reference/parse_model_to_xyz.html</loc>
   </url>
   <url>
+    <loc>/reference/print_error_block.html</loc>
+  </url>
+  <url>
     <loc>/reference/print_warning_block.html</loc>
   </url>
   <url>
@@ -67,6 +103,21 @@
     <loc>/reference/reprocess_table_row.html</loc>
   </url>
   <url>
+    <loc>/reference/scrape_ble_lib.html</loc>
+  </url>
+  <url>
+    <loc>/reference/shotgun_proj_test.html</loc>
+  </url>
+  <url>
     <loc>/reference/update_models_from_table.html</loc>
+  </url>
+  <url>
+    <loc>/reference/util_unzip.html</loc>
+  </url>
+  <url>
+    <loc>/reference/util_url.html</loc>
+  </url>
+  <url>
+    <loc>/reference/xyz_to_ls.html</loc>
   </url>
 </urlset>

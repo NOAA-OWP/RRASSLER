@@ -1,0 +1,5 @@
+Message  | River:"10170204000897"	Reach: "10170204000897" - A flow is specified at RS: "12135.3 " but this cross section does not exist in the geometric data.
+Message  | River:"10170204000897"	Reach: "10170204000897" - A flow is specified at RS: "11962.49" but this cross section does not exist in the geometric data.
+Message  | River:"10170204000897"	Reach: "10170204000897" - A flow is specified at RS: "11567.17" but this cross section does not exist in the geometric data.
+Message  | River:"10170204000897"	Reach: "10170204000897" - A flow is specified at RS: "11364.5 " but this cross section does not exist in the geometric data.
+Message  | River:"10170204000897"	Reach: "10170204000897" - A flow is specified at RS: "10361.63" but this cross section does not exist in the geometric data.

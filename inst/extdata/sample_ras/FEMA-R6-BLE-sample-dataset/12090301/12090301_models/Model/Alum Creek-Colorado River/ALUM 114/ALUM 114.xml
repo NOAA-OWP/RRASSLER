@@ -1,0 +1,1456 @@
+<WISERASXml value="1.1">
+<RasVersion value="3.10" />
+<River value="ALUM 114" GISName="ALUM 114" />
+<Reach value="Reach-1" />
+<InScenarioMode value="False" />
+<Units IsEnglish="True" />
+<ActiveDisplayOptions Value="0" />
+<Projection>
+ <![CDATA[PROJCS["NAD_1983_StatePlane_Texas_Central_FIPS_4203_Feet",GEOGCS["GCS_North_American_1983",DATUM["D_North_American_1983",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Lambert_Conformal_Conic"],PARAMETER["False_Easting",2296583.333333333],PARAMETER["False_Northing",9842500.0],PARAMETER["Central_Meridian",-100.3333333333333],PARAMETER["Standard_Parallel_1",30.11666666666667],PARAMETER["Standard_Parallel_2",31.88333333333333],PARAMETER["Latitude_Of_Origin",29.66666666666667],UNIT["Foot_US",0.3048006096012192]]]]>
+</Projection>
+<Comments>
+ <![CDATA[Watershed Concepts
+A Division of HSMM
+3333 Regency Parkway, Suite 120
+Cary, NC 27518
+(919)460-6895
+
+XXXXX County
+Commission No. XXXXX
+5/2/2018 4:12:48 PM
+
+Stream:                 ALUM 114
+WISE Project:           N:\Compass\RTO\R6\TX\60538965_LowerColoradoCummins_TX\400_PRODUCTION\Engineering\Alum\Hydraulics\Alum\AlumWISE.wse
+WISE Version:           4.1.0
+Takeoff Database:       N:\Compass\RTO\R6\TX\60538965_LowerColoradoCummins_TX\400_PRODUCTION\Engineering\Alum\_Workspace\WISE\Eng\_takeoff_db\Takeoffs.mdb
+Basin Shapefile:        N:\Compass\RTO\R6\TX\60538965_LowerColoradoCummins_TX\400_PRODUCTION\Engineering\Alum\_Workspace\WISE\GIS\Shapefiles\ALUM_basins.shp
+Stream Shapefile:       N:\Compass\RTO\R6\TX\60538965_LowerColoradoCummins_TX\400_PRODUCTION\Engineering\Alum\Hydraulics\Alum\GIS\SHP\ALUM_ModelStreams_D.shp
+X-Section Shapefile:    N:\Compass\RTO\R6\TX\60538965_LowerColoradoCummins_TX\400_PRODUCTION\Engineering\Alum\_Workspace\WISE\GIS\Shapefiles\ALUM_xs.shp
+]]>
+</Comments>
+<Options>
+</Options>
+<PRJFileDef Title="ALUM 114 Base Level Engineering">
+ <ProjectDescription>
+  <![CDATA[ALUM 114]]>
+ </ProjectDescription>
+ <CurrentPlan Value="1" />
+ <DefaultExpCoeff Value="0.3" />
+ <DefaultContCoeff Value="0.1" />
+</PRJFileDef>
+<PlanFileDef Title="Multiple Run" Suffix="p01" ShortID="Multiple" FlowFileSuffix="f01" GeometryFileSuffix="g01">
+ <PlanDescription>
+  <![CDATA[Multiple Run]]>
+ </PlanDescription>
+ <Parameters>
+  <FlowType Value="Subcritical Flow" />
+  <ConveyanceSumByGR Value="False" />
+  <StdStepTol Value="0.01" />
+  <CriticalTol Value="0.01" />
+  <NumofStdStepTrials Value="20" />
+  <MaxErrorTol Value="0.3" />
+  <FlowTolRatio Value="0.001" />
+  <SplitFlowNTrial Value="30" />
+  <SplitFlowTol Value="0.02" />
+  <SplitFlowRatio Value="0.02" />
+  <FrictionSlopeMethod Value="1" />
+  <UnsteadyFrictionSlopeMethod Value="2" />
+  <UnsteadyBridgesFrictionSlopeMethod Value="1" />
+  <CalcCriticalAtEveryXS Value="False" />
+  <CriticalDepthMethod Value="Parabolic Critical Depth" />
+  <VelocityDistributions GlobalNumBreaksLOB="1" GlobalNumBreaksChan="1"  GlobalNumBreaksROB="1">
+  </VelocityDistributions>
+  <LogLevels GlobalLogLevel="0">
+  </LogLevels>
+  <CheckData Value="True" />
+  <LeftBankOffset Value="0" />
+  <RightBankOffset Value="0" />
+  <EqualKReduction Value="True" />
+ </Parameters>
+</PlanFileDef>
+<FlowBlock Name="Manual Calculations" Source="Manual Calcs">
+ <Profiles>
+  <Profile ID="0" Name="10-year" />
+  <Profile ID="1" Name="25-year" />
+  <Profile ID="2" Name="50-year" />
+  <Profile ID="3" Name="1pct_min" />
+  <Profile ID="4" Name="100-year" />
+  <Profile ID="5" Name="1pct_plu" />
+  <Profile ID="6" Name="500-year" />
+ </Profiles>
+ <FlowPoint StreamStation="1471" Comment="DA = 0.153 sq. mi.; Qmult =1">
+  <FlowValue ProfileID="0" Q="268" />
+  <FlowValue ProfileID="1" Q="383" />
+  <FlowValue ProfileID="2" Q="479" />
+  <FlowValue ProfileID="3" Q="194" />
+  <FlowValue ProfileID="4" Q="586" />
+  <FlowValue ProfileID="5" Q="1770" />
+  <FlowValue ProfileID="6" Q="874" />
+ </FlowPoint>
+</FlowBlock>
+<FlowFileDef Title="Multiple" FlowBlockName="Manual Calculations" Suffix="f01">
+ <ProfileDef ID="0" ProfileID="0">
+  <BoundaryCondition DsType="Normal" DsValue="0.005" UsType="" UsValue="0" Source="Assumed slope" />
+ </ProfileDef>
+ <ProfileDef ID="1" ProfileID="1">
+  <BoundaryCondition DsType="Normal" DsValue="0.005" UsType="" UsValue="0" Source="Assumed slope" />
+ </ProfileDef>
+ <ProfileDef ID="2" ProfileID="2">
+  <BoundaryCondition DsType="Normal" DsValue="0.005" UsType="" UsValue="0" Source="Assumed slope" />
+ </ProfileDef>
+ <ProfileDef ID="3" ProfileID="3">
+  <BoundaryCondition DsType="Normal" DsValue="0.005" UsType="" UsValue="0" Source="Assumed slope" />
+ </ProfileDef>
+ <ProfileDef ID="4" ProfileID="4">
+  <BoundaryCondition DsType="Normal" DsValue="0.005" UsType="" UsValue="0" Source="Assumed slope" />
+ </ProfileDef>
+ <ProfileDef ID="5" ProfileID="5">
+  <BoundaryCondition DsType="Normal" DsValue="0.005" UsType="" UsValue="0" Source="Assumed slope" />
+ </ProfileDef>
+ <ProfileDef ID="6" ProfileID="6">
+  <BoundaryCondition DsType="Normal" DsValue="0.005" UsType="" UsValue="0" Source="Assumed slope" />
+ </ProfileDef>
+</FlowFileDef>
+<GeometryFileDef Title="Existing Conditions" Suffix="g01" ActiveExportOptions="0" />
+<GeometryData>
+<StreamPoints>
+ <StreamPoint X="3279644.98634987" Y="10062036.0785725" Station="0" />
+ <StreamPoint X="3279644.98634986" Y="10062096.0784525" Station="59.9998799785972" />
+ <StreamPoint X="3279624.98638988" Y="10062116.0784125" Station="88.2840946429271" />
+ <StreamPoint X="3279624.98638988" Y="10062126.0783925" Station="98.2840746437062" />
+ <StreamPoint X="3279604.98642988" Y="10062146.0786806" Station="126.568521317181" />
+ <StreamPoint X="3279604.98642989" Y="10062196.0785806" Station="176.568421319214" />
+ <StreamPoint X="3279594.9864499" Y="10062206.0785605" Station="190.710528602482" />
+ <StreamPoint X="3279594.9864499" Y="10062246.0784806" Station="230.710448650301" />
+ <StreamPoint X="3279584.9864699" Y="10062256.0784605" Station="244.852555958923" />
+ <StreamPoint X="3279584.9864699" Y="10062306.0786887" Station="294.852784121778" />
+ <StreamPoint X="3279574.98648991" Y="10062316.0786687" Station="308.994891437644" />
+ <StreamPoint X="3279574.98648991" Y="10062356.0785886" Station="348.994811412821" />
+ <StreamPoint X="3279564.98650992" Y="10062366.0785687" Station="363.136918754699" />
+ <StreamPoint X="3279564.98650992" Y="10062446.0784086" Station="443.136758747893" />
+ <StreamPoint X="3279544.98654993" Y="10062466.0783687" Station="471.420973438894" />
+ <StreamPoint X="3279544.98654993" Y="10062506.0786167" Station="511.421221491074" />
+ <StreamPoint X="3279534.98656987" Y="10062516.0785967" Station="525.563328883002" />
+ <StreamPoint X="3279534.98656987" Y="10062556.0785167" Station="565.563248863766" />
+ <StreamPoint X="3279524.98658988" Y="10062566.0784967" Station="579.705356208279" />
+ <StreamPoint X="3279524.98658988" Y="10062586.0784567" Station="599.705316168859" />
+ <StreamPoint X="3279514.98660988" Y="10062596.0784367" Station="613.847423533128" />
+ <StreamPoint X="3279514.98660988" Y="10062636.0786848" Station="653.847671583445" />
+ <StreamPoint X="3279476.49587322" Y="10062830.4532961" Station="851.996671882318" />
+ <StreamPoint X="3279469.5513333" Y="10062875.5923134" Station="897.666766269866" />
+ <StreamPoint X="3279462.60679342" Y="10062938.0921884" Station="960.551271584209" />
+ <StreamPoint X="3279459.13468748" Y="10062979.7590998" Station="1002.36259812213" />
+ <StreamPoint X="3279452.19014755" Y="10063028.370223" Station="1051.46726117848" />
+ <StreamPoint X="3279438.3013958" Y="10063108.2312838" Station="1132.52703207131" />
+ <StreamPoint X="3279438.3013958" Y="10063174.2032648" Station="1198.49901302676" />
+ <StreamPoint X="3279438.30139581" Y="10063257.5367595" Station="1281.83250774029" />
+ <StreamPoint X="3279424.412316" Y="10063330.4532803" Station="1356.06003324082" />
+ <StreamPoint X="3279407.05113025" Y="10063399.8980233" Station="1427.64203590913" />
+ <StreamPoint X="3279354.96790107" Y="10063472.8145442" Station="1517.24941159728" />
+ <StreamPoint X="3279292.46802608" Y="10063552.6756049" Station="1618.6595855922" />
+ <StreamPoint X="3279245.72082677" Y="10063624.9212035" Station="1704.71030996511" />
+</StreamPoints>
+<InvertData>
+ <Invert Station="122.3" Elev="552.53" Comment="TIN Xing : Unadjusted Invert = 552.53" Options="0" Active="True" />
+ <Invert Station="126.6" Elev="553.16" Comment="TIN Xing : Unadjusted Invert = 553.16" Options="0" Active="True" />
+ <Invert Station="135.5" Elev="553.53" Comment="TIN Xing : Unadjusted Invert = 553.53" Options="0" Active="True" />
+ <Invert Station="149" Elev="552.77" Comment="ALUM 114 1.0" Options="0" Active="True" />
+ <Invert Station="186.4" Elev="554.07" Comment="TIN Xing : Unadjusted Invert = 554.07" Options="0" Active="True" />
+ <Invert Station="250" Elev="552.64" Comment="Mapping XS 2039b168" Options="0" Active="True" />
+ <Invert Station="453" Elev="555.87" Comment="TIN Xing : Unadjusted Invert = 555.87" Options="0" Active="True" />
+ <Invert Station="534" Elev="557.64" Comment="Mapping XS 2d284b52" Options="0" Active="True" />
+ <Invert Station="575.4" Elev="557.72" Comment="TIN Xing : Unadjusted Invert = 557.72" Options="0" Active="True" />
+ <Invert Station="662.9" Elev="558.06" Comment="TIN Xing : Unadjusted Invert = 558.06" Options="0" Active="True" />
+ <Invert Station="673.1" Elev="558.38" Comment="TIN Xing : Unadjusted Invert = 558.38" Options="0" Active="True" />
+ <Invert Station="683.3" Elev="559.02" Comment="TIN Xing : Unadjusted Invert = 559.02" Options="0" Active="True" />
+ <Invert Station="704" Elev="559.04" Comment="Mapping XS ebdb95ee" Options="0" Active="True" />
+ <Invert Station="707" Elev="559.14" Comment="TIN Xing : Unadjusted Invert = 559.14" Options="0" Active="True" />
+ <Invert Station="785.3" Elev="559.26" Comment="TIN Xing : Unadjusted Invert = 559.26" Options="0" Active="True" />
+ <Invert Station="826" Elev="559.59" Comment="TIN Xing : Unadjusted Invert = 559.59" Options="0" Active="True" />
+ <Invert Station="836.2" Elev="559.74" Comment="TIN Xing : Unadjusted Invert = 559.74" Options="0" Active="True" />
+ <Invert Station="846.4" Elev="559.75" Comment="TIN Xing : Unadjusted Invert = 559.75" Options="0" Active="True" />
+ <Invert Station="851.8" Elev="560.15" Comment="TIN Xing : Unadjusted Invert = 560.15" Options="0" Active="True" />
+ <Invert Station="856.8" Elev="560.15" Comment="TIN Xing : Unadjusted Invert = 560.15" Options="0" Active="True" />
+ <Invert Station="861.7" Elev="560.36" Comment="TIN Xing : Unadjusted Invert = 560.36" Options="0" Active="True" />
+ <Invert Station="887" Elev="560.46" Comment="TIN Xing : Unadjusted Invert = 560.46" Options="0" Active="True" />
+ <Invert Station="894.8" Elev="560.51" Comment="TIN Xing : Unadjusted Invert = 560.51" Options="0" Active="True" />
+ <Invert Station="899.9" Elev="560.51" Comment="TIN Xing : Unadjusted Invert = 560.51" Options="0" Active="True" />
+ <Invert Station="907.1" Elev="560.98" Comment="TIN Xing : Unadjusted Invert = 560.98" Options="0" Active="True" />
+ <Invert Station="917.2" Elev="561.21" Comment="TIN Xing : Unadjusted Invert = 561.21" Options="0" Active="True" />
+ <Invert Station="927.3" Elev="561.52" Comment="TIN Xing : Unadjusted Invert = 561.52" Options="0" Active="True" />
+ <Invert Station="935.6" Elev="561.82" Comment="TIN Xing : Unadjusted Invert = 561.82" Options="0" Active="True" />
+ <Invert Station="940.6" Elev="562.33" Comment="TIN Xing : Unadjusted Invert = 562.33" Options="0" Active="True" />
+ <Invert Station="947.4" Elev="563.97" Comment="TIN Xing : Unadjusted Invert = 563.97" Options="0" Active="True" />
+ <Invert Station="956.5" Elev="564.83" Comment="TIN Xing : Unadjusted Invert = 564.83" Options="0" Active="True" />
+ <Invert Station="960.6" Elev="564.83" Comment="TIN Xing : Unadjusted Invert = 564.83" Options="0" Active="True" />
+ <Invert Station="1024" Elev="563.64" Comment="ALUM 114 2.0" Options="0" Active="True" />
+ <Invert Station="1027.2" Elev="565.75" Comment="TIN Xing : Unadjusted Invert = 565.75" Options="0" Active="True" />
+ <Invert Station="1078.5" Elev="567.55" Comment="TIN Xing : Unadjusted Invert = 567.55" Options="0" Active="True" />
+ <Invert Station="1229.3" Elev="567.96" Comment="TIN Xing : Unadjusted Invert = 567.96" Options="0" Active="True" />
+ <Invert Station="1239.3" Elev="569.97" Comment="TIN Xing : Unadjusted Invert = 569.97" Options="0" Active="True" />
+ <Invert Station="1281" Elev="569.81" Comment="Mapping XS 569052ba" Options="0" Active="True" />
+ <Invert Station="1302.1" Elev="570.65" Comment="TIN Xing : Unadjusted Invert = 570.65" Options="0" Active="True" />
+ <Invert Station="1309.8" Elev="571.03" Comment="TIN Xing : Unadjusted Invert = 571.03" Options="0" Active="True" />
+ <Invert Station="1320" Elev="571.33" Comment="TIN Xing : Unadjusted Invert = 571.33" Options="0" Active="True" />
+ <Invert Station="1340.3" Elev="571.58" Comment="TIN Xing : Unadjusted Invert = 571.58" Options="0" Active="True" />
+ <Invert Station="1349.2" Elev="572.1" Comment="TIN Xing : Unadjusted Invert = 572.10" Options="0" Active="True" />
+ <Invert Station="1390.7" Elev="572.41" Comment="TIN Xing : Unadjusted Invert = 572.41" Options="0" Active="True" />
+ <Invert Station="1422.5" Elev="573.61" Comment="TIN Xing : Unadjusted Invert = 573.61" Options="0" Active="True" />
+ <Invert Station="1427.6" Elev="573.61" Comment="TIN Xing : Unadjusted Invert = 573.61" Options="0" Active="True" />
+ <Invert Station="1444.2" Elev="576.67" Comment="TIN Xing : Unadjusted Invert = 576.67" Options="0" Active="True" />
+ <Invert Station="1471" Elev="575.32" Comment="ALUM 114 3.0" Options="0" Active="True" />
+ <Invert Station="1565.2" Elev="578.34" Comment="TIN Xing : Unadjusted Invert = 578.34" Options="0" Active="True" />
+ <Invert Station="1579.6" Elev="579.58" Comment="TIN Xing : Unadjusted Invert = 579.58" Options="0" Active="True" />
+ <Invert Station="1594.1" Elev="580.61" Comment="TIN Xing : Unadjusted Invert = 580.61" Options="0" Active="True" />
+ <Invert Station="1608.6" Elev="581.6" Comment="TIN Xing : Unadjusted Invert = 581.60" Options="0" Active="True" />
+ <Invert Station="1645.1" Elev="582.24" Comment="TIN Xing : Unadjusted Invert = 582.24" Options="0" Active="True" />
+ <Invert Station="1651" Elev="583.25" Comment="TIN Xing : Unadjusted Invert = 583.25" Options="0" Active="True" />
+ <Invert Station="1657.2" Elev="583.97" Comment="TIN Xing : Unadjusted Invert = 583.97" Options="0" Active="True" />
+ <Invert Station="1666.2" Elev="585.62" Comment="TIN Xing : Unadjusted Invert = 585.62" Options="0" Active="True" />
+ <Invert Station="1672.1" Elev="587.82" Comment="TIN Xing : Unadjusted Invert = 587.82" Options="0" Active="True" />
+ <Invert Station="1681" Elev="590.58" Comment="TIN Xing : Unadjusted Invert = 590.58" Options="0" Active="True" />
+ <Invert Station="1687.3" Elev="592.56" Comment="TIN Xing : Unadjusted Invert = 592.56" Options="0" Active="True" />
+ <Invert Station="1693.2" Elev="593.81" Comment="TIN Xing : Unadjusted Invert = 593.81" Options="0" Active="True" />
+ <Invert Station="1701.8" Elev="594.51" Comment="TIN Xing : Unadjusted Invert = 594.51" Options="0" Active="True" />
+ <Invert Station="1704.7" Elev="594.51" Comment="TIN Xing : Unadjusted Invert = 594.51" Options="0" Active="True" />
+</InvertData>
+ <CrossSection Options="0">
+  <GisXsectName Value="ALUM 114 1.0" />
+  <GisXsectGUID Value="" />
+  <Name Value="ALUM 114 1.0" Options="0" Comment="" />
+  <StreamStation Value="149" Options="0" Comment="" />
+  <IsInterpolated Value="False" Options="0" Comment="" />
+  <SkewAngle Value="0" Options="0" Comment="" />
+  <LeftOverBankDistance Value="0" Options="0" Comment="" />
+  <ChannelDistance Value="0" Options="0" Comment="" />
+  <RightOverBankDistance Value="0" Options="0" Comment="" />
+  <LeftCB Value="4997.5" Options="0" Comment="" />
+  <RightCB Value="5002.5" Options="0" Comment="" />
+  <ExpansionCoeff Value="0.3" Options="0" Comment="" />
+  <ContractionCoeff Value="0.1" Options="0" Comment="" />
+  <FinalCenterline Value="5000" Options="0" Comment="" />
+  <BlendByFieldData Value="True" Options="0" Comment="" />
+  <AlignmentPoints>
+   <AlignmentPoint X="3280031.33347589" Y="10062183.9710936" />
+   <AlignmentPoint X="3279604.98642993" Y="10062168.7801214" />
+   <AlignmentPoint X="3279096.00361478" Y="10061971.2974825" />
+  </AlignmentPoints>
+  <Comment Options="0">
+   <![CDATA[ALUM 114 1.0]]>
+  </Comment>
+  <Photos>
+  </Photos>
+  <FieldData Options="0" Comment="">
+   <RelateToInvert Value="True" Options="0" Comment="" />
+   <XFactor Value="1" Options="0" Comment="" />
+   <Source Options="0">
+    <![CDATA[Field data contains a calculated trapezoidal channel]]>
+   </Source>
+   <Points>
+    <Point Sta="4997.5" Elev="552.87" Comment="Trap. Pt1" Options="0" Active="True" />
+    <Point Sta="4998" Elev="552.77" Comment="Trap. Pt2" Options="0" Active="True" />
+    <Point Sta="5002" Elev="552.77" Comment="Trap. Pt3" Options="0" Active="True" />
+    <Point Sta="5002.5" Elev="552.87" Comment="Trap. Pt4" Options="0" Active="True" />
+   </Points>
+  </FieldData>
+  <TopoData Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Topographic profile]]>
+   </Source>
+   <Points>
+    <Point Sta="4573.4" Elev="582.53" Comment="" Options="0" Active="True" />
+    <Point Sta="4576.6" Elev="582.53" Comment="" Options="0" Active="True" />
+    <Point Sta="4584.7" Elev="581.23" Comment="" Options="0" Active="True" />
+    <Point Sta="4594.7" Elev="579.14" Comment="" Options="0" Active="True" />
+    <Point Sta="4604.7" Elev="578.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4614.7" Elev="576.71" Comment="" Options="0" Active="True" />
+    <Point Sta="4624.7" Elev="575.3" Comment="" Options="0" Active="True" />
+    <Point Sta="4634.8" Elev="574.31" Comment="" Options="0" Active="True" />
+    <Point Sta="4644.8" Elev="573.41" Comment="" Options="0" Active="True" />
+    <Point Sta="4654.8" Elev="572.61" Comment="" Options="0" Active="True" />
+    <Point Sta="4664.8" Elev="572.25" Comment="" Options="0" Active="True" />
+    <Point Sta="4674.8" Elev="571.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4682.3" Elev="570.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4687.3" Elev="570.55" Comment="" Options="0" Active="True" />
+    <Point Sta="4694.8" Elev="569.2" Comment="" Options="0" Active="True" />
+    <Point Sta="4704.8" Elev="568.56" Comment="" Options="0" Active="True" />
+    <Point Sta="4714.8" Elev="567.64" Comment="" Options="0" Active="True" />
+    <Point Sta="4724.8" Elev="567.01" Comment="" Options="0" Active="True" />
+    <Point Sta="4734.8" Elev="566.29" Comment="" Options="0" Active="True" />
+    <Point Sta="4744.8" Elev="565.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4754.8" Elev="565.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4764.8" Elev="565.23" Comment="" Options="0" Active="True" />
+    <Point Sta="4774.8" Elev="564.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4784.8" Elev="563.56" Comment="" Options="0" Active="True" />
+    <Point Sta="4794.9" Elev="561.16" Comment="" Options="0" Active="True" />
+    <Point Sta="4804.9" Elev="554.67" Comment="" Options="0" Active="True" />
+    <Point Sta="4814.9" Elev="554.07" Comment="" Options="0" Active="True" />
+    <Point Sta="4824.9" Elev="557.37" Comment="" Options="0" Active="True" />
+    <Point Sta="4834.9" Elev="560.05" Comment="" Options="0" Active="True" />
+    <Point Sta="4844.9" Elev="561.41" Comment="" Options="0" Active="True" />
+    <Point Sta="4864.9" Elev="561.58" Comment="" Options="0" Active="True" />
+    <Point Sta="4874.9" Elev="561.52" Comment="" Options="0" Active="True" />
+    <Point Sta="4884.9" Elev="561.6" Comment="" Options="0" Active="True" />
+    <Point Sta="4894.9" Elev="561.7" Comment="" Options="0" Active="True" />
+    <Point Sta="4904.9" Elev="561.84" Comment="" Options="0" Active="True" />
+    <Point Sta="4914.9" Elev="561.78" Comment="" Options="0" Active="True" />
+    <Point Sta="4924.9" Elev="561.54" Comment="" Options="0" Active="True" />
+    <Point Sta="4934.9" Elev="560.94" Comment="" Options="0" Active="True" />
+    <Point Sta="4945" Elev="560.19" Comment="" Options="0" Active="True" />
+    <Point Sta="4955" Elev="558.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4962.8" Elev="557.77" Comment="" Options="0" Active="True" />
+    <Point Sta="4967.9" Elev="557.56" Comment="" Options="0" Active="True" />
+    <Point Sta="4975" Elev="554.51" Comment="" Options="0" Active="True" />
+    <Point Sta="4985" Elev="552.87" Comment="" Options="0" Active="True" />
+    <Point Sta="4995" Elev="553.03" Comment="" Options="0" Active="True" />
+    <Point Sta="5000" Elev="555.79" Comment="" Options="0" Active="True" />
+    <Point Sta="5005.4" Elev="555.79" Comment="" Options="0" Active="True" />
+    <Point Sta="5016.1" Elev="557.04" Comment="" Options="0" Active="True" />
+    <Point Sta="5022.9" Elev="556.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5028.2" Elev="554.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5037.5" Elev="555.09" Comment="" Options="0" Active="True" />
+    <Point Sta="5047.4" Elev="556.09" Comment="" Options="0" Active="True" />
+    <Point Sta="5052.8" Elev="558.09" Comment="" Options="0" Active="True" />
+    <Point Sta="5059" Elev="558.48" Comment="" Options="0" Active="True" />
+    <Point Sta="5069.7" Elev="558.8" Comment="" Options="0" Active="True" />
+    <Point Sta="5077.3" Elev="558.37" Comment="" Options="0" Active="True" />
+    <Point Sta="5082.7" Elev="560.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5091.2" Elev="563.1" Comment="" Options="0" Active="True" />
+    <Point Sta="5101.9" Elev="563.27" Comment="" Options="0" Active="True" />
+    <Point Sta="5107.2" Elev="564.21" Comment="" Options="0" Active="True" />
+    <Point Sta="5112.6" Elev="564.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5123.3" Elev="564.22" Comment="" Options="0" Active="True" />
+    <Point Sta="5131.8" Elev="564.75" Comment="" Options="0" Active="True" />
+    <Point Sta="5137.1" Elev="565.13" Comment="" Options="0" Active="True" />
+    <Point Sta="5144.8" Elev="565.51" Comment="" Options="0" Active="True" />
+    <Point Sta="5155.5" Elev="565.98" Comment="" Options="0" Active="True" />
+    <Point Sta="5161.7" Elev="566.33" Comment="" Options="0" Active="True" />
+    <Point Sta="5167.1" Elev="567.27" Comment="" Options="0" Active="True" />
+    <Point Sta="5177" Elev="567.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5186.2" Elev="567.53" Comment="" Options="0" Active="True" />
+    <Point Sta="5191.6" Elev="568.11" Comment="" Options="0" Active="True" />
+    <Point Sta="5198.4" Elev="568.54" Comment="" Options="0" Active="True" />
+    <Point Sta="5209.1" Elev="569.01" Comment="" Options="0" Active="True" />
+    <Point Sta="5216.2" Elev="568.82" Comment="" Options="0" Active="True" />
+    <Point Sta="5221.5" Elev="569.63" Comment="" Options="0" Active="True" />
+    <Point Sta="5230.6" Elev="569.93" Comment="" Options="0" Active="True" />
+    <Point Sta="5240.7" Elev="570.05" Comment="" Options="0" Active="True" />
+    <Point Sta="5246.1" Elev="570.73" Comment="" Options="0" Active="True" />
+    <Point Sta="5252.1" Elev="571.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5270.6" Elev="572" Comment="" Options="0" Active="True" />
+    <Point Sta="5276" Elev="572.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5284.2" Elev="573.25" Comment="" Options="0" Active="True" />
+    <Point Sta="5295" Elev="573.49" Comment="" Options="0" Active="True" />
+    <Point Sta="5300.5" Elev="573.67" Comment="" Options="0" Active="True" />
+    <Point Sta="5305.9" Elev="574.22" Comment="" Options="0" Active="True" />
+    <Point Sta="5316.4" Elev="574.64" Comment="" Options="0" Active="True" />
+    <Point Sta="5325.1" Elev="575.29" Comment="" Options="0" Active="True" />
+    <Point Sta="5330.4" Elev="575.75" Comment="" Options="0" Active="True" />
+    <Point Sta="5337.9" Elev="576.35" Comment="" Options="0" Active="True" />
+    <Point Sta="5348.6" Elev="576.73" Comment="" Options="0" Active="True" />
+    <Point Sta="5355" Elev="577.19" Comment="" Options="0" Active="True" />
+    <Point Sta="5360.3" Elev="577.84" Comment="" Options="0" Active="True" />
+    <Point Sta="5370" Elev="578.19" Comment="" Options="0" Active="True" />
+    <Point Sta="5379.5" Elev="578.71" Comment="" Options="0" Active="True" />
+    <Point Sta="5384.9" Elev="579.17" Comment="" Options="0" Active="True" />
+    <Point Sta="5391.5" Elev="579.88" Comment="" Options="0" Active="True" />
+    <Point Sta="5402.2" Elev="580.31" Comment="" Options="0" Active="True" />
+    <Point Sta="5409.4" Elev="580.76" Comment="" Options="0" Active="True" />
+    <Point Sta="5414.8" Elev="581.45" Comment="" Options="0" Active="True" />
+    <Point Sta="5423.7" Elev="582.03" Comment="" Options="0" Active="True" />
+    <Point Sta="5434" Elev="582.56" Comment="" Options="0" Active="True" />
+    <Point Sta="5439.4" Elev="583.27" Comment="" Options="0" Active="True" />
+    <Point Sta="5445.1" Elev="583.73" Comment="" Options="0" Active="True" />
+    <Point Sta="5455.9" Elev="584.29" Comment="" Options="0" Active="True" />
+    <Point Sta="5463.9" Elev="584.66" Comment="" Options="0" Active="True" />
+    <Point Sta="5469.3" Elev="585.6" Comment="" Options="0" Active="True" />
+    <Point Sta="5477.3" Elev="585.78" Comment="" Options="0" Active="True" />
+    <Point Sta="5488" Elev="586.12" Comment="" Options="0" Active="True" />
+    <Point Sta="5493.8" Elev="586.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5499.2" Elev="586.84" Comment="" Options="0" Active="True" />
+    <Point Sta="5509.5" Elev="587.2" Comment="" Options="0" Active="True" />
+    <Point Sta="5518.4" Elev="587.7" Comment="" Options="0" Active="True" />
+    <Point Sta="5523.7" Elev="588.01" Comment="" Options="0" Active="True" />
+    <Point Sta="5530.9" Elev="588.17" Comment="" Options="0" Active="True" />
+    <Point Sta="5541.1" Elev="588.47" Comment="" Options="0" Active="True" />
+    <Point Sta="5546" Elev="588.47" Comment="" Options="0" Active="True" />
+   </Points>
+  </TopoData>
+  <NValues UseK="False" Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Calculated values from WISE]]>
+   </Source>
+   <NValPoints>
+    <NValPoint StartSta="4573.4" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4997.5" Value="0.07" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5002.5" Value="0.16" Comment="" Options="0" Active="True" />
+   </NValPoints>
+  </NValues>
+ </CrossSection>
+ <CrossSection Options="0">
+  <GisXsectName Value="Mapping XS 2039b168" />
+  <GisXsectGUID Value="" />
+  <Name Value="Mapping XS 2039b168" Options="0" Comment="" />
+  <StreamStation Value="250" Options="0" Comment="" />
+  <IsInterpolated Value="False" Options="0" Comment="" />
+  <SkewAngle Value="0" Options="0" Comment="" />
+  <LeftOverBankDistance Value="101" Options="0" Comment="" />
+  <ChannelDistance Value="101" Options="0" Comment="" />
+  <RightOverBankDistance Value="101" Options="0" Comment="" />
+  <LeftCB Value="4997.5" Options="0" Comment="" />
+  <RightCB Value="5002.5" Options="0" Comment="" />
+  <ExpansionCoeff Value="0.3" Options="0" Comment="" />
+  <ContractionCoeff Value="0.1" Options="0" Comment="" />
+  <FinalCenterline Value="5000" Options="0" Comment="" />
+  <BlendByFieldData Value="True" Options="0" Comment="" />
+  <AlignmentPoints>
+   <AlignmentPoint X="3279974.90986478" Y="10062292.4780381" />
+   <AlignmentPoint X="3279679.77097589" Y="10062255.585677" />
+   <AlignmentPoint X="3279415.01403147" Y="10062270.7766492" />
+   <AlignmentPoint X="3279007.02792037" Y="10062307.6690103" />
+  </AlignmentPoints>
+  <Comment Options="0">
+   <![CDATA[Mapping XS 2039b168]]>
+  </Comment>
+  <Photos>
+  </Photos>
+  <FieldData Options="0" Comment="">
+   <RelateToInvert Value="True" Options="0" Comment="" />
+   <XFactor Value="1" Options="0" Comment="" />
+   <Source Options="0">
+    <![CDATA[Field data contains a calculated trapezoidal channel]]>
+   </Source>
+   <Points>
+    <Point Sta="4997.5" Elev="552.74" Comment="Trap. Pt1" Options="0" Active="True" />
+    <Point Sta="4998" Elev="552.64" Comment="Trap. Pt2" Options="0" Active="True" />
+    <Point Sta="5002" Elev="552.64" Comment="Trap. Pt3" Options="0" Active="True" />
+    <Point Sta="5002.5" Elev="552.74" Comment="Trap. Pt4" Options="0" Active="True" />
+   </Points>
+  </FieldData>
+  <TopoData Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Topographic profile]]>
+   </Source>
+   <Points>
+    <Point Sta="4607.6" Elev="572.49" Comment="" Options="0" Active="True" />
+    <Point Sta="4612.6" Elev="572.49" Comment="" Options="0" Active="True" />
+    <Point Sta="4622.6" Elev="571.84" Comment="" Options="0" Active="True" />
+    <Point Sta="4627.6" Elev="572.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4632.7" Elev="570.94" Comment="" Options="0" Active="True" />
+    <Point Sta="4642.8" Elev="569.83" Comment="" Options="0" Active="True" />
+    <Point Sta="4652.9" Elev="569.39" Comment="" Options="0" Active="True" />
+    <Point Sta="4663" Elev="568.62" Comment="" Options="0" Active="True" />
+    <Point Sta="4673" Elev="567.58" Comment="" Options="0" Active="True" />
+    <Point Sta="4683.1" Elev="566.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4693.2" Elev="566.23" Comment="" Options="0" Active="True" />
+    <Point Sta="4703.2" Elev="565.8" Comment="" Options="0" Active="True" />
+    <Point Sta="4708.3" Elev="565.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4713.4" Elev="565.69" Comment="" Options="0" Active="True" />
+    <Point Sta="4723.4" Elev="565.4" Comment="" Options="0" Active="True" />
+    <Point Sta="4733.5" Elev="564.64" Comment="" Options="0" Active="True" />
+    <Point Sta="4743.6" Elev="563.72" Comment="" Options="0" Active="True" />
+    <Point Sta="4753.7" Elev="562.7" Comment="" Options="0" Active="True" />
+    <Point Sta="4763.7" Elev="559.95" Comment="" Options="0" Active="True" />
+    <Point Sta="4773.8" Elev="555.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4783.9" Elev="552.76" Comment="" Options="0" Active="True" />
+    <Point Sta="4788.9" Elev="552.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4794" Elev="557.34" Comment="" Options="0" Active="True" />
+    <Point Sta="4804.1" Elev="561.7" Comment="" Options="0" Active="True" />
+    <Point Sta="4814.1" Elev="562.18" Comment="" Options="0" Active="True" />
+    <Point Sta="4824.2" Elev="562.19" Comment="" Options="0" Active="True" />
+    <Point Sta="4834.3" Elev="562.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4844.4" Elev="562.62" Comment="" Options="0" Active="True" />
+    <Point Sta="4854.4" Elev="562.63" Comment="" Options="0" Active="True" />
+    <Point Sta="4864.5" Elev="562.09" Comment="" Options="0" Active="True" />
+    <Point Sta="4869.5" Elev="562.21" Comment="" Options="0" Active="True" />
+    <Point Sta="4874.6" Elev="561.97" Comment="" Options="0" Active="True" />
+    <Point Sta="4884.7" Elev="561.94" Comment="" Options="0" Active="True" />
+    <Point Sta="4894.8" Elev="561.86" Comment="" Options="0" Active="True" />
+    <Point Sta="4902.4" Elev="562.04" Comment="" Options="0" Active="True" />
+    <Point Sta="4905.1" Elev="562.04" Comment="" Options="0" Active="True" />
+    <Point Sta="4907.4" Elev="562.04" Comment="" Options="0" Active="True" />
+    <Point Sta="4914.8" Elev="562.42" Comment="" Options="0" Active="True" />
+    <Point Sta="4924.9" Elev="562.32" Comment="" Options="0" Active="True" />
+    <Point Sta="4934.9" Elev="562.5" Comment="" Options="0" Active="True" />
+    <Point Sta="4944.9" Elev="562" Comment="" Options="0" Active="True" />
+    <Point Sta="4954.9" Elev="560.92" Comment="" Options="0" Active="True" />
+    <Point Sta="4964.9" Elev="560.42" Comment="" Options="0" Active="True" />
+    <Point Sta="4974.9" Elev="559.58" Comment="" Options="0" Active="True" />
+    <Point Sta="4981" Elev="556.55" Comment="" Options="0" Active="True" />
+    <Point Sta="4986" Elev="556.88" Comment="" Options="0" Active="True" />
+    <Point Sta="4995" Elev="557.92" Comment="" Options="0" Active="True" />
+    <Point Sta="5005" Elev="561.33" Comment="" Options="0" Active="True" />
+    <Point Sta="5015" Elev="562.37" Comment="" Options="0" Active="True" />
+    <Point Sta="5025" Elev="562.05" Comment="" Options="0" Active="True" />
+    <Point Sta="5035" Elev="562.39" Comment="" Options="0" Active="True" />
+    <Point Sta="5045.1" Elev="562.86" Comment="" Options="0" Active="True" />
+    <Point Sta="5055.1" Elev="563.8" Comment="" Options="0" Active="True" />
+    <Point Sta="5065.1" Elev="564.02" Comment="" Options="0" Active="True" />
+    <Point Sta="5075.1" Elev="564.47" Comment="" Options="0" Active="True" />
+    <Point Sta="5085.1" Elev="564.87" Comment="" Options="0" Active="True" />
+    <Point Sta="5095.1" Elev="565.47" Comment="" Options="0" Active="True" />
+    <Point Sta="5105.2" Elev="565.66" Comment="" Options="0" Active="True" />
+    <Point Sta="5115.2" Elev="565.95" Comment="" Options="0" Active="True" />
+    <Point Sta="5125.2" Elev="565.75" Comment="" Options="0" Active="True" />
+    <Point Sta="5135.2" Elev="566.15" Comment="" Options="0" Active="True" />
+    <Point Sta="5145.2" Elev="566.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5153.5" Elev="566.68" Comment="" Options="0" Active="True" />
+    <Point Sta="5158.5" Elev="567.15" Comment="" Options="0" Active="True" />
+    <Point Sta="5165.3" Elev="567.03" Comment="" Options="0" Active="True" />
+    <Point Sta="5170.3" Elev="567.03" Comment="" Options="0" Active="True" />
+    <Point Sta="5185.3" Elev="567.88" Comment="" Options="0" Active="True" />
+    <Point Sta="5195.4" Elev="568.25" Comment="" Options="0" Active="True" />
+    <Point Sta="5205.4" Elev="568.89" Comment="" Options="0" Active="True" />
+    <Point Sta="5215.4" Elev="569.63" Comment="" Options="0" Active="True" />
+    <Point Sta="5225.5" Elev="569.9" Comment="" Options="0" Active="True" />
+    <Point Sta="5235.5" Elev="570.5" Comment="" Options="0" Active="True" />
+    <Point Sta="5245.6" Elev="570.62" Comment="" Options="0" Active="True" />
+    <Point Sta="5255.6" Elev="570.96" Comment="" Options="0" Active="True" />
+    <Point Sta="5265.7" Elev="571.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5271.7" Elev="571.05" Comment="" Options="0" Active="True" />
+    <Point Sta="5276.7" Elev="571.42" Comment="" Options="0" Active="True" />
+    <Point Sta="5285.7" Elev="571.57" Comment="" Options="0" Active="True" />
+    <Point Sta="5295.8" Elev="571.65" Comment="" Options="0" Active="True" />
+    <Point Sta="5305.8" Elev="571.69" Comment="" Options="0" Active="True" />
+    <Point Sta="5315.9" Elev="571.72" Comment="" Options="0" Active="True" />
+    <Point Sta="5325.9" Elev="571.92" Comment="" Options="0" Active="True" />
+    <Point Sta="5335.9" Elev="572.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5346" Elev="572.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5356" Elev="571.43" Comment="" Options="0" Active="True" />
+    <Point Sta="5366.1" Elev="570.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5376.1" Elev="568.36" Comment="" Options="0" Active="True" />
+    <Point Sta="5382.4" Elev="566.32" Comment="" Options="0" Active="True" />
+    <Point Sta="5387.4" Elev="569.27" Comment="" Options="0" Active="True" />
+    <Point Sta="5396.2" Elev="565.87" Comment="" Options="0" Active="True" />
+    <Point Sta="5406.2" Elev="565.28" Comment="" Options="0" Active="True" />
+    <Point Sta="5416.3" Elev="569.21" Comment="" Options="0" Active="True" />
+    <Point Sta="5426.3" Elev="572.1" Comment="" Options="0" Active="True" />
+    <Point Sta="5436.3" Elev="573.23" Comment="" Options="0" Active="True" />
+    <Point Sta="5446.4" Elev="574.66" Comment="" Options="0" Active="True" />
+    <Point Sta="5456.4" Elev="576.58" Comment="" Options="0" Active="True" />
+    <Point Sta="5466.5" Elev="577.56" Comment="" Options="0" Active="True" />
+    <Point Sta="5476.5" Elev="578.28" Comment="" Options="0" Active="True" />
+    <Point Sta="5486.6" Elev="578.97" Comment="" Options="0" Active="True" />
+    <Point Sta="5493.2" Elev="579.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5498.2" Elev="579.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5506.6" Elev="579.88" Comment="" Options="0" Active="True" />
+    <Point Sta="5516.7" Elev="580.84" Comment="" Options="0" Active="True" />
+    <Point Sta="5526.7" Elev="581.5" Comment="" Options="0" Active="True" />
+    <Point Sta="5536.8" Elev="582.16" Comment="" Options="0" Active="True" />
+    <Point Sta="5546.8" Elev="582.88" Comment="" Options="0" Active="True" />
+    <Point Sta="5556.8" Elev="583.66" Comment="" Options="0" Active="True" />
+    <Point Sta="5566.9" Elev="584.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5575.9" Elev="585.28" Comment="" Options="0" Active="True" />
+    <Point Sta="5579.9" Elev="585.28" Comment="" Options="0" Active="True" />
+   </Points>
+  </TopoData>
+  <NValues UseK="False" Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Calculated values from WISE]]>
+   </Source>
+   <NValPoints>
+    <NValPoint StartSta="4607.6" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4997.5" Value="0.07" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5002.5" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5026" Value="0.1" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5162.9" Value="0.16" Comment="" Options="0" Active="True" />
+   </NValPoints>
+  </NValues>
+ </CrossSection>
+ <CrossSection Options="0">
+  <GisXsectName Value="Mapping XS 2d284b52" />
+  <GisXsectGUID Value="" />
+  <Name Value="Mapping XS 2d284b52" Options="0" Comment="" />
+  <StreamStation Value="534" Options="0" Comment="" />
+  <IsInterpolated Value="False" Options="0" Comment="" />
+  <SkewAngle Value="0" Options="0" Comment="" />
+  <LeftOverBankDistance Value="284" Options="0" Comment="" />
+  <ChannelDistance Value="284" Options="0" Comment="" />
+  <RightOverBankDistance Value="284" Options="0" Comment="" />
+  <LeftCB Value="4997.5" Options="0" Comment="" />
+  <RightCB Value="5002.5" Options="0" Comment="" />
+  <ExpansionCoeff Value="0.3" Options="0" Comment="" />
+  <ContractionCoeff Value="0.1" Options="0" Comment="" />
+  <FinalCenterline Value="5000" Options="0" Comment="" />
+  <BlendByFieldData Value="True" Options="0" Comment="" />
+  <AlignmentPoints>
+   <AlignmentPoint X="3279738.18388098" Y="10062722.1655381" />
+   <AlignmentPoint X="3279640.52763098" Y="10062581.1065103" />
+   <AlignmentPoint X="3279564.57276987" Y="10062526.8530381" />
+   <AlignmentPoint X="3279043.73943654" Y="10062483.4502603" />
+  </AlignmentPoints>
+  <Comment Options="0">
+   <![CDATA[Mapping XS 2d284b52]]>
+  </Comment>
+  <Photos>
+  </Photos>
+  <FieldData Options="0" Comment="">
+   <RelateToInvert Value="True" Options="0" Comment="" />
+   <XFactor Value="1" Options="0" Comment="" />
+   <Source Options="0">
+    <![CDATA[Field data contains a calculated trapezoidal channel]]>
+   </Source>
+   <Points>
+    <Point Sta="4997.5" Elev="557.74" Comment="Trap. Pt1" Options="0" Active="True" />
+    <Point Sta="4998" Elev="557.64" Comment="Trap. Pt2" Options="0" Active="True" />
+    <Point Sta="5002" Elev="557.64" Comment="Trap. Pt3" Options="0" Active="True" />
+    <Point Sta="5002.5" Elev="557.74" Comment="Trap. Pt4" Options="0" Active="True" />
+   </Points>
+  </FieldData>
+  <TopoData Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Topographic profile]]>
+   </Source>
+   <Points>
+    <Point Sta="4705.4" Elev="573.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4709.5" Elev="573.28" Comment="" Options="0" Active="True" />
+    <Point Sta="4715.6" Elev="573.33" Comment="" Options="0" Active="True" />
+    <Point Sta="4724.4" Elev="573.11" Comment="" Options="0" Active="True" />
+    <Point Sta="4730.5" Elev="573.38" Comment="" Options="0" Active="True" />
+    <Point Sta="4738.4" Elev="573.21" Comment="" Options="0" Active="True" />
+    <Point Sta="4745.3" Elev="573.04" Comment="" Options="0" Active="True" />
+    <Point Sta="4751.4" Elev="573.54" Comment="" Options="0" Active="True" />
+    <Point Sta="4760.2" Elev="573.7" Comment="" Options="0" Active="True" />
+    <Point Sta="4766.3" Elev="575.4" Comment="" Options="0" Active="True" />
+    <Point Sta="4774.9" Elev="574.57" Comment="" Options="0" Active="True" />
+    <Point Sta="4781.1" Elev="573.61" Comment="" Options="0" Active="True" />
+    <Point Sta="4787.2" Elev="574.26" Comment="" Options="0" Active="True" />
+    <Point Sta="4796" Elev="573.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4802.1" Elev="573.49" Comment="" Options="0" Active="True" />
+    <Point Sta="4810.9" Elev="572.98" Comment="" Options="0" Active="True" />
+    <Point Sta="4817" Elev="573.28" Comment="" Options="0" Active="True" />
+    <Point Sta="4823.6" Elev="573" Comment="" Options="0" Active="True" />
+    <Point Sta="4831.8" Elev="572.51" Comment="" Options="0" Active="True" />
+    <Point Sta="4837.9" Elev="572.31" Comment="" Options="0" Active="True" />
+    <Point Sta="4846.7" Elev="572.07" Comment="" Options="0" Active="True" />
+    <Point Sta="4852.8" Elev="571.48" Comment="" Options="0" Active="True" />
+    <Point Sta="4860.1" Elev="571.51" Comment="" Options="0" Active="True" />
+    <Point Sta="4867.6" Elev="571.39" Comment="" Options="0" Active="True" />
+    <Point Sta="4873" Elev="571.08" Comment="" Options="0" Active="True" />
+    <Point Sta="4877" Elev="571.08" Comment="" Options="0" Active="True" />
+    <Point Sta="4881.3" Elev="570.84" Comment="" Options="0" Active="True" />
+    <Point Sta="4889.9" Elev="570.44" Comment="" Options="0" Active="True" />
+    <Point Sta="4896.1" Elev="569.42" Comment="" Options="0" Active="True" />
+    <Point Sta="4902.2" Elev="569.33" Comment="" Options="0" Active="True" />
+    <Point Sta="4910.8" Elev="568.9" Comment="" Options="0" Active="True" />
+    <Point Sta="4917" Elev="568.82" Comment="" Options="0" Active="True" />
+    <Point Sta="4925.6" Elev="568.14" Comment="" Options="0" Active="True" />
+    <Point Sta="4931.7" Elev="567.86" Comment="" Options="0" Active="True" />
+    <Point Sta="4939.1" Elev="566.85" Comment="" Options="0" Active="True" />
+    <Point Sta="4946.5" Elev="566.26" Comment="" Options="0" Active="True" />
+    <Point Sta="4952.6" Elev="566.03" Comment="" Options="0" Active="True" />
+    <Point Sta="4961.2" Elev="564.51" Comment="" Options="0" Active="True" />
+    <Point Sta="4967.3" Elev="564.27" Comment="" Options="0" Active="True" />
+    <Point Sta="4970" Elev="561.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4975.1" Elev="561.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4984.9" Elev="557.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4995" Elev="557.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5005" Elev="563.02" Comment="" Options="0" Active="True" />
+    <Point Sta="5015" Elev="565.44" Comment="" Options="0" Active="True" />
+    <Point Sta="5025.1" Elev="566.31" Comment="" Options="0" Active="True" />
+    <Point Sta="5035.1" Elev="567.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5045.1" Elev="567.82" Comment="" Options="0" Active="True" />
+    <Point Sta="5051.5" Elev="568.57" Comment="" Options="0" Active="True" />
+    <Point Sta="5056.5" Elev="568.77" Comment="" Options="0" Active="True" />
+    <Point Sta="5065.2" Elev="569.18" Comment="" Options="0" Active="True" />
+    <Point Sta="5075.2" Elev="569.76" Comment="" Options="0" Active="True" />
+    <Point Sta="5085.3" Elev="570.47" Comment="" Options="0" Active="True" />
+    <Point Sta="5095.3" Elev="571.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5105.4" Elev="571.88" Comment="" Options="0" Active="True" />
+    <Point Sta="5115.4" Elev="572.56" Comment="" Options="0" Active="True" />
+    <Point Sta="5125.4" Elev="573.31" Comment="" Options="0" Active="True" />
+    <Point Sta="5135.5" Elev="573.99" Comment="" Options="0" Active="True" />
+    <Point Sta="5145.5" Elev="574.78" Comment="" Options="0" Active="True" />
+    <Point Sta="5155.5" Elev="575.44" Comment="" Options="0" Active="True" />
+    <Point Sta="5165.6" Elev="576.05" Comment="" Options="0" Active="True" />
+    <Point Sta="5171.9" Elev="576.49" Comment="" Options="0" Active="True" />
+    <Point Sta="5176.9" Elev="576.62" Comment="" Options="0" Active="True" />
+    <Point Sta="5185.6" Elev="577.31" Comment="" Options="0" Active="True" />
+    <Point Sta="5195.7" Elev="577.51" Comment="" Options="0" Active="True" />
+    <Point Sta="5205.7" Elev="577.76" Comment="" Options="0" Active="True" />
+    <Point Sta="5215.7" Elev="578.63" Comment="" Options="0" Active="True" />
+    <Point Sta="5225.8" Elev="578.65" Comment="" Options="0" Active="True" />
+    <Point Sta="5235.8" Elev="578.56" Comment="" Options="0" Active="True" />
+    <Point Sta="5245.8" Elev="578.58" Comment="" Options="0" Active="True" />
+    <Point Sta="5255.9" Elev="578.93" Comment="" Options="0" Active="True" />
+    <Point Sta="5265.9" Elev="579.19" Comment="" Options="0" Active="True" />
+    <Point Sta="5286" Elev="579.78" Comment="" Options="0" Active="True" />
+    <Point Sta="5292.3" Elev="580" Comment="" Options="0" Active="True" />
+    <Point Sta="5297.3" Elev="579.97" Comment="" Options="0" Active="True" />
+    <Point Sta="5306" Elev="580.66" Comment="" Options="0" Active="True" />
+    <Point Sta="5316.1" Elev="580.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5326.1" Elev="580.57" Comment="" Options="0" Active="True" />
+    <Point Sta="5336.1" Elev="580.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5346.2" Elev="580.72" Comment="" Options="0" Active="True" />
+    <Point Sta="5356.2" Elev="580.44" Comment="" Options="0" Active="True" />
+    <Point Sta="5366.3" Elev="580.41" Comment="" Options="0" Active="True" />
+    <Point Sta="5376.3" Elev="580.37" Comment="" Options="0" Active="True" />
+    <Point Sta="5386.3" Elev="580.52" Comment="" Options="0" Active="True" />
+    <Point Sta="5396.4" Elev="580.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5406.4" Elev="580.71" Comment="" Options="0" Active="True" />
+    <Point Sta="5412.7" Elev="580.81" Comment="" Options="0" Active="True" />
+    <Point Sta="5417.8" Elev="580.44" Comment="" Options="0" Active="True" />
+    <Point Sta="5436.5" Elev="580.18" Comment="" Options="0" Active="True" />
+    <Point Sta="5446.5" Elev="579.47" Comment="" Options="0" Active="True" />
+    <Point Sta="5456.6" Elev="576.13" Comment="" Options="0" Active="True" />
+    <Point Sta="5466.6" Elev="572.1" Comment="" Options="0" Active="True" />
+    <Point Sta="5476.6" Elev="578.62" Comment="" Options="0" Active="True" />
+    <Point Sta="5486.7" Elev="579.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5492.3" Elev="581.3" Comment="" Options="0" Active="True" />
+   </Points>
+  </TopoData>
+  <NValues UseK="False" Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Calculated values from WISE]]>
+   </Source>
+   <NValPoints>
+    <NValPoint StartSta="4705.4" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4997.5" Value="0.07" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5002.5" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5176.6" Value="0.1" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5392.3" Value="0.12" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5491" Value="0.16" Comment="" Options="0" Active="True" />
+   </NValPoints>
+  </NValues>
+ </CrossSection>
+ <CrossSection Options="0">
+  <GisXsectName Value="Mapping XS ebdb95ee" />
+  <GisXsectGUID Value="" />
+  <Name Value="Mapping XS ebdb95ee" Options="0" Comment="" />
+  <StreamStation Value="704" Options="0" Comment="" />
+  <IsInterpolated Value="False" Options="0" Comment="" />
+  <SkewAngle Value="0" Options="0" Comment="" />
+  <LeftOverBankDistance Value="170" Options="0" Comment="" />
+  <ChannelDistance Value="170" Options="0" Comment="" />
+  <RightOverBankDistance Value="170" Options="0" Comment="" />
+  <LeftCB Value="4997.5" Options="0" Comment="" />
+  <RightCB Value="5002.5" Options="0" Comment="" />
+  <ExpansionCoeff Value="0.3" Options="0" Comment="" />
+  <ContractionCoeff Value="0.1" Options="0" Comment="" />
+  <FinalCenterline Value="5000" Options="0" Comment="" />
+  <BlendByFieldData Value="True" Options="0" Comment="" />
+  <AlignmentPoints>
+   <AlignmentPoint X="3279816.24877867" Y="10063197.8472995" />
+   <AlignmentPoint X="3279612.14699003" Y="10062734.5899302" />
+   <AlignmentPoint X="3279473.85607809" Y="10062670.4550145" />
+   <AlignmentPoint X="3279238.05163854" Y="10062628.8424663" />
+   <AlignmentPoint X="3278841.93197569" Y="10062936.2602979" />
+  </AlignmentPoints>
+  <Comment Options="0">
+   <![CDATA[Mapping XS ebdb95ee]]>
+  </Comment>
+  <Photos>
+  </Photos>
+  <FieldData Options="0" Comment="">
+   <RelateToInvert Value="True" Options="0" Comment="" />
+   <XFactor Value="1" Options="0" Comment="" />
+   <Source Options="0">
+    <![CDATA[Field data contains a calculated trapezoidal channel]]>
+   </Source>
+   <Points>
+    <Point Sta="4997.5" Elev="559.14" Comment="Trap. Pt1" Options="0" Active="True" />
+    <Point Sta="4998" Elev="559.04" Comment="Trap. Pt2" Options="0" Active="True" />
+    <Point Sta="5002" Elev="559.04" Comment="Trap. Pt3" Options="0" Active="True" />
+    <Point Sta="5002.5" Elev="559.14" Comment="Trap. Pt4" Options="0" Active="True" />
+   </Points>
+  </FieldData>
+  <TopoData Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Topographic profile]]>
+   </Source>
+   <Points>
+    <Point Sta="4376" Elev="590.01" Comment="" Options="0" Active="True" />
+    <Point Sta="4381.8" Elev="590" Comment="" Options="0" Active="True" />
+    <Point Sta="4390" Elev="589.6" Comment="" Options="0" Active="True" />
+    <Point Sta="4399.7" Elev="589.22" Comment="" Options="0" Active="True" />
+    <Point Sta="4405.2" Elev="589.4" Comment="" Options="0" Active="True" />
+    <Point Sta="4411.9" Elev="588.93" Comment="" Options="0" Active="True" />
+    <Point Sta="4422.8" Elev="588.55" Comment="" Options="0" Active="True" />
+    <Point Sta="4428.5" Elev="588.2" Comment="" Options="0" Active="True" />
+    <Point Sta="4433.9" Elev="588.3" Comment="" Options="0" Active="True" />
+    <Point Sta="4451.8" Elev="587.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4457.3" Elev="587.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4466.5" Elev="587.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4475.1" Elev="586.76" Comment="" Options="0" Active="True" />
+    <Point Sta="4480.6" Elev="586.77" Comment="" Options="0" Active="True" />
+    <Point Sta="4488.4" Elev="586.36" Comment="" Options="0" Active="True" />
+    <Point Sta="4498.5" Elev="586.04" Comment="" Options="0" Active="True" />
+    <Point Sta="4503.9" Elev="585.76" Comment="" Options="0" Active="True" />
+    <Point Sta="4510.2" Elev="585.5" Comment="" Options="0" Active="True" />
+    <Point Sta="4521.2" Elev="585.14" Comment="" Options="0" Active="True" />
+    <Point Sta="4527.3" Elev="584.84" Comment="" Options="0" Active="True" />
+    <Point Sta="4532.7" Elev="584.69" Comment="" Options="0" Active="True" />
+    <Point Sta="4543" Elev="584.16" Comment="" Options="0" Active="True" />
+    <Point Sta="4550.6" Elev="583.53" Comment="" Options="0" Active="True" />
+    <Point Sta="4556.1" Elev="583.37" Comment="" Options="0" Active="True" />
+    <Point Sta="4564.9" Elev="582.83" Comment="" Options="0" Active="True" />
+    <Point Sta="4573.9" Elev="582.39" Comment="" Options="0" Active="True" />
+    <Point Sta="4579.4" Elev="582.35" Comment="" Options="0" Active="True" />
+    <Point Sta="4586.7" Elev="581.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4597.2" Elev="581.52" Comment="" Options="0" Active="True" />
+    <Point Sta="4602.7" Elev="581.62" Comment="" Options="0" Active="True" />
+    <Point Sta="4608.6" Elev="581.09" Comment="" Options="0" Active="True" />
+    <Point Sta="4619.5" Elev="580.64" Comment="" Options="0" Active="True" />
+    <Point Sta="4626" Elev="580.32" Comment="" Options="0" Active="True" />
+    <Point Sta="4631.5" Elev="580.29" Comment="" Options="0" Active="True" />
+    <Point Sta="4641.4" Elev="579.87" Comment="" Options="0" Active="True" />
+    <Point Sta="4649.4" Elev="579.41" Comment="" Options="0" Active="True" />
+    <Point Sta="4654.8" Elev="579.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4663.2" Elev="579.03" Comment="" Options="0" Active="True" />
+    <Point Sta="4672.7" Elev="578.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4678.2" Elev="578.69" Comment="" Options="0" Active="True" />
+    <Point Sta="4685.1" Elev="578.38" Comment="" Options="0" Active="True" />
+    <Point Sta="4696" Elev="578.05" Comment="" Options="0" Active="True" />
+    <Point Sta="4701.5" Elev="577.7" Comment="" Options="0" Active="True" />
+    <Point Sta="4707" Elev="577.72" Comment="" Options="0" Active="True" />
+    <Point Sta="4717.9" Elev="577.4" Comment="" Options="0" Active="True" />
+    <Point Sta="4724.8" Elev="577.23" Comment="" Options="0" Active="True" />
+    <Point Sta="4730.3" Elev="577.14" Comment="" Options="0" Active="True" />
+    <Point Sta="4739.7" Elev="576.85" Comment="" Options="0" Active="True" />
+    <Point Sta="4748.1" Elev="576.58" Comment="" Options="0" Active="True" />
+    <Point Sta="4753.6" Elev="576.48" Comment="" Options="0" Active="True" />
+    <Point Sta="4761.6" Elev="576.44" Comment="" Options="0" Active="True" />
+    <Point Sta="4771.5" Elev="576.34" Comment="" Options="0" Active="True" />
+    <Point Sta="4776.9" Elev="576.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4783.4" Elev="576.33" Comment="" Options="0" Active="True" />
+    <Point Sta="4794.3" Elev="576.28" Comment="" Options="0" Active="True" />
+    <Point Sta="4800.3" Elev="575.76" Comment="" Options="0" Active="True" />
+    <Point Sta="4805.7" Elev="575.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4816.2" Elev="575.14" Comment="" Options="0" Active="True" />
+    <Point Sta="4823.6" Elev="574.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4829.1" Elev="574.72" Comment="" Options="0" Active="True" />
+    <Point Sta="4838.1" Elev="574.5" Comment="" Options="0" Active="True" />
+    <Point Sta="4846.9" Elev="574.3" Comment="" Options="0" Active="True" />
+    <Point Sta="4852.4" Elev="574.11" Comment="" Options="0" Active="True" />
+    <Point Sta="4859.9" Elev="573.88" Comment="" Options="0" Active="True" />
+    <Point Sta="4870.3" Elev="573.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4875.7" Elev="573.48" Comment="" Options="0" Active="True" />
+    <Point Sta="4879.3" Elev="573.25" Comment="" Options="0" Active="True" />
+    <Point Sta="4882.2" Elev="573.25" Comment="" Options="0" Active="True" />
+    <Point Sta="4886.2" Elev="573.25" Comment="" Options="0" Active="True" />
+    <Point Sta="4891.6" Elev="572.98" Comment="" Options="0" Active="True" />
+    <Point Sta="4897.1" Elev="572.88" Comment="" Options="0" Active="True" />
+    <Point Sta="4906.6" Elev="572.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4920" Elev="572.11" Comment="" Options="0" Active="True" />
+    <Point Sta="4928.7" Elev="571.38" Comment="" Options="0" Active="True" />
+    <Point Sta="4937.4" Elev="570.48" Comment="" Options="0" Active="True" />
+    <Point Sta="4942.9" Elev="570.12" Comment="" Options="0" Active="True" />
+    <Point Sta="4950.7" Elev="569.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4960.3" Elev="569.02" Comment="" Options="0" Active="True" />
+    <Point Sta="4965.8" Elev="568.62" Comment="" Options="0" Active="True" />
+    <Point Sta="4972.8" Elev="567.96" Comment="" Options="0" Active="True" />
+    <Point Sta="4983.2" Elev="567.02" Comment="" Options="0" Active="True" />
+    <Point Sta="4988.7" Elev="566.24" Comment="" Options="0" Active="True" />
+    <Point Sta="4994.8" Elev="562.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5005.8" Elev="559.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5011.7" Elev="559.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5017.2" Elev="559.92" Comment="" Options="0" Active="True" />
+    <Point Sta="5027.9" Elev="565.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5034" Elev="567.92" Comment="" Options="0" Active="True" />
+    <Point Sta="5040.5" Elev="568.16" Comment="" Options="0" Active="True" />
+    <Point Sta="5048.7" Elev="568.93" Comment="" Options="0" Active="True" />
+    <Point Sta="5058.9" Elev="569.61" Comment="" Options="0" Active="True" />
+    <Point Sta="5069" Elev="569.9" Comment="" Options="0" Active="True" />
+    <Point Sta="5079.2" Elev="570.23" Comment="" Options="0" Active="True" />
+    <Point Sta="5089.3" Elev="570.83" Comment="" Options="0" Active="True" />
+    <Point Sta="5094.6" Elev="571.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5099.7" Elev="571.35" Comment="" Options="0" Active="True" />
+    <Point Sta="5109.6" Elev="572.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5119.8" Elev="573.12" Comment="" Options="0" Active="True" />
+    <Point Sta="5130" Elev="573.94" Comment="" Options="0" Active="True" />
+    <Point Sta="5140.1" Elev="574.52" Comment="" Options="0" Active="True" />
+    <Point Sta="5148.8" Elev="575.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5153.8" Elev="575.15" Comment="" Options="0" Active="True" />
+    <Point Sta="5160.4" Elev="575.82" Comment="" Options="0" Active="True" />
+    <Point Sta="5170.6" Elev="576.37" Comment="" Options="0" Active="True" />
+    <Point Sta="5180.7" Elev="577.19" Comment="" Options="0" Active="True" />
+    <Point Sta="5190.9" Elev="577.81" Comment="" Options="0" Active="True" />
+    <Point Sta="5201" Elev="578.7" Comment="" Options="0" Active="True" />
+    <Point Sta="5208" Elev="578.98" Comment="" Options="0" Active="True" />
+    <Point Sta="5213.1" Elev="579.08" Comment="" Options="0" Active="True" />
+    <Point Sta="5221.3" Elev="579.68" Comment="" Options="0" Active="True" />
+    <Point Sta="5231.5" Elev="580.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5241.7" Elev="580.56" Comment="" Options="0" Active="True" />
+    <Point Sta="5251.8" Elev="581.25" Comment="" Options="0" Active="True" />
+    <Point Sta="5262" Elev="581.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5267.2" Elev="582.37" Comment="" Options="0" Active="True" />
+    <Point Sta="5270.8" Elev="582.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5274.1" Elev="582.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5284.3" Elev="582.67" Comment="" Options="0" Active="True" />
+    <Point Sta="5291.5" Elev="583.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5297.8" Elev="583.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5305.9" Elev="584.35" Comment="" Options="0" Active="True" />
+    <Point Sta="5312.3" Elev="583.79" Comment="" Options="0" Active="True" />
+    <Point Sta="5320.4" Elev="584.83" Comment="" Options="0" Active="True" />
+    <Point Sta="5326.8" Elev="584.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5334.9" Elev="584.9" Comment="" Options="0" Active="True" />
+    <Point Sta="5341.2" Elev="584.52" Comment="" Options="0" Active="True" />
+    <Point Sta="5347.6" Elev="585.45" Comment="" Options="0" Active="True" />
+    <Point Sta="5355.7" Elev="585.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5362.1" Elev="585.78" Comment="" Options="0" Active="True" />
+    <Point Sta="5370.2" Elev="586.46" Comment="" Options="0" Active="True" />
+    <Point Sta="5376.5" Elev="586.23" Comment="" Options="0" Active="True" />
+    <Point Sta="5384.7" Elev="586.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5391" Elev="586.47" Comment="" Options="0" Active="True" />
+    <Point Sta="5398.2" Elev="587.23" Comment="" Options="0" Active="True" />
+    <Point Sta="5405.5" Elev="587.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5411.8" Elev="587.7" Comment="" Options="0" Active="True" />
+    <Point Sta="5420" Elev="588.03" Comment="" Options="0" Active="True" />
+    <Point Sta="5426.3" Elev="588" Comment="" Options="0" Active="True" />
+    <Point Sta="5434.5" Elev="588.46" Comment="" Options="0" Active="True" />
+    <Point Sta="5440.8" Elev="588.2" Comment="" Options="0" Active="True" />
+    <Point Sta="5448.8" Elev="588.84" Comment="" Options="0" Active="True" />
+    <Point Sta="5455.3" Elev="588.8" Comment="" Options="0" Active="True" />
+    <Point Sta="5461.6" Elev="589.22" Comment="" Options="0" Active="True" />
+    <Point Sta="5469.8" Elev="589.77" Comment="" Options="0" Active="True" />
+    <Point Sta="5476.1" Elev="589.78" Comment="" Options="0" Active="True" />
+    <Point Sta="5484.3" Elev="590.59" Comment="" Options="0" Active="True" />
+    <Point Sta="5490.6" Elev="590.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5498.7" Elev="590.72" Comment="" Options="0" Active="True" />
+    <Point Sta="5505.1" Elev="590.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5512.1" Elev="591.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5519.6" Elev="591.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5525.9" Elev="591.35" Comment="" Options="0" Active="True" />
+    <Point Sta="5534" Elev="591.41" Comment="" Options="0" Active="True" />
+    <Point Sta="5540.4" Elev="591.57" Comment="" Options="0" Active="True" />
+    <Point Sta="5548.5" Elev="591.99" Comment="" Options="0" Active="True" />
+    <Point Sta="5554.9" Elev="592.12" Comment="" Options="0" Active="True" />
+    <Point Sta="5562.8" Elev="592.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5569.3" Elev="592.01" Comment="" Options="0" Active="True" />
+    <Point Sta="5575.7" Elev="592.44" Comment="" Options="0" Active="True" />
+    <Point Sta="5583.8" Elev="591.92" Comment="" Options="0" Active="True" />
+    <Point Sta="5590.2" Elev="592.2" Comment="" Options="0" Active="True" />
+    <Point Sta="5598.3" Elev="592.23" Comment="" Options="0" Active="True" />
+    <Point Sta="5604.6" Elev="592.52" Comment="" Options="0" Active="True" />
+    <Point Sta="5612.8" Elev="592.7" Comment="" Options="0" Active="True" />
+    <Point Sta="5619.1" Elev="593.39" Comment="" Options="0" Active="True" />
+    <Point Sta="5626.1" Elev="593.11" Comment="" Options="0" Active="True" />
+    <Point Sta="5633.6" Elev="592.85" Comment="" Options="0" Active="True" />
+    <Point Sta="5639.9" Elev="593.85" Comment="" Options="0" Active="True" />
+    <Point Sta="5648.1" Elev="593.64" Comment="" Options="0" Active="True" />
+    <Point Sta="5654.4" Elev="594.41" Comment="" Options="0" Active="True" />
+    <Point Sta="5662.6" Elev="594.53" Comment="" Options="0" Active="True" />
+    <Point Sta="5668.9" Elev="595.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5676.7" Elev="595.1" Comment="" Options="0" Active="True" />
+    <Point Sta="5683.4" Elev="595.28" Comment="" Options="0" Active="True" />
+    <Point Sta="5689.7" Elev="595.83" Comment="" Options="0" Active="True" />
+    <Point Sta="5697.9" Elev="596.13" Comment="" Options="0" Active="True" />
+    <Point Sta="5704.2" Elev="596.75" Comment="" Options="0" Active="True" />
+    <Point Sta="5712.4" Elev="596.87" Comment="" Options="0" Active="True" />
+    <Point Sta="5718.7" Elev="597.7" Comment="" Options="0" Active="True" />
+    <Point Sta="5726.8" Elev="597.73" Comment="" Options="0" Active="True" />
+    <Point Sta="5733.2" Elev="598.43" Comment="" Options="0" Active="True" />
+    <Point Sta="5740" Elev="598.59" Comment="" Options="0" Active="True" />
+    <Point Sta="5747.7" Elev="598.92" Comment="" Options="0" Active="True" />
+    <Point Sta="5754" Elev="599.41" Comment="" Options="0" Active="True" />
+    <Point Sta="5768.5" Elev="600.22" Comment="" Options="0" Active="True" />
+    <Point Sta="5773.6" Elev="600.82" Comment="" Options="0" Active="True" />
+   </Points>
+  </TopoData>
+  <NValues UseK="False" Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Calculated values from WISE]]>
+   </Source>
+   <NValPoints>
+    <NValPoint StartSta="4376" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4400.5" Value="0.1" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4401.1" Value="0.05" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4623.8" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4997.5" Value="0.07" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5002.5" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5252.3" Value="0.1" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5474.6" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5533.3" Value="0.1" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5627" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5662.3" Value="0.1" Comment="" Options="0" Active="True" />
+   </NValPoints>
+  </NValues>
+ </CrossSection>
+ <CrossSection Options="0">
+  <GisXsectName Value="ALUM 114 2.0" />
+  <GisXsectGUID Value="" />
+  <Name Value="ALUM 114 2.0" Options="0" Comment="" />
+  <StreamStation Value="1024" Options="0" Comment="" />
+  <IsInterpolated Value="False" Options="0" Comment="" />
+  <SkewAngle Value="0" Options="0" Comment="" />
+  <LeftOverBankDistance Value="320" Options="0" Comment="" />
+  <ChannelDistance Value="320" Options="0" Comment="" />
+  <RightOverBankDistance Value="320" Options="0" Comment="" />
+  <LeftCB Value="4997.5" Options="0" Comment="" />
+  <RightCB Value="5002.5" Options="0" Comment="" />
+  <ExpansionCoeff Value="0.3" Options="0" Comment="" />
+  <ContractionCoeff Value="0.1" Options="0" Comment="" />
+  <FinalCenterline Value="5000" Options="0" Comment="" />
+  <BlendByFieldData Value="True" Options="0" Comment="" />
+  <AlignmentPoints>
+   <AlignmentPoint X="3279766.9642711" Y="10063322.9541264" />
+   <AlignmentPoint X="3279440.00010112" Y="10062985.0001332" />
+   <AlignmentPoint X="3278872.26090342" Y="10063072.7404727" />
+  </AlignmentPoints>
+  <Comment Options="0">
+   <![CDATA[ALUM 114 2.0]]>
+  </Comment>
+  <Photos>
+  </Photos>
+  <FieldData Options="0" Comment="">
+   <RelateToInvert Value="True" Options="0" Comment="" />
+   <XFactor Value="1" Options="0" Comment="" />
+   <Source Options="0">
+    <![CDATA[Field data contains a calculated trapezoidal channel]]>
+   </Source>
+   <Points>
+    <Point Sta="4997.5" Elev="563.74" Comment="Trap. Pt1" Options="0" Active="True" />
+    <Point Sta="4998" Elev="563.64" Comment="Trap. Pt2" Options="0" Active="True" />
+    <Point Sta="5002" Elev="563.64" Comment="Trap. Pt3" Options="0" Active="True" />
+    <Point Sta="5002.5" Elev="563.74" Comment="Trap. Pt4" Options="0" Active="True" />
+   </Points>
+  </FieldData>
+  <TopoData Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Topographic profile]]>
+   </Source>
+   <Points>
+    <Point Sta="4552.8" Elev="595.23" Comment="" Options="0" Active="True" />
+    <Point Sta="4556.3" Elev="594.97" Comment="" Options="0" Active="True" />
+    <Point Sta="4563.5" Elev="594.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4570.4" Elev="594.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4577.6" Elev="594.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4584.6" Elev="594.28" Comment="" Options="0" Active="True" />
+    <Point Sta="4591.7" Elev="593.9" Comment="" Options="0" Active="True" />
+    <Point Sta="4598.7" Elev="593.58" Comment="" Options="0" Active="True" />
+    <Point Sta="4605.7" Elev="593.46" Comment="" Options="0" Active="True" />
+    <Point Sta="4612.9" Elev="593.17" Comment="" Options="0" Active="True" />
+    <Point Sta="4619.8" Elev="592.98" Comment="" Options="0" Active="True" />
+    <Point Sta="4627" Elev="592.39" Comment="" Options="0" Active="True" />
+    <Point Sta="4634" Elev="592.02" Comment="" Options="0" Active="True" />
+    <Point Sta="4641.2" Elev="591.66" Comment="" Options="0" Active="True" />
+    <Point Sta="4648.1" Elev="591.51" Comment="" Options="0" Active="True" />
+    <Point Sta="4655.3" Elev="591.25" Comment="" Options="0" Active="True" />
+    <Point Sta="4662.3" Elev="590.9" Comment="" Options="0" Active="True" />
+    <Point Sta="4669.5" Elev="590.73" Comment="" Options="0" Active="True" />
+    <Point Sta="4676.4" Elev="590.31" Comment="" Options="0" Active="True" />
+    <Point Sta="4683.6" Elev="589.75" Comment="" Options="0" Active="True" />
+    <Point Sta="4690.6" Elev="589.45" Comment="" Options="0" Active="True" />
+    <Point Sta="4697.8" Elev="589.27" Comment="" Options="0" Active="True" />
+    <Point Sta="4704.7" Elev="589.06" Comment="" Options="0" Active="True" />
+    <Point Sta="4711.9" Elev="588.79" Comment="" Options="0" Active="True" />
+    <Point Sta="4726.1" Elev="588.01" Comment="" Options="0" Active="True" />
+    <Point Sta="4733" Elev="587.96" Comment="" Options="0" Active="True" />
+    <Point Sta="4740.2" Elev="587.17" Comment="" Options="0" Active="True" />
+    <Point Sta="4747.2" Elev="586.71" Comment="" Options="0" Active="True" />
+    <Point Sta="4754.3" Elev="585.96" Comment="" Options="0" Active="True" />
+    <Point Sta="4761.3" Elev="585.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4768.5" Elev="585.13" Comment="" Options="0" Active="True" />
+    <Point Sta="4775.5" Elev="584.42" Comment="" Options="0" Active="True" />
+    <Point Sta="4782.6" Elev="584.27" Comment="" Options="0" Active="True" />
+    <Point Sta="4789.6" Elev="583.63" Comment="" Options="0" Active="True" />
+    <Point Sta="4796.8" Elev="583.5" Comment="" Options="0" Active="True" />
+    <Point Sta="4803.7" Elev="582.35" Comment="" Options="0" Active="True" />
+    <Point Sta="4810.9" Elev="582.06" Comment="" Options="0" Active="True" />
+    <Point Sta="4817.9" Elev="581.31" Comment="" Options="0" Active="True" />
+    <Point Sta="4825.1" Elev="580.94" Comment="" Options="0" Active="True" />
+    <Point Sta="4832" Elev="580.45" Comment="" Options="0" Active="True" />
+    <Point Sta="4839.2" Elev="579.88" Comment="" Options="0" Active="True" />
+    <Point Sta="4846.2" Elev="579.17" Comment="" Options="0" Active="True" />
+    <Point Sta="4853.4" Elev="578.92" Comment="" Options="0" Active="True" />
+    <Point Sta="4860.3" Elev="578.32" Comment="" Options="0" Active="True" />
+    <Point Sta="4867.5" Elev="578" Comment="" Options="0" Active="True" />
+    <Point Sta="4874.5" Elev="577.49" Comment="" Options="0" Active="True" />
+    <Point Sta="4881.7" Elev="577.35" Comment="" Options="0" Active="True" />
+    <Point Sta="4888.6" Elev="576.66" Comment="" Options="0" Active="True" />
+    <Point Sta="4895.8" Elev="576.36" Comment="" Options="0" Active="True" />
+    <Point Sta="4902.8" Elev="575.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4910" Elev="575.4" Comment="" Options="0" Active="True" />
+    <Point Sta="4916.9" Elev="574.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4924.1" Elev="574.63" Comment="" Options="0" Active="True" />
+    <Point Sta="4931.1" Elev="573.32" Comment="" Options="0" Active="True" />
+    <Point Sta="4938.3" Elev="572.79" Comment="" Options="0" Active="True" />
+    <Point Sta="4945.2" Elev="570.86" Comment="" Options="0" Active="True" />
+    <Point Sta="4952.4" Elev="570.49" Comment="" Options="0" Active="True" />
+    <Point Sta="4959.4" Elev="568.46" Comment="" Options="0" Active="True" />
+    <Point Sta="4966.6" Elev="567.75" Comment="" Options="0" Active="True" />
+    <Point Sta="4973.5" Elev="564.09" Comment="" Options="0" Active="True" />
+    <Point Sta="4980.7" Elev="563.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4987.7" Elev="563.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4994.9" Elev="565.75" Comment="" Options="0" Active="True" />
+    <Point Sta="5001.8" Elev="571.12" Comment="" Options="0" Active="True" />
+    <Point Sta="5009" Elev="571.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5016" Elev="572.89" Comment="" Options="0" Active="True" />
+    <Point Sta="5019.6" Elev="572.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5023" Elev="572.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5025.6" Elev="572.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5033.2" Elev="573.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5043.3" Elev="574.84" Comment="" Options="0" Active="True" />
+    <Point Sta="5052.1" Elev="575.25" Comment="" Options="0" Active="True" />
+    <Point Sta="5057.1" Elev="575.6" Comment="" Options="0" Active="True" />
+    <Point Sta="5063.5" Elev="576.13" Comment="" Options="0" Active="True" />
+    <Point Sta="5073.6" Elev="576.53" Comment="" Options="0" Active="True" />
+    <Point Sta="5083.8" Elev="577.01" Comment="" Options="0" Active="True" />
+    <Point Sta="5093.9" Elev="577.29" Comment="" Options="0" Active="True" />
+    <Point Sta="5104" Elev="577.52" Comment="" Options="0" Active="True" />
+    <Point Sta="5114.1" Elev="577.54" Comment="" Options="0" Active="True" />
+    <Point Sta="5120.2" Elev="577.46" Comment="" Options="0" Active="True" />
+    <Point Sta="5125.3" Elev="577.97" Comment="" Options="0" Active="True" />
+    <Point Sta="5134.3" Elev="578.07" Comment="" Options="0" Active="True" />
+    <Point Sta="5144.5" Elev="578.08" Comment="" Options="0" Active="True" />
+    <Point Sta="5154.6" Elev="578.39" Comment="" Options="0" Active="True" />
+    <Point Sta="5164.7" Elev="578.58" Comment="" Options="0" Active="True" />
+    <Point Sta="5174.8" Elev="577.93" Comment="" Options="0" Active="True" />
+    <Point Sta="5183.3" Elev="579.37" Comment="" Options="0" Active="True" />
+    <Point Sta="5188.4" Elev="579.43" Comment="" Options="0" Active="True" />
+    <Point Sta="5195.1" Elev="580.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5205.2" Elev="580.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5215.3" Elev="581.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5225.4" Elev="581.71" Comment="" Options="0" Active="True" />
+    <Point Sta="5235.5" Elev="582.2" Comment="" Options="0" Active="True" />
+    <Point Sta="5245.7" Elev="582.63" Comment="" Options="0" Active="True" />
+    <Point Sta="5251.5" Elev="583.23" Comment="" Options="0" Active="True" />
+    <Point Sta="5256.5" Elev="583.48" Comment="" Options="0" Active="True" />
+    <Point Sta="5265.9" Elev="583.99" Comment="" Options="0" Active="True" />
+    <Point Sta="5276" Elev="584.43" Comment="" Options="0" Active="True" />
+    <Point Sta="5286.1" Elev="585.36" Comment="" Options="0" Active="True" />
+    <Point Sta="5296.2" Elev="585.77" Comment="" Options="0" Active="True" />
+    <Point Sta="5306.4" Elev="586.55" Comment="" Options="0" Active="True" />
+    <Point Sta="5314.6" Elev="586.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5319.6" Elev="587.21" Comment="" Options="0" Active="True" />
+    <Point Sta="5326.6" Elev="587.41" Comment="" Options="0" Active="True" />
+    <Point Sta="5336.7" Elev="587.82" Comment="" Options="0" Active="True" />
+    <Point Sta="5346.8" Elev="588.18" Comment="" Options="0" Active="True" />
+    <Point Sta="5357" Elev="588.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5367.1" Elev="589.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5377.2" Elev="590.06" Comment="" Options="0" Active="True" />
+    <Point Sta="5382.7" Elev="590.53" Comment="" Options="0" Active="True" />
+    <Point Sta="5387.8" Elev="590.68" Comment="" Options="0" Active="True" />
+    <Point Sta="5397.4" Elev="591.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5407.6" Elev="591.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5417.7" Elev="592.69" Comment="" Options="0" Active="True" />
+    <Point Sta="5427.8" Elev="593.2" Comment="" Options="0" Active="True" />
+    <Point Sta="5437.9" Elev="593.85" Comment="" Options="0" Active="True" />
+    <Point Sta="5445.8" Elev="594.29" Comment="" Options="0" Active="True" />
+    <Point Sta="5450.9" Elev="594.39" Comment="" Options="0" Active="True" />
+    <Point Sta="5458.1" Elev="595.01" Comment="" Options="0" Active="True" />
+    <Point Sta="5468.3" Elev="595.78" Comment="" Options="0" Active="True" />
+    <Point Sta="5478.4" Elev="596.34" Comment="" Options="0" Active="True" />
+    <Point Sta="5488.5" Elev="596.77" Comment="" Options="0" Active="True" />
+    <Point Sta="5498.6" Elev="597.7" Comment="" Options="0" Active="True" />
+    <Point Sta="5508.7" Elev="598.31" Comment="" Options="0" Active="True" />
+    <Point Sta="5514" Elev="598.85" Comment="" Options="0" Active="True" />
+    <Point Sta="5529" Elev="599.72" Comment="" Options="0" Active="True" />
+    <Point Sta="5539.1" Elev="600.38" Comment="" Options="0" Active="True" />
+    <Point Sta="5549.2" Elev="600.96" Comment="" Options="0" Active="True" />
+    <Point Sta="5559.3" Elev="601.35" Comment="" Options="0" Active="True" />
+    <Point Sta="5569.5" Elev="601.82" Comment="" Options="0" Active="True" />
+    <Point Sta="5577" Elev="602.27" Comment="" Options="0" Active="True" />
+    <Point Sta="5582.1" Elev="602.26" Comment="" Options="0" Active="True" />
+    <Point Sta="5589.7" Elev="602.78" Comment="" Options="0" Active="True" />
+    <Point Sta="5596.1" Elev="603.36" Comment="" Options="0" Active="True" />
+   </Points>
+  </TopoData>
+  <NValues UseK="False" Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Calculated values from WISE]]>
+   </Source>
+   <NValPoints>
+    <NValPoint StartSta="4552.8" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4591.7" Value="0.1" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4769.7" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4997.5" Value="0.07" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5002.5" Value="0.16" Comment="" Options="0" Active="True" />
+   </NValPoints>
+  </NValues>
+ </CrossSection>
+ <CrossSection Options="0">
+  <GisXsectName Value="Mapping XS 569052ba" />
+  <GisXsectGUID Value="" />
+  <Name Value="Mapping XS 569052ba" Options="0" Comment="" />
+  <StreamStation Value="1281" Options="0" Comment="" />
+  <IsInterpolated Value="False" Options="0" Comment="" />
+  <SkewAngle Value="0" Options="0" Comment="" />
+  <LeftOverBankDistance Value="257" Options="0" Comment="" />
+  <ChannelDistance Value="257" Options="0" Comment="" />
+  <RightOverBankDistance Value="257" Options="0" Comment="" />
+  <LeftCB Value="4997.5" Options="0" Comment="" />
+  <RightCB Value="5002.5" Options="0" Comment="" />
+  <ExpansionCoeff Value="0.3" Options="0" Comment="" />
+  <ContractionCoeff Value="0.1" Options="0" Comment="" />
+  <FinalCenterline Value="5000" Options="0" Comment="" />
+  <BlendByFieldData Value="True" Options="0" Comment="" />
+  <AlignmentPoints>
+   <AlignmentPoint X="3279703.02274474" Y="10063494.0661256" />
+   <AlignmentPoint X="3279529.41163363" Y="10063292.6772367" />
+   <AlignmentPoint X="3279407.88385585" Y="10063244.0661256" />
+   <AlignmentPoint X="3279050.24496696" Y="10063240.5939034" />
+  </AlignmentPoints>
+  <Comment Options="0">
+   <![CDATA[Mapping XS 569052ba]]>
+  </Comment>
+  <Photos>
+  </Photos>
+  <FieldData Options="0" Comment="">
+   <RelateToInvert Value="True" Options="0" Comment="" />
+   <XFactor Value="1" Options="0" Comment="" />
+   <Source Options="0">
+    <![CDATA[Field data contains a calculated trapezoidal channel]]>
+   </Source>
+   <Points>
+    <Point Sta="4997.5" Elev="569.91" Comment="Trap. Pt1" Options="0" Active="True" />
+    <Point Sta="4998" Elev="569.81" Comment="Trap. Pt2" Options="0" Active="True" />
+    <Point Sta="5002" Elev="569.81" Comment="Trap. Pt3" Options="0" Active="True" />
+    <Point Sta="5002.5" Elev="569.91" Comment="Trap. Pt4" Options="0" Active="True" />
+   </Points>
+  </FieldData>
+  <TopoData Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Topographic profile]]>
+   </Source>
+   <Points>
+    <Point Sta="4636" Elev="596.91" Comment="" Options="0" Active="True" />
+    <Point Sta="4638.7" Elev="596.91" Comment="" Options="0" Active="True" />
+    <Point Sta="4644.8" Elev="596.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4651.4" Elev="596.56" Comment="" Options="0" Active="True" />
+    <Point Sta="4659.1" Elev="596.38" Comment="" Options="0" Active="True" />
+    <Point Sta="4665.7" Elev="595.99" Comment="" Options="0" Active="True" />
+    <Point Sta="4673.3" Elev="595.74" Comment="" Options="0" Active="True" />
+    <Point Sta="4679.9" Elev="595.21" Comment="" Options="0" Active="True" />
+    <Point Sta="4687.6" Elev="595.18" Comment="" Options="0" Active="True" />
+    <Point Sta="4694.2" Elev="595.08" Comment="" Options="0" Active="True" />
+    <Point Sta="4700.8" Elev="594.66" Comment="" Options="0" Active="True" />
+    <Point Sta="4708.4" Elev="594.44" Comment="" Options="0" Active="True" />
+    <Point Sta="4715" Elev="594.11" Comment="" Options="0" Active="True" />
+    <Point Sta="4722.7" Elev="593.63" Comment="" Options="0" Active="True" />
+    <Point Sta="4729.3" Elev="592.92" Comment="" Options="0" Active="True" />
+    <Point Sta="4737" Elev="592.76" Comment="" Options="0" Active="True" />
+    <Point Sta="4743.6" Elev="592.32" Comment="" Options="0" Active="True" />
+    <Point Sta="4751.2" Elev="592.07" Comment="" Options="0" Active="True" />
+    <Point Sta="4757.8" Elev="591.73" Comment="" Options="0" Active="True" />
+    <Point Sta="4765.5" Elev="591.47" Comment="" Options="0" Active="True" />
+    <Point Sta="4772.1" Elev="591.01" Comment="" Options="0" Active="True" />
+    <Point Sta="4779.7" Elev="591.02" Comment="" Options="0" Active="True" />
+    <Point Sta="4786.3" Elev="590.59" Comment="" Options="0" Active="True" />
+    <Point Sta="4793.2" Elev="590.23" Comment="" Options="0" Active="True" />
+    <Point Sta="4800.6" Elev="589.95" Comment="" Options="0" Active="True" />
+    <Point Sta="4807.2" Elev="589.33" Comment="" Options="0" Active="True" />
+    <Point Sta="4814.9" Elev="589.12" Comment="" Options="0" Active="True" />
+    <Point Sta="4821.5" Elev="588.66" Comment="" Options="0" Active="True" />
+    <Point Sta="4829.1" Elev="588.64" Comment="" Options="0" Active="True" />
+    <Point Sta="4835.7" Elev="587.99" Comment="" Options="0" Active="True" />
+    <Point Sta="4843.4" Elev="587.68" Comment="" Options="0" Active="True" />
+    <Point Sta="4850" Elev="586.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4857.6" Elev="586.61" Comment="" Options="0" Active="True" />
+    <Point Sta="4864.2" Elev="586.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4871.9" Elev="585.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4878.5" Elev="585.24" Comment="" Options="0" Active="True" />
+    <Point Sta="4885.6" Elev="585.07" Comment="" Options="0" Active="True" />
+    <Point Sta="4892.8" Elev="585.17" Comment="" Options="0" Active="True" />
+    <Point Sta="4897.6" Elev="584.52" Comment="" Options="0" Active="True" />
+    <Point Sta="4901.9" Elev="584.52" Comment="" Options="0" Active="True" />
+    <Point Sta="4904.2" Elev="584.52" Comment="" Options="0" Active="True" />
+    <Point Sta="4907.9" Elev="584.09" Comment="" Options="0" Active="True" />
+    <Point Sta="4913.2" Elev="583.71" Comment="" Options="0" Active="True" />
+    <Point Sta="4922.8" Elev="583.09" Comment="" Options="0" Active="True" />
+    <Point Sta="4932.1" Elev="582.17" Comment="" Options="0" Active="True" />
+    <Point Sta="4937.5" Elev="581.94" Comment="" Options="0" Active="True" />
+    <Point Sta="4944.3" Elev="581.06" Comment="" Options="0" Active="True" />
+    <Point Sta="4955.1" Elev="579.26" Comment="" Options="0" Active="True" />
+    <Point Sta="4961.7" Elev="577.81" Comment="" Options="0" Active="True" />
+    <Point Sta="4967.1" Elev="577.37" Comment="" Options="0" Active="True" />
+    <Point Sta="4976.6" Elev="575.91" Comment="" Options="0" Active="True" />
+    <Point Sta="4985.9" Elev="574.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4991.3" Elev="574.65" Comment="" Options="0" Active="True" />
+    <Point Sta="4998.2" Elev="572.02" Comment="" Options="0" Active="True" />
+    <Point Sta="5008.9" Elev="569.91" Comment="" Options="0" Active="True" />
+    <Point Sta="5015.6" Elev="571.5" Comment="" Options="0" Active="True" />
+    <Point Sta="5020.9" Elev="571.69" Comment="" Options="0" Active="True" />
+    <Point Sta="5028.9" Elev="573.77" Comment="" Options="0" Active="True" />
+    <Point Sta="5032.8" Elev="573.77" Comment="" Options="0" Active="True" />
+    <Point Sta="5040.6" Elev="575.5" Comment="" Options="0" Active="True" />
+    <Point Sta="5050.6" Elev="578.79" Comment="" Options="0" Active="True" />
+    <Point Sta="5060.6" Elev="579.87" Comment="" Options="0" Active="True" />
+    <Point Sta="5070.6" Elev="580.74" Comment="" Options="0" Active="True" />
+    <Point Sta="5080.6" Elev="581.29" Comment="" Options="0" Active="True" />
+    <Point Sta="5090.6" Elev="581.93" Comment="" Options="0" Active="True" />
+    <Point Sta="5100.6" Elev="582.64" Comment="" Options="0" Active="True" />
+    <Point Sta="5110.6" Elev="583.39" Comment="" Options="0" Active="True" />
+    <Point Sta="5120.6" Elev="583.73" Comment="" Options="0" Active="True" />
+    <Point Sta="5130.6" Elev="584.22" Comment="" Options="0" Active="True" />
+    <Point Sta="5140.6" Elev="584.67" Comment="" Options="0" Active="True" />
+    <Point Sta="5150.7" Elev="585.19" Comment="" Options="0" Active="True" />
+    <Point Sta="5160.7" Elev="585.56" Comment="" Options="0" Active="True" />
+    <Point Sta="5170.7" Elev="586.02" Comment="" Options="0" Active="True" />
+    <Point Sta="5180.7" Elev="586.66" Comment="" Options="0" Active="True" />
+    <Point Sta="5190.7" Elev="586.97" Comment="" Options="0" Active="True" />
+    <Point Sta="5200.7" Elev="587.41" Comment="" Options="0" Active="True" />
+    <Point Sta="5210.7" Elev="587.92" Comment="" Options="0" Active="True" />
+    <Point Sta="5220.7" Elev="588.3" Comment="" Options="0" Active="True" />
+    <Point Sta="5230.7" Elev="588.93" Comment="" Options="0" Active="True" />
+    <Point Sta="5240.7" Elev="589.37" Comment="" Options="0" Active="True" />
+    <Point Sta="5250.7" Elev="589.62" Comment="" Options="0" Active="True" />
+    <Point Sta="5260.7" Elev="590.14" Comment="" Options="0" Active="True" />
+    <Point Sta="5270.7" Elev="590.58" Comment="" Options="0" Active="True" />
+    <Point Sta="5280.7" Elev="590.95" Comment="" Options="0" Active="True" />
+    <Point Sta="5290.7" Elev="591.18" Comment="" Options="0" Active="True" />
+    <Point Sta="5300.7" Elev="591.63" Comment="" Options="0" Active="True" />
+    <Point Sta="5310.7" Elev="591.89" Comment="" Options="0" Active="True" />
+    <Point Sta="5320.7" Elev="592.28" Comment="" Options="0" Active="True" />
+    <Point Sta="5330.7" Elev="592.93" Comment="" Options="0" Active="True" />
+    <Point Sta="5340.7" Elev="593.28" Comment="" Options="0" Active="True" />
+    <Point Sta="5350.7" Elev="593.57" Comment="" Options="0" Active="True" />
+    <Point Sta="5360.7" Elev="594.06" Comment="" Options="0" Active="True" />
+    <Point Sta="5370.7" Elev="594.6" Comment="" Options="0" Active="True" />
+    <Point Sta="5380.7" Elev="595.09" Comment="" Options="0" Active="True" />
+    <Point Sta="5388" Elev="595.6" Comment="" Options="0" Active="True" />
+    <Point Sta="5390.4" Elev="595.6" Comment="" Options="0" Active="True" />
+   </Points>
+  </TopoData>
+  <NValues UseK="False" Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Calculated values from WISE]]>
+   </Source>
+   <NValPoints>
+    <NValPoint StartSta="4636" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4716.3" Value="0.1" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4809.4" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4997.5" Value="0.07" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5002.5" Value="0.16" Comment="" Options="0" Active="True" />
+   </NValPoints>
+  </NValues>
+ </CrossSection>
+ <CrossSection Options="0">
+  <GisXsectName Value="ALUM 114 3.0" />
+  <GisXsectGUID Value="" />
+  <Name Value="ALUM 114 3.0" Options="0" Comment="" />
+  <StreamStation Value="1471" Options="0" Comment="" />
+  <IsInterpolated Value="False" Options="0" Comment="" />
+  <SkewAngle Value="0" Options="0" Comment="" />
+  <LeftOverBankDistance Value="190" Options="0" Comment="" />
+  <ChannelDistance Value="190" Options="0" Comment="" />
+  <RightOverBankDistance Value="190" Options="0" Comment="" />
+  <LeftCB Value="4997.5" Options="0" Comment="" />
+  <RightCB Value="5002.5" Options="0" Comment="" />
+  <ExpansionCoeff Value="0.3" Options="0" Comment="" />
+  <ContractionCoeff Value="0.1" Options="0" Comment="" />
+  <FinalCenterline Value="5000" Options="0" Comment="" />
+  <BlendByFieldData Value="True" Options="0" Comment="" />
+  <AlignmentPoints>
+   <AlignmentPoint X="3279590.0001011" Y="10063735.0001332" />
+   <AlignmentPoint X="3279390.0001011" Y="10063435.0001332" />
+   <AlignmentPoint X="3279090.0001011" Y="10063435.0001332" />
+  </AlignmentPoints>
+  <Comment Options="0">
+   <![CDATA[ALUM 114 3.0]]>
+  </Comment>
+  <Photos>
+  </Photos>
+  <FieldData Options="0" Comment="">
+   <RelateToInvert Value="True" Options="0" Comment="" />
+   <XFactor Value="1" Options="0" Comment="" />
+   <Source Options="0">
+    <![CDATA[Field data contains a calculated trapezoidal channel]]>
+   </Source>
+   <Points>
+    <Point Sta="4997.5" Elev="575.42" Comment="Trap. Pt1" Options="0" Active="True" />
+    <Point Sta="4998" Elev="575.32" Comment="Trap. Pt2" Options="0" Active="True" />
+    <Point Sta="5002" Elev="575.32" Comment="Trap. Pt3" Options="0" Active="True" />
+    <Point Sta="5002.5" Elev="575.42" Comment="Trap. Pt4" Options="0" Active="True" />
+   </Points>
+  </FieldData>
+  <TopoData Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Topographic profile]]>
+   </Source>
+   <Points>
+    <Point Sta="4631.4" Elev="601.88" Comment="" Options="0" Active="True" />
+    <Point Sta="4634.4" Elev="601.88" Comment="" Options="0" Active="True" />
+    <Point Sta="4644.9" Elev="601.35" Comment="" Options="0" Active="True" />
+    <Point Sta="4654" Elev="600.86" Comment="" Options="0" Active="True" />
+    <Point Sta="4667.5" Elev="599.75" Comment="" Options="0" Active="True" />
+    <Point Sta="4675" Elev="598.95" Comment="" Options="0" Active="True" />
+    <Point Sta="4681" Elev="598.7" Comment="" Options="0" Active="True" />
+    <Point Sta="4690" Elev="598.1" Comment="" Options="0" Active="True" />
+    <Point Sta="4696" Elev="597.73" Comment="" Options="0" Active="True" />
+    <Point Sta="4711" Elev="596.69" Comment="" Options="0" Active="True" />
+    <Point Sta="4717.1" Elev="596.05" Comment="" Options="0" Active="True" />
+    <Point Sta="4732.1" Elev="594.63" Comment="" Options="0" Active="True" />
+    <Point Sta="4739.6" Elev="594.43" Comment="" Options="0" Active="True" />
+    <Point Sta="4747.1" Elev="593.94" Comment="" Options="0" Active="True" />
+    <Point Sta="4753.1" Elev="593.26" Comment="" Options="0" Active="True" />
+    <Point Sta="4768.1" Elev="592.37" Comment="" Options="0" Active="True" />
+    <Point Sta="4775.6" Elev="591.95" Comment="" Options="0" Active="True" />
+    <Point Sta="4783.2" Elev="591.59" Comment="" Options="0" Active="True" />
+    <Point Sta="4789.2" Elev="591.44" Comment="" Options="0" Active="True" />
+    <Point Sta="4798.2" Elev="591.03" Comment="" Options="0" Active="True" />
+    <Point Sta="4804.2" Elev="590.58" Comment="" Options="0" Active="True" />
+    <Point Sta="4811.7" Elev="590.53" Comment="" Options="0" Active="True" />
+    <Point Sta="4819.2" Elev="590.04" Comment="" Options="0" Active="True" />
+    <Point Sta="4825.2" Elev="589.25" Comment="" Options="0" Active="True" />
+    <Point Sta="4834.2" Elev="588.92" Comment="" Options="0" Active="True" />
+    <Point Sta="4840.2" Elev="588.73" Comment="" Options="0" Active="True" />
+    <Point Sta="4847.8" Elev="588.03" Comment="" Options="0" Active="True" />
+    <Point Sta="4855.3" Elev="587.59" Comment="" Options="0" Active="True" />
+    <Point Sta="4861.3" Elev="587.42" Comment="" Options="0" Active="True" />
+    <Point Sta="4870.3" Elev="587.19" Comment="" Options="0" Active="True" />
+    <Point Sta="4876.3" Elev="586.92" Comment="" Options="0" Active="True" />
+    <Point Sta="4883.8" Elev="586.68" Comment="" Options="0" Active="True" />
+    <Point Sta="4891.3" Elev="586.26" Comment="" Options="0" Active="True" />
+    <Point Sta="4897.3" Elev="585.9" Comment="" Options="0" Active="True" />
+    <Point Sta="4906.3" Elev="585.29" Comment="" Options="0" Active="True" />
+    <Point Sta="4912.4" Elev="584.95" Comment="" Options="0" Active="True" />
+    <Point Sta="4919.9" Elev="584.58" Comment="" Options="0" Active="True" />
+    <Point Sta="4927.4" Elev="584.01" Comment="" Options="0" Active="True" />
+    <Point Sta="4933.4" Elev="583.89" Comment="" Options="0" Active="True" />
+    <Point Sta="4942.4" Elev="584.03" Comment="" Options="0" Active="True" />
+    <Point Sta="4948.4" Elev="583.57" Comment="" Options="0" Active="True" />
+    <Point Sta="4955.9" Elev="582.26" Comment="" Options="0" Active="True" />
+    <Point Sta="4963.4" Elev="580.77" Comment="" Options="0" Active="True" />
+    <Point Sta="4969.4" Elev="575.87" Comment="" Options="0" Active="True" />
+    <Point Sta="4978.5" Elev="575.42" Comment="" Options="0" Active="True" />
+    <Point Sta="4984.5" Elev="581.68" Comment="" Options="0" Active="True" />
+    <Point Sta="4989" Elev="581.21" Comment="" Options="0" Active="True" />
+    <Point Sta="4992" Elev="581.21" Comment="" Options="0" Active="True" />
+    <Point Sta="4994.5" Elev="581.21" Comment="" Options="0" Active="True" />
+    <Point Sta="5002" Elev="582.04" Comment="" Options="0" Active="True" />
+    <Point Sta="5012" Elev="582.54" Comment="" Options="0" Active="True" />
+    <Point Sta="5022" Elev="583.05" Comment="" Options="0" Active="True" />
+    <Point Sta="5032" Elev="583.97" Comment="" Options="0" Active="True" />
+    <Point Sta="5042" Elev="584.68" Comment="" Options="0" Active="True" />
+    <Point Sta="5052" Elev="585.32" Comment="" Options="0" Active="True" />
+    <Point Sta="5062" Elev="585.63" Comment="" Options="0" Active="True" />
+    <Point Sta="5072" Elev="586.07" Comment="" Options="0" Active="True" />
+    <Point Sta="5082" Elev="586.5" Comment="" Options="0" Active="True" />
+    <Point Sta="5092" Elev="586.96" Comment="" Options="0" Active="True" />
+    <Point Sta="5102" Elev="587.34" Comment="" Options="0" Active="True" />
+    <Point Sta="5112" Elev="587.7" Comment="" Options="0" Active="True" />
+    <Point Sta="5122" Elev="588.25" Comment="" Options="0" Active="True" />
+    <Point Sta="5132" Elev="588.61" Comment="" Options="0" Active="True" />
+    <Point Sta="5142" Elev="589.08" Comment="" Options="0" Active="True" />
+    <Point Sta="5152" Elev="589.5" Comment="" Options="0" Active="True" />
+    <Point Sta="5162" Elev="589.94" Comment="" Options="0" Active="True" />
+    <Point Sta="5172" Elev="590.4" Comment="" Options="0" Active="True" />
+    <Point Sta="5182" Elev="590.99" Comment="" Options="0" Active="True" />
+    <Point Sta="5192" Elev="591.34" Comment="" Options="0" Active="True" />
+    <Point Sta="5202" Elev="592.27" Comment="" Options="0" Active="True" />
+    <Point Sta="5212" Elev="592.73" Comment="" Options="0" Active="True" />
+    <Point Sta="5222" Elev="593.07" Comment="" Options="0" Active="True" />
+    <Point Sta="5232" Elev="593.54" Comment="" Options="0" Active="True" />
+    <Point Sta="5242" Elev="593.69" Comment="" Options="0" Active="True" />
+    <Point Sta="5252" Elev="594.35" Comment="" Options="0" Active="True" />
+    <Point Sta="5262" Elev="594.82" Comment="" Options="0" Active="True" />
+    <Point Sta="5272" Elev="595.24" Comment="" Options="0" Active="True" />
+    <Point Sta="5282" Elev="595.8" Comment="" Options="0" Active="True" />
+    <Point Sta="5289.5" Elev="596.56" Comment="" Options="0" Active="True" />
+    <Point Sta="5292" Elev="596.56" Comment="" Options="0" Active="True" />
+   </Points>
+  </TopoData>
+  <NValues UseK="False" Options="0" Comment="">
+   <Source Options="0">
+    <![CDATA[Calculated values from WISE]]>
+   </Source>
+   <NValPoints>
+    <NValPoint StartSta="4631.4" Value="0.16" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="4997.5" Value="0.07" Comment="" Options="0" Active="True" />
+    <NValPoint StartSta="5002.5" Value="0.16" Comment="" Options="0" Active="True" />
+   </NValPoints>
+  </NValues>
+ </CrossSection>
+</GeometryData>
+</WISERASXml>

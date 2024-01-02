@@ -1,0 +1,16 @@
+Flow Title=BLE_7242449
+Program Version=5.07
+BEGIN FILE DESCRIPTION:
+Flow File - Created from provided HEC-RAS models for Flood Inundation Library - Andy Carter,PE
+END FILE DESCRIPTION:
+Number of Profiles= 0
+Profile Names=
+River Rch & RM=10170204000897,10170204000897,12359.04
+
+DSS Import StartDate=
+DSS Import StartTime=
+DSS Import EndDate=
+DSS Import GetInterval= 0 
+DSS Import Interval=
+DSS Import GetPeak= 0 
+DSS Import FillOption= 0 

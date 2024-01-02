@@ -1,33 +1,34 @@
 Package: RRASSLER
 Type: Package
 Title: R based HEC-RAS model accounting wrestler
-Version: 0.0.01
-Authors@R: c(person(given = "Jim", family = "Coll", 
-                    role = c("aut", "cre"),
-                    email = "jamesmcoll@gmail.com"),
-             person(given = "Mike", family = "Johnson", role = "aut"),
-             person(given = "Laura", family = "Keys", role = "aut"),
-             person(given = "Andy", family = "Carter", role = "aut"),
+Version: 0.0.2
+Authors@R: c(person(given = "Jim", family = "Coll", role = c("aut", "cre"), email = "james.coll@noaa.gov",comment = c(ORCID = "0000-0002-6994-6668")),
+             person(given = "Mike", family = "Johnson", role = "ctb",email = "mikecp11@gmail.com",comment = c(ORCID = "0000-0002-5288-8350")),
+             person(given = "Laura", family = "Keys", role = "ctb",comment = c(ORCID = "0000-0003-1470-5215")),
+             person(given = "Andy", family = "Carter", role = c("ctb", "trl")),
       person("NOAA", role = c("fnd")),
       person("Lynker", role = c("fnd")))
-Maintainer: Jim Coll <jamesmcoll@gmail.com>
-Description: A bottoms up approach to walking CONUS scale applications back to the spesific point, cross section, and HEC-RAS model they were sourced from.  Still in alpha dont use this.
+Maintainer: Jim Coll <james.coll@noaa.gov>
+Description: A package for making HEC-RAS data more FAIR by cataloging models, cross sections, and points for accounting, interoperability, and reuse in RAS and other applications.  Still in alpha dont use this.
 License: MIT + file LICENSE
-URL: https://github.com/JimColl/RRASSLER
+URL: https://github.com/NOAA-OWP/RRASSLER
+BugReports: https://github.com/NOAA-OWP/RRASSLER
 Depends: 
   R (>= 3.5),
   magrittr, 
+  foreach,
   data.table
 Imports: 
     AOI,
     arrow,
+    aws.s3,
     cowplot,
     data.table,
+    doParallel,
     dplyr,
+    foreach,
     ggplot2,
     glue,
-    gmailr,
-    holyhull,
     httr,
     leafem,
     leaflet,
@@ -36,6 +37,7 @@ Imports:
     lwgeom,
     mapview,
     nhdplusTools,
+    parallel,
     rhdf5,
     sf,
     sfheaders,
@@ -43,12 +45,11 @@ Imports:
     stringr,
     tidyr,
     unglue,
-    units,
     utils
 Remotes:
     grimbough/rhdf5,
     mikejohnson51/AOI,
-    JimColl/holyhull,
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 LazyData: true
+VignetteBuilder: knitr

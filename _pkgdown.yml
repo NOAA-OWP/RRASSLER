@@ -1,4 +1,48 @@
 url: ~
 template:
   bootstrap: 5
+  bootswatch: litera
+authors:
+   NOAA:
+     html: "<img src='https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/noaa-logo.png' height='36' alt='NOAA OWP'/>"
+     href: "https://water.noaa.gov/about/nwm"
+   Lynker:
+     html: "<img src='https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/lynker-logo.png' height='36' alt='Lynker'/>"
+     href: "https://lynker-intel.com/"
+   sidebar:
+    roles: [cre, ctb, fnd]
+   footer:
+    roles: [cre, ctb, fnd]
+   citation:
+    roles: [fnd, cre]
+reference:
+- title: Helpers
+- subtitle:
+  desc: General misc. helper functions
+- contents:
+  - has_concept("helper")
+- subtitle: Data Preprocessing
+  desc: General preprocessing functions for BLE data found at https://webapps.usgs.gov/infrm/estBFE/
+  contents:
+  - has_concept("pre-process")
+- subtitle: wrestling
+  desc: Core RRASSLER logic
+  contents:
+  - has_concept("ingest")
+- subtitle: Postprocess
+  desc: Database helpers and mappers
+  contents:
+  - has_concept("post-process")
+- subtitle: Full references
+  desc: All function documentation
+  contents:
+  - matches(".*")
 
+articles:
+- title: Articles
+  desc: Tutorials, How-To's, and Snippets
+  contents:
+  - ingest-steps
+  - deploying-rrassler
+  - mapping-rrassler
+  - model-debug
