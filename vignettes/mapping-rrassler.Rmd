@@ -35,7 +35,6 @@ ras_dbase <- file.path("~/data/ras_catalog/")
 ## Or set a cloud account and path up like so:
 ```{r, eval = FALSE}
 Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
-Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIAZMS5YKH7KECCDHOA","AWS_SECRET_ACCESS_KEY" = "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","AWS_DEFAULT_REGION" = "us-east-2")
 ras_dbase <- "s3://ras-models/"
 ```
 

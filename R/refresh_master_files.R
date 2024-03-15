@@ -66,8 +66,8 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
 
   if(cloud) {
     rest_of_bucket_prefix <- stringr::str_sub(path_to_ras_dbase, nchar(path_to_root_bucket)+1, nchar(path_to_ras_dbase)-1)
-    root_temp <- tempdir()
-    # unlink(root_temp,recursive = TRUE)
+    process_dir <- tempdir()
+    # unlink(process_dir,recursive = TRUE)
 
     # What is in the database at this very moment?
     if(is_verbose) { message(glue::glue("Gathering bucket contents")) }
@@ -95,7 +95,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       aws.s3::save_object(
         object = file_to_move,
         bucket = path_to_root_bucket,
-        file = file.path(root_temp,file_to_move,fsep = .Platform$file.sep)
+        file = file.path(process_dir,file_to_move,fsep = .Platform$file.sep)
       )
     }
     for(index in 1:nrow(xyz_files)) {
@@ -103,7 +103,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       aws.s3::save_object(
         object = file_to_move,
         bucket = path_to_root_bucket,
-        file = file.path(root_temp,file_to_move,fsep = .Platform$file.sep)
+        file = file.path(process_dir,file_to_move,fsep = .Platform$file.sep)
       )
     }
     for(index in 1:nrow(meta_files)) {
@@ -111,12 +111,12 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       aws.s3::save_object(
         object = file_to_move,
         bucket = path_to_root_bucket,
-        file = file.path(root_temp,file_to_move,fsep = .Platform$file.sep)
+        file = file.path(process_dir,file_to_move,fsep = .Platform$file.sep)
       )
     }
 
     if(is_verbose) { message("Merging catalog") }
-    disk_rrassler_records <- list.files(root_temp, pattern = utils::glob2rx("*RRASSLER_metadata.csv$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
+    disk_rrassler_records <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_metadata.csv$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
     full_accounting <- rbindlist(lapply(disk_rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
 
     if(is_verbose) { message("Writing catalog") }
@@ -124,8 +124,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       file_to_remove <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('accounting.csv'),]$list_bucket_data
       aws.s3::delete_object(
         object = file_to_remove,
-        bucket = path_to_root_bucket,
-        region = "us-east-2",
+        bucket = path_to_root_bucket
       )
     }
     temp_file <- tempfile(fileext = ".csv")
@@ -137,8 +136,8 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
     )
     unlink(temp_file)
 
-    disk_xyz_files <- list.files(root_temp, pattern = utils::glob2rx("*RRASSLER_cs_pts.parquet$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
-    disk_hull_files <- list.files(root_temp, pattern = utils::glob2rx("*RRASSLER_hull.fgb$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
+    disk_xyz_files <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_cs_pts.parquet$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
+    disk_hull_files <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_hull.fgb$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
 
     point_concat <- c()
     xs_concat <- c()
@@ -153,8 +152,8 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
 
       row <- full_accounting[full_accounting$final_name_key==final_folder_name,]
 
-      hull <- sf::st_read(file.path(root_temp,"models",final_folder_name,"RRASSLER_hull.fgb",fsep = .Platform$file.sep),quiet = TRUE)
-      point_data <- arrow::read_parquet(file.path(root_temp,"models",final_folder_name,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep),as_data_frame = TRUE) %>%
+      hull <- sf::st_read(file.path(process_dir,"models",final_folder_name,"RRASSLER_hull.fgb",fsep = .Platform$file.sep),quiet = TRUE)
+      point_data <- arrow::read_parquet(file.path(process_dir,"models",final_folder_name,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep),as_data_frame = TRUE) %>%
         data.table::as.data.table()
 
       hull$start_master_id <- master_id + 1
@@ -235,7 +234,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       message(glue::glue("(re)-Merged {nrow(hull_concat)} models with {nrow(xs_lines)} cross sections and {nrow(point_concat)} points"))
       message(glue::glue("Wall time: {round(runtime, digits = 3)} hours"))
     }
-    unlink(root_temp,recursive = TRUE)
+    unlink(process_dir,recursive = TRUE)
 
   } else {
     # Remerge master features
@@ -248,8 +247,6 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
 
     if(is_verbose) { message("Merging catalog") }
     full_accounting <- rbindlist(lapply(rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
-    length(hull_files)
-    nrow(full_accounting)
 
     if(is_verbose) { message("Writing catalog") }
     unlink(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))
@@ -271,10 +268,15 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       final_folder_name <- basename(dirname(hull_files[index]))
       if(is_verbose) { message(glue::glue("Processing {index} of {rows_in_table}:{final_folder_name}")) }
 
-      full_accounting[full_accounting$model_name=='Hill Creek',]
       row <- full_accounting[full_accounting$final_name_key==final_folder_name,]
-      rrassler_records[7821:7824]
-
+      if(nrow(row) == 0) {
+        if(is_verbose) {
+          print_warning_block()
+          message(glue::glue("Somethings up with {index}:{final_folder_name}"))
+        }
+        row <- data.table::fread(file.path(path_to_ras_dbase,"models",final_folder_name,"RRASSLER_metadata.csv",fsep = .Platform$file.sep),
+                                 colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))
+      }
 
       hull <- sf::st_read(file.path(path_to_ras_dbase,"models",final_folder_name,"RRASSLER_hull.fgb",fsep = .Platform$file.sep),quiet = TRUE)
       point_data <- arrow::read_parquet(file.path(path_to_ras_dbase,"models",final_folder_name,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep),as_data_frame = TRUE) %>%

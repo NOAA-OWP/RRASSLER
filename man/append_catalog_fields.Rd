@@ -18,13 +18,13 @@ append_catalog_fields(
 
 \item{overwrite}{flag to dictate whether or not to overwrite the out_name, should it exist. set to TRUE to delete and (re)generate, FALSE to safely exit, Default: FALSE}
 
-\item{verbose}{flag to determine whether print statements are suppressed, TRUE to show messages and FALSE to surpress them, Default: TRUE}
+\item{is_verbose}{flag to determine whether print statements are suppressed, TRUE to show messages and FALSE to surpress them, Default: TRUE}
 }
 \value{
 a new csv with helper columns
 }
 \description{
-adds helper fields to accounting.csv.  Request based on https://github.com/NOAA-OWP/ras2fim/issues/34
+adds helper fields to accounting.csv.
 }
 \details{
 DETAILS
@@ -33,7 +33,7 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE
- RRASSLER::append_catalog_fields(path_to_ras_dbase = "G:/data/ras_catalog",out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,verbose = TRUE)
+ RRASSLER::append_catalog_fields(path_to_ras_dbase = "G:/data/ras_catalog",out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_verbose = TRUE)
  }
 }
 }

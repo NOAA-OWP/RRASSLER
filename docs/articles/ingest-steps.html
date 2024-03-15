@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,8 +87,8 @@ from individuals and organizations might internally align, adding models
 from outside sources is difficult or impossible due to the differences
 in the tasks and formats different model producers use. It’s also
 non-trivial and requires discovery and processing to answer questions
-like “What models are available for my Area of Interest” or “Do we have
-this model in our library?” This friction gave rise to RRASSLER. By
+like “What models are available for my area of interest” or “Do we have
+this model in our catalog?” This friction gave rise to RRASSLER. By
 reducing the form of the HEC-RAS data to a unique catalog entry and
 adding cloud-accessible data helpers, we can arbitrarily and blindly be
 handed a HEC-RAS model and place that into the resulting framework or
@@ -184,19 +184,20 @@ conditions</td>
 </table>
 <ol start="3" style="list-style-type: decimal">
 <li>Attempt to place the model in space. This is done by attempting to
-parse the g** and g**.hdf files, guess at projections, and pulling and
-collating the data into an xid-xyz table.</li>
+parse the g** and g**.hdf files, intelligently guess at projections, and
+pulling and collating the data into an xid-xyz table.</li>
 <li>Using that extracted geometry, attempt to create a model footprint
 (hull).
 <ol start="5" style="list-style-type: decimal">
 <li>If that process errors out, the model is appended with a 3_, and
-placed into the catalog</li>
+placed into the catalog. The resulting extracted geometry will allow you
+to determine why a footprint was unable to be created.</li>
 <li>If the hull was created, we then attempt to joint that model the the
 reference hydrofabric and locate the “Primary downstream divergence”
 (the first COMID from the maximum levelpath underneath that footprint).
 If that process errors out for any reason, the model is appended with a
-1_</li>
-<li>If there was no feature to join, the model</li>
+1_,</li>
+<li>If there was no feature to join, the model is</li>
 <li>If the model was joined, the ID of the primary downstream divergence
 is appended to the model key.</li>
 <li>If that can be constructed, the model was assumed to be correctly
@@ -215,10 +216,10 @@ spatial form) from the HEC-RAS model, and pointers back to the copied
 source data which remains unaltered.</li>
 </ol>
 <p>This workflow is loosely diagrammed as follows:</p>
-<p><img src="https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png"></p>
+<p><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png"></p>
 <p>Let’s take a look at a few “real life” examples of these outputs and
 how we should interpret them.</p>
-<p><img src="https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_names.png"></p>
+<p><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_names.png"></p>
 <p>Note that this process is “HECRAS_model_catalog” location agnostic.
 Therefore, although you will be operating over local files you may
 RRASSLE those into ether a local directory or an s3 bucket using the
@@ -466,8 +467,7 @@ R):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>dat <span class="op">=</span> gpd(<span class="st">"../inst/extdata/sample_output/ras_catalog/model_footprints.fgb"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>head(dat)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>exit</span></code></pre></div>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>head(dat)</span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

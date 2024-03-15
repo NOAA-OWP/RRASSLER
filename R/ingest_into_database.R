@@ -142,6 +142,7 @@ ingest_into_database <- function(path_to_ras_dbase,
       #   is_verbose = FALSE,
       #   overwrite = overwrite
       # )
+      # Process into a temp dir
       temp_dir_to_write <- tempdir()
       dir.create(file.path(temp_dir_to_write,"models","_unprocessed",fsep = .Platform$file.sep), recursive = TRUE)
       foreach::foreach(x = 1:n_files_to_process) %dopar% disk_ingest_record(

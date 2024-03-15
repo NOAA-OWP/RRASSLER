@@ -208,9 +208,9 @@ disk_ingest_record <- function(in_file = NULL,
       data.table::fwrite(new_row,file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,"RRASSLER_metadata.csv",fsep = .Platform$file.sep),row.names = FALSE)
 
       if(cond3) {
-        files_to_copy <- c(g_file,paste0(g_file, ".hdf"),p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+        files_to_copy <- list_of_files
       } else {
-        files_to_copy <- c(g_file,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+        files_to_copy <- c(g_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
       }
 
       file.copy(
@@ -234,7 +234,7 @@ disk_ingest_record <- function(in_file = NULL,
       )
     })
 
-    # If it fails or is non-existant, parsing failed and it goes into _unprocessed
+    # If it fails or is non-existent, parsing failed and it goes into _unprocessed
     if (isFALSE(extrated_pts[[1]]) |
         (c("try-error") %in% class(extrated_pts))
         ) {
@@ -279,10 +279,11 @@ disk_ingest_record <- function(in_file = NULL,
       data.table::fwrite(new_row,file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,"RRASSLER_metadata.csv",fsep = .Platform$file.sep),row.names = FALSE)
 
       if(cond3) {
-        files_to_copy <- c(g_file,paste0(g_file, ".hdf"),p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+        files_to_copy <- list_of_files
       } else {
-        files_to_copy <- c(g_file,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+        files_to_copy <- c(g_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
       }
+
       file.copy(
         files_to_copy,
         file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,fsep = .Platform$file.sep)
@@ -383,9 +384,9 @@ disk_ingest_record <- function(in_file = NULL,
     )
 
     if(cond3) {
-      files_to_copy <- c(g_file,paste0(g_file, ".hdf"),p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+      files_to_copy <- list_of_files
     } else {
-      files_to_copy <- c(g_file,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+      files_to_copy <- c(g_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
     }
     file.copy(
       files_to_copy,

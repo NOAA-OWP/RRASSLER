@@ -1,21 +1,18 @@
 All notable changes to this project will be documented in this file.
 We follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 
+## 0.0.02 - 2024-01-xx
 
-## x.y.z - YYYY-MM-DD
+
+
+## 0.0.01 - 2023-11-08
+
+### Changes
+
+- Removed multiple dependencies, hull cleanup, addressed todos and typos, updated docs
+
+## 0.0.01 - 2023-07-25
 
 ### Added
 
-- Lorem ipsum dolor sit amet
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
+- First large release

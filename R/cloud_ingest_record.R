@@ -182,7 +182,7 @@ cloud_ingest_record <- function(in_file = NULL,
         }
       }
 
-      files_to_copy <- c(g_file,paste0(g_file, ".hdf"),p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+      files_to_copy <- list_of_files
       for (file in files_to_copy) {
         aws.s3::put_object(
           file = file,
@@ -262,7 +262,7 @@ cloud_ingest_record <- function(in_file = NULL,
         }
       }
 
-      files_to_copy <- c(g_file,paste0(g_file, ".hdf"),p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+      files_to_copy <- list_of_files
       for (file in files_to_copy) {
         aws.s3::put_object(
           file = file,
@@ -379,7 +379,7 @@ cloud_ingest_record <- function(in_file = NULL,
       }
     }
 
-    files_to_copy <- c(g_file,paste0(g_file,".hdf"),p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+    files_to_copy <- list_of_files
     for (file in files_to_copy) {
       aws.s3::put_object(
         file = file,

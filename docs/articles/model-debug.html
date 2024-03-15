@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,9 +144,45 @@ execution.</p>
 <span><span class="va">current_nhdplus_comid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crosswalk_hull_to_hydrofabric_value.html">crosswalk_hull_to_hydrofabric_value</a></span><span class="op">(</span><span class="va">hull</span>,<span class="va">river</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="run-sample-data-in-a-new-folder">run sample data in a new folder<a class="anchor" aria-label="anchor" href="#run-sample-data-in-a-new-folder"></a>
+<h3 id="rrassler-model-interaction">RRASSLER Model interaction<a class="anchor" aria-label="anchor" href="#rrassler-model-interaction"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># root_path &lt;- </span></span>
+<span><span class="va">pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parse_model_to_xyz.html">parse_model_to_xyz</a></span><span class="op">(</span>geom_path <span class="op">=</span> <span class="va">root_path</span>,units <span class="op">=</span> <span class="va">units</span>,proj_string <span class="op">=</span> <span class="va">proj_string</span>,quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">pts_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_ras_g_to_xyz.html">process_ras_g_to_xyz</a></span><span class="op">(</span>geom_path <span class="op">=</span> <span class="va">root_path</span>,units <span class="op">=</span> <span class="va">units</span>,proj_string <span class="op">=</span> <span class="va">proj_string</span>,vdat <span class="op">=</span> <span class="cn">FALSE</span>,quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pts_ghdf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_ras_hdf_to_xyz.html">process_ras_hdf_to_xyz</a></span><span class="op">(</span>geom_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">root_path</span>,<span class="st">".hdf"</span><span class="op">)</span>,units <span class="op">=</span> <span class="va">units</span>,proj_string <span class="op">=</span> <span class="va">proj_string</span>,vdat <span class="op">=</span> <span class="cn">FALSE</span>,quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xyz_to_ls.html">xyz_to_ls</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="va">pts_g</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ls</span> <span class="op">=</span> <span class="fu">sfheaders</span><span class="fu">::</span><span class="fu"><a href="https://dcooley.github.io/sfheaders/reference/sf_linestring.html" class="external-link">sf_linestring</a></span><span class="op">(</span></span>
+<span>  obj <span class="op">=</span> <span class="va">pts</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  x <span class="op">=</span> <span class="st">"x"</span>,</span>
+<span>  y <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>  linestring_id <span class="op">=</span> <span class="st">"xid"</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_set_crs</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="st">"EPSG:6349"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ls_final_line_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ls</span><span class="op">)</span></span>
+<span><span class="va">ls_end_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">ls</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
+<span><span class="va">ls_middle_lines_end</span> <span class="op">&lt;-</span> <span class="va">ls</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="va">ls_end_index</span>,<span class="op">]</span> <span class="op">|&gt;</span> <span class="fu">lwgeom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lwgeom/man/st_startpoint.html" class="external-link">st_endpoint</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">ls_middle_lines_start</span> <span class="op">&lt;-</span> <span class="va">ls</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="va">ls_end_index</span>,<span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu">lwgeom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lwgeom/man/st_startpoint.html" class="external-link">st_startpoint</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df_hull_pts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="va">ls</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="va">ls_middle_lines_end</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="va">ls</span><span class="op">[</span><span class="va">ls_final_line_index</span>,<span class="op">]</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span>, <span class="fl">2</span>, <span class="va">rev</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="va">ls_middle_lines_start</span><span class="op">)</span>, <span class="fl">2</span>, <span class="va">rev</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">hull</span> <span class="op">=</span> <span class="fu">sfheaders</span><span class="fu">::</span><span class="fu"><a href="https://dcooley.github.io/sfheaders/reference/sf_polygon.html" class="external-link">sf_polygon</a></span><span class="op">(</span></span>
+<span>  obj <span class="op">=</span> <span class="va">df_hull_pts</span>,</span>
+<span>  x <span class="op">=</span> <span class="st">"X"</span>,</span>
+<span>  y <span class="op">=</span> <span class="st">"Y"</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_set_crs</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="st">"EPSG:6349"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">river</span> <span class="op">&lt;-</span> <span class="va">pts</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">current_nhdplus_comid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crosswalk_hull_to_hydrofabric_value.html">crosswalk_hull_to_hydrofabric_value</a></span><span class="op">(</span><span class="va">hull</span>,<span class="va">river</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="run-sample-data-in-a-new-folder">run sample data in a new folder<a class="anchor" aria-label="anchor" href="#run-sample-data-in-a-new-folder"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dir_to_scrape</span> <span class="op">&lt;-</span> <span class="st">"../inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"</span></span>
 <span><span class="fu"><a href="../reference/ingest_into_database.html">ingest_into_database</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,top_of_dir_to_scrape <span class="op">=</span> <span class="va">dir_to_scrape</span>,code_to_place_in_source <span class="op">=</span> <span class="st">"test: FEMA6"</span>,proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -156,14 +192,14 @@ execution.</p>
 <div class="section level3">
 <h3 id="run-12090301-in-a-new-folder">run 12090301 in a new folder<a class="anchor" aria-label="anchor" href="#run-12090301-in-a-new-folder"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Note: paste HUC8 key into folder</span></span>
 <span><span class="fu"><a href="../reference/ingest_FEMA6_BLE.html">ingest_FEMA6_BLE</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,<span class="st">"12090301"</span>,proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="colorado-river-accounting-helpers">Colorado river accounting helpers<a class="anchor" aria-label="anchor" href="#colorado-river-accounting-helpers"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_of_all_colorado_river_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"~/data/ras_catalog"</span>,<span class="st">"_temp"</span>,<span class="st">"BLE"</span>,<span class="st">"12090301"</span>,<span class="st">"12090301_models"</span>, fsep <span class="op">=</span> <span class="va">.Platform</span><span class="op">$</span><span class="va">file.sep</span><span class="op">)</span>,pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/glob2rx.html" class="external-link">glob2rx</a></span><span class="op">(</span><span class="st">"*colorado*.g??$"</span><span class="op">)</span>,full.names <span class="op">=</span> <span class="cn">TRUE</span>,ignore.case <span class="op">=</span> <span class="cn">TRUE</span>,recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">list_of_all_colorado_river_models</span></span>
 <span><span class="va">list_of_all_rrassled_colorado_river_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"~/data/ras_catalog"</span>,<span class="st">"models"</span>, fsep <span class="op">=</span> <span class="va">.Platform</span><span class="op">$</span><span class="va">file.sep</span><span class="op">)</span>,pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/glob2rx.html" class="external-link">glob2rx</a></span><span class="op">(</span><span class="st">"*colorado*.g??$"</span><span class="op">)</span>,full.names <span class="op">=</span> <span class="cn">TRUE</span>,ignore.case <span class="op">=</span> <span class="cn">TRUE</span>,recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -190,10 +226,28 @@ execution.</p>
 <h2 id="data-helpers-and-others">Data helpers and others<a class="anchor" aria-label="anchor" href="#data-helpers-and-others"></a>
 </h2>
 <div class="section level3">
+<h3 id="interacting-with-a-model">Interacting with a model<a class="anchor" aria-label="anchor" href="#interacting-with-a-model"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ras_dbase</span> <span class="op">&lt;-</span> <span class="st">"../inst/extdata/sample_output/ras_catalog/"</span></span>
+<span><span class="va">ras_dbase</span> <span class="op">&lt;-</span> <span class="st">"~/data/ras_catalog/"</span></span>
+<span></span>
+<span><span class="va">select_model_string</span> <span class="op">&lt;-</span></span>
+<span><span class="va">select_model_index</span> <span class="op">&lt;-</span></span>
+<span>  </span>
+<span><span class="va">full_catalog</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">target_record</span> <span class="op">&lt;-</span></span>
+<span></span>
+<span><span class="va">all_target_xs</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">list_of_all_rrassled_colorado_river_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"~/data/ras_catalog"</span>,<span class="st">"models"</span>, fsep <span class="op">=</span> <span class="va">.Platform</span><span class="op">$</span><span class="va">file.sep</span><span class="op">)</span>,pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/glob2rx.html" class="external-link">glob2rx</a></span><span class="op">(</span><span class="st">"*colorado*.g??$"</span><span class="op">)</span>,full.names <span class="op">=</span> <span class="cn">TRUE</span>,ignore.case <span class="op">=</span> <span class="cn">TRUE</span>,recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">list_of_all_rrassled_colorado_river_models</span></span>
+<span><span class="va">hulls</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="st">"~/data/ras_catalog/model_footprints.fgb"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
 <h3 id="ras_xyz-parquet-to-line-transform">ras_xyz.parquet to line transform<a class="anchor" aria-label="anchor" href="#ras_xyz-parquet-to-line-transform"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">xyz</span> <span class="op">=</span> <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">read_parquet</a></span><span class="op">(</span><span class="st">"~/temp/ras_xyz.parquet"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">xyz</span> <span class="op">=</span> <span class="fu">arrow</span><span class="fu">::</span><span class="fu"><a href="https://arrow.apache.org/docs/r/reference/read_parquet.html" class="external-link">read_parquet</a></span><span class="op">(</span><span class="st">"~/data/ras_catalog/models/5791934_COLORADO RIVER_g01_1700261677/RRASSLER_cs_pts.parquet"</span><span class="op">)</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">xyz</span>,<span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">ls</span> <span class="op">=</span> <span class="fu">sfheaders</span><span class="fu">::</span><span class="fu"><a href="https://dcooley.github.io/sfheaders/reference/sf_linestring.html" class="external-link">sf_linestring</a></span><span class="op">(</span></span>
 <span>  obj <span class="op">=</span> <span class="va">xyz</span></span>
@@ -203,12 +257,12 @@ execution.</p>
 <span>  , linestring_id <span class="op">=</span> <span class="st">"xid"</span></span>
 <span>  , keep <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_set_crs</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="st">"EPSG:6349"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_write.html" class="external-link">st_write</a></span><span class="op">(</span><span class="va">ls</span>,<span class="st">"~/temp/ras_xyz_lines.fgb"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_write.html" class="external-link">st_write</a></span><span class="op">(</span><span class="va">ls</span>,<span class="st">"~/data/temp/tras_xyz_lines.fgb"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="model-info-into-cross-sections">model info into cross sections<a class="anchor" aria-label="anchor" href="#model-info-into-cross-sections"></a>
 </h3>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xs_t</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="va">xs</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">feet_t</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="va">feet</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">xs_t</span> <span class="op">&lt;-</span> <span class="va">xs_t</span><span class="op">[</span>, <span class="va">dummy</span> <span class="op">:=</span> <span class="va">master_id</span><span class="op">]</span> </span>
@@ -221,12 +275,12 @@ execution.</p>
 <div class="section level3">
 <h3 id="push-a-local-catalog-to-the-cloud">Push a local catalog to the cloud<a class="anchor" aria-label="anchor" href="#push-a-local-catalog-to-the-cloud"></a>
 </h3>
-<p><code>{{bash, eval=FALSE}} aws s3 cp --recursive G:/data/ras_catalog s3://.../ras_models ---exclude G:/data/ras_catalog/_temp --dryrun</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="ex">aws</span> s3 cp <span class="at">--recursive</span> G:/data/ras_catalog s3://.../ras_models <span class="at">---exclude</span> G:/data/ras_catalog/_temp <span class="at">--dryrun</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="proj-finder">Proj finder<a class="anchor" aria-label="anchor" href="#proj-finder"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path_to_gdb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"~/data/ras_catalog/_temp/BLE/12090301/12090301_SpatialData/Spatial/BLE_LowColoradoCummins.gdb"</span><span class="op">)</span></span>
 <span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">path_to_gdb</span>,layer<span class="op">=</span><span class="st">"BLE_DEP01PCT"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">fc</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -234,61 +288,61 @@ execution.</p>
 <div class="section level3">
 <h3 id="ras-zip-scraper">RAS zip scraper<a class="anchor" aria-label="anchor" href="#ras-zip-scraper"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">import</span> argparse</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="im">import</span> tarfile</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># file="C:\Users\rdp-user\Projects\data\ras_models\_temp\IFC\07020009.tar.gz"</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co"># ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="kw">def</span> unpacker(str_huc8_arg,str_tar_file):</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>    str_out_dir <span class="op">=</span> os.path.join(os.path.dirname(str_tar_file),str_huc8_arg)</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a> </span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(str_tar_file):</span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'File does not exist?'</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>        <span class="bu">print</span>(str_tar_file)</span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>        <span class="cf">return</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>        </span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>    <span class="cf">if</span> os.path.exists(str_out_dir):</span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'File already unpacked'</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>        <span class="cf">return</span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>    </span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>    os.mkdir(str_out_dir)</span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>    <span class="co"># read the tar.gz file... this takes some time</span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>    t <span class="op">=</span> tarfile.<span class="bu">open</span>(str_tar_file, <span class="st">"r:gz"</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>    <span class="cf">for</span> member <span class="kw">in</span> t.getmembers():</span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a>        <span class="cf">if</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'g'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'p'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'f'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'h'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'v'</span>:</span>
-<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>            <span class="co">#print(member.name)</span></span>
-<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a>            t.extract(member, str_out_dir)</span>
-<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a></span>
-<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Done "</span>)</span>
-<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>    <span class="cf">return</span></span>
-<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a>    parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">'========== IFC by (HUC8) =========='</span>)</span>
-<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a></span>
-<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a>    parser.add_argument(<span class="st">'-w'</span>,</span>
-<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a>                        dest <span class="op">=</span> <span class="st">"str_huc8_arg"</span>,</span>
-<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a>                        <span class="bu">help</span> <span class="op">=</span> <span class="st">'REQUIRED: HUC-8 watershed that is being evaluated: Example: 10170204'</span>,</span>
-<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a>                        required <span class="op">=</span> <span class="va">True</span>,</span>
-<span id="cb9-39"><a href="#cb9-39" tabindex="-1"></a>                        <span class="bu">type</span> <span class="op">=</span> <span class="bu">str</span>)  <span class="co"># has to be string so it doesn't strip the leading zero</span></span>
-<span id="cb9-40"><a href="#cb9-40" tabindex="-1"></a></span>
-<span id="cb9-41"><a href="#cb9-41" tabindex="-1"></a>    parser.add_argument(<span class="st">'-i'</span>,</span>
-<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a>                        dest <span class="op">=</span> <span class="st">"str_tar_file"</span>,</span>
-<span id="cb9-43"><a href="#cb9-43" tabindex="-1"></a>                        <span class="bu">help</span> <span class="op">=</span> <span class="vs">r'OPTIONAL: path containing the HEC_RAS files: Example -i C:\HEC\input_folder\my_models.'</span> \</span>
-<span id="cb9-44"><a href="#cb9-44" tabindex="-1"></a>                               <span class="vs">r' Defaults to c:\ras2fim_datas\OWP_ras_models\models.'</span>,</span>
-<span id="cb9-45"><a href="#cb9-45" tabindex="-1"></a>                        required <span class="op">=</span> <span class="va">False</span>,</span>
-<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a>                        <span class="bu">type</span> <span class="op">=</span> <span class="bu">str</span>)</span>
-<span id="cb9-47"><a href="#cb9-47" tabindex="-1"></a>    </span>
-<span id="cb9-48"><a href="#cb9-48" tabindex="-1"></a>    args <span class="op">=</span> <span class="bu">vars</span>(parser.parse_args())</span>
-<span id="cb9-49"><a href="#cb9-49" tabindex="-1"></a>    </span>
-<span id="cb9-50"><a href="#cb9-50" tabindex="-1"></a>    unpacker(<span class="op">**</span>args)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">import</span> argparse</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="im">import</span> tarfile</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co"># file="C:\Users\rdp-user\Projects\data\ras_models\_temp\IFC\07020009.tar.gz"</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co"># ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="kw">def</span> unpacker(str_huc8_arg,str_tar_file):</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    str_out_dir <span class="op">=</span> os.path.join(os.path.dirname(str_tar_file),str_huc8_arg)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a> </span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(str_tar_file):</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'File does not exist?'</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>        <span class="bu">print</span>(str_tar_file)</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>        </span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>    <span class="cf">if</span> os.path.exists(str_out_dir):</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'File already unpacked'</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>    </span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>    os.mkdir(str_out_dir)</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>    <span class="co"># read the tar.gz file... this takes some time</span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>    t <span class="op">=</span> tarfile.<span class="bu">open</span>(str_tar_file, <span class="st">"r:gz"</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>    <span class="cf">for</span> member <span class="kw">in</span> t.getmembers():</span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a>        <span class="cf">if</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'g'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'p'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'f'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'h'</span> <span class="kw">or</span> member.name[<span class="op">-</span><span class="dv">3</span>:<span class="op">-</span><span class="dv">2</span>] <span class="op">==</span> <span class="st">'v'</span>:</span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a>            <span class="co">#print(member.name)</span></span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a>            t.extract(member, str_out_dir)</span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">" Done "</span>)</span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a>    <span class="cf">return</span></span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
+<span id="cb12-33"><a href="#cb12-33" tabindex="-1"></a>    parser <span class="op">=</span> argparse.ArgumentParser(description<span class="op">=</span><span class="st">'========== IFC by (HUC8) =========='</span>)</span>
+<span id="cb12-34"><a href="#cb12-34" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" tabindex="-1"></a>    parser.add_argument(<span class="st">'-w'</span>,</span>
+<span id="cb12-36"><a href="#cb12-36" tabindex="-1"></a>                        dest <span class="op">=</span> <span class="st">"str_huc8_arg"</span>,</span>
+<span id="cb12-37"><a href="#cb12-37" tabindex="-1"></a>                        <span class="bu">help</span> <span class="op">=</span> <span class="st">'REQUIRED: HUC-8 watershed that is being evaluated: Example: 10170204'</span>,</span>
+<span id="cb12-38"><a href="#cb12-38" tabindex="-1"></a>                        required <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb12-39"><a href="#cb12-39" tabindex="-1"></a>                        <span class="bu">type</span> <span class="op">=</span> <span class="bu">str</span>)  <span class="co"># has to be string so it doesn't strip the leading zero</span></span>
+<span id="cb12-40"><a href="#cb12-40" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" tabindex="-1"></a>    parser.add_argument(<span class="st">'-i'</span>,</span>
+<span id="cb12-42"><a href="#cb12-42" tabindex="-1"></a>                        dest <span class="op">=</span> <span class="st">"str_tar_file"</span>,</span>
+<span id="cb12-43"><a href="#cb12-43" tabindex="-1"></a>                        <span class="bu">help</span> <span class="op">=</span> <span class="vs">r'OPTIONAL: path containing the HEC_RAS files: Example -i C:\HEC\input_folder\my_models.'</span> \</span>
+<span id="cb12-44"><a href="#cb12-44" tabindex="-1"></a>                               <span class="vs">r' Defaults to c:\ras2fim_datas\OWP_ras_models\models.'</span>,</span>
+<span id="cb12-45"><a href="#cb12-45" tabindex="-1"></a>                        required <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb12-46"><a href="#cb12-46" tabindex="-1"></a>                        <span class="bu">type</span> <span class="op">=</span> <span class="bu">str</span>)</span>
+<span id="cb12-47"><a href="#cb12-47" tabindex="-1"></a>    </span>
+<span id="cb12-48"><a href="#cb12-48" tabindex="-1"></a>    args <span class="op">=</span> <span class="bu">vars</span>(parser.parse_args())</span>
+<span id="cb12-49"><a href="#cb12-49" tabindex="-1"></a>    </span>
+<span id="cb12-50"><a href="#cb12-50" tabindex="-1"></a>    unpacker(<span class="op">**</span>args)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="grab-spatial-key-file-huc8-bounds-names-from-s3">Grab spatial key file (huc8 bounds &amp; names) from s3<a class="anchor" aria-label="anchor" href="#grab-spatial-key-file-huc8-bounds-names-from-s3"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span><span class="st">"AWS_ACCESS_KEY_ID"</span> <span class="op">=</span> <span class="st">"mykey"</span>,</span>
 <span>           <span class="st">"AWS_SECRET_ACCESS_KEY"</span> <span class="op">=</span> <span class="st">"mysecretkey"</span>,</span>
 <span>           <span class="st">"AWS_DEFAULT_REGION"</span> <span class="op">=</span> <span class="st">"us-east-1"</span><span class="op">)</span></span>
@@ -297,6 +351,23 @@ execution.</p>
 <span>  bucket <span class="op">=</span> <span class="st">"s3://.../.../HUC8.fgb"</span>,</span>
 <span>  file <span class="op">=</span> <span class="st">"&lt;path to your catalog&gt;/HUC8.fgb"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="ras2fim-off-aoi-helper">RAS2FIM off AOI helper<a class="anchor" aria-label="anchor" href="#ras2fim-off-aoi-helper"></a>
+</h3>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Using https://www.google.com/maps/@30.1029252,-97.2764193,11.89z?entry=ttu</span></span>
+<span><span class="va">lat</span> <span class="op">=</span> <span class="op">-</span><span class="fl">97.2764193</span></span>
+<span><span class="va">lon</span> <span class="op">=</span> <span class="fl">30.1029252</span></span>
+<span><span class="va">zoom</span> <span class="op">=</span> <span class="fl">11.9</span></span>
+<span></span>
+<span><span class="va">metersPerPx</span> <span class="op">=</span> <span class="fl">156543.03392</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">lat</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">/</span> <span class="fl">180</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">zoom</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">distance_to_buffer</span> <span class="op">=</span> <span class="va">metersPerPx</span> <span class="op">*</span> <span class="fl">1000</span></span>
+<span><span class="co"># distance_to_buffer = 156609*exp(-0.693*6-zoom)</span></span>
+<span></span>
+<span><span class="va">my_map_window</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">st_buffer</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/sfc.html" class="external-link">st_sfc</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st.html" class="external-link">st_point</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">lat</span>,<span class="va">lon</span><span class="op">)</span><span class="op">)</span>,crs <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="st">'EPSG: 4326'</span><span class="op">)</span><span class="op">)</span>,<span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">as_units</a></span><span class="op">(</span><span class="va">distance_to_buffer</span>,<span class="st">'meter'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span><span class="va">my_map_window</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

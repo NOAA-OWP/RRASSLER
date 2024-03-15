@@ -41,8 +41,9 @@ data.frame(
 
 Other helper: 
 \code{\link{marco}()},
+\code{\link{move_dbase}()},
 \code{\link{print_error_block}()},
 \code{\link{print_warning_block}()},
-\code{\link{util_unzip}()}
+\code{\link{util_ras2plucker}()}
 }
 \concept{helper}

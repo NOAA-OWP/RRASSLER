@@ -20,34 +20,39 @@ Our first set of sample data comes to us from the FEMA region 6 Base Level Engin
 
 ### Sample RAS2FIM data
 
-Our last set of sample data is taken directly from the [RAS2FIM](https://github.com/NOAA-OWP/ras2fim) repo from Iowa.  This folder ("ras2fim-sample-dataset") has both the input and output from a [RAS2FIM (v1)](https://github.com/NOAA-OWP/ras2fim/tree/main) run, and the models are given to us in "SI Units" and in "[EPSG:26915](https://epsg.io/26915)".  To save you the keystrokes, I've provided three different sections below which all RRASSLE sample data to a location of your choice.  You'll need to decide for yourself where you want to run, but there is no reason to run all three unless you are really curious.  The first step is to decide what path you want:
+Our last set of sample data is taken directly from the [RAS2FIM](https://github.com/NOAA-OWP/ras2fim) repo from Iowa.  This folder ("ras2fim-sample-dataset") has both the input and output from a [RAS2FIM (v1)](https://github.com/NOAA-OWP/ras2fim/tree/main) run, and the models are given to us in "SI Units" and in "[EPSG:26915](https://epsg.io/26915)".  To save you the keystrokes, I've provided three different sections below which all RRASSLE sample data to a location of your choice.  You'll need to decide for yourself how and where you want to run, but there is no reason to run them all.  The first step is to decide what path you want:
 
 # Step 1: Select a location
-## Internal to the package
+## A) Internal to the package
+```{r, eval = FALSE}
+message(paste("Running in:",fs::path_package("", package = "RRASSLER")))
+ras_dbase <- fs::path_package("./inst/extdata/sample_output/ras_catalog/", package = "RRASSLER")
+```
+
+## B) As a developer using the docker setup
 ```{r, eval = FALSE}
 ras_dbase <- "../inst/extdata/sample_output/ras_catalog/"
 ```
 
-## A Local path
+## C) A Local path
 ```{r, eval = FALSE}
 ras_dbase <- file.path("~/data/ras_catalog/")
 ```
 
-## Or set a cloud account and path up like so:
+## D) Or set a cloud account and path up like so:
 ```{r, eval = FALSE}
 Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
-Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIAZMS5YKH7KECCDHOA","AWS_SECRET_ACCESS_KEY" = "ccoMD3BdJRXR8GunZK4iE7Lf7NfpdGzrDiYBE+tl","AWS_DEFAULT_REGION" = "us-east-2")
 ras_dbase <- "s3://ras-models/"
 ```
 
 ## Step 2: Ingest sample data
 
 ```{r, eval = FALSE}
-ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/",code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/",code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 
-ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/",code_to_place_in_source = "test: Iowa input",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/",code_to_place_in_source = "test: Iowa input",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 
-ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/ras2fim-sample-dataset/output_iowa/05_hecras_output",code_to_place_in_source = "test: RAS2FIM V1 outputs",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/ras2fim-sample-dataset/output_iowa/05_hecras_output",code_to_place_in_source = "test: RAS2FIM V1 outputs",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 ```
 
 ### Extra: How to RRASSLE other sample data
@@ -56,12 +61,12 @@ ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../in
 
 ```{r, eval = FALSE}
 ## Note: paste HUC8 key into folder
-ingest_FEMA6_BLE(path_to_ras_dbase = ras_dbase,HUCID ="12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = ras_dbase,HUCID ="12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 ```
 
-(and if you need to restart it afterwards)
+(and if you need to restart it should a hiccup occour)
 ```{r, eval = FALSE}
-ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = file.path(ras_dbase,"_temp","BLE","12090301","12090301_models",fsep = .Platform$file.sep),code_to_place_in_source = "FEMA Region 6:12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
+RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = file.path(ras_dbase,"_temp","BLE","12090301","12090301_models",fsep = .Platform$file.sep),code_to_place_in_source = "FEMA Region 6:12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 ```
 
 ## Next steps

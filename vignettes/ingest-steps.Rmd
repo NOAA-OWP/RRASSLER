@@ -48,11 +48,11 @@ In order to wrassle that friction, RRASSLER has a few theoretical value judgment
 
 This workflow is loosely diagrammed as follows:
 
-![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png)
+![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png)
 
 Let's take a look at a few "real life" examples of these outputs and how we should interpret them.
 
-![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_names.png)
+![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_names.png)
 
 Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, although you will be operating over local files you may RRASSLE those into ether a local directory or an s3 bucket using the same commands.  RRASSLER also handles all "folder structure" differences between S3 protocols and disk representations, so the "bucket" argument can look just like a folder path or can be the "root" folder in an S3 URL and both are intelligently parsed out.
 
@@ -160,5 +160,4 @@ import os
 import geopandas as gpd
 dat = gpd("../inst/extdata/sample_output/ras_catalog/model_footprints.fgb")
 head(dat)
-exit
 ```

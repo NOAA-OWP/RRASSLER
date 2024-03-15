@@ -3,6 +3,7 @@
 #' @param path_to_csv path to the model_catalog.csv file under your catalog folder
 #' @param is_quiet if TRUE, function will suppress message, Default: TRUE
 #' @return returns the model_catalog as a data.table object with enforced column types
+#' @family helper
 #' @details DETAILS
 #' @examples
 #' \dontrun{

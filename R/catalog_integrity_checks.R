@@ -1,10 +1,10 @@
 #' @title catalog integrity checks
-#' @description Check the status of the catalog for errors and inconsistencies
+#' @description Check the status of the catalog for errors and inconsistencies.  See also https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/CHANGELOG.md#v20beta6---2023-12-04---pr212 for added utilities
 #' @param path_to_ras_dbase The path to the folder in which you are building your catalog, Default: NULL
 #' @param quiet flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE, Default: TRUE
 #' @return OUTPUT_DESCRIPTION
 #' @family post-process
-#' @details DETAILS
+#' @details todo
 #' @examples
 #' \dontrun{
 #' if(interactive()){
