@@ -11,7 +11,7 @@ vignette: >
 
 # Making an "RRASSLE'd Catalog"
 
-Dispite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the tasks and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
+Despite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the tasks and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
 
 ### Ingest logic
 
@@ -54,7 +54,7 @@ Let's take a look at a few "real life" examples of these outputs and how we shou
 
 ![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_names.png)
 
-Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, although you will be operating over local files you may RRASSLE those into ether a local directory or an s3 bucket using the same commands.  RRASSLER also handles all "folder structure" differences between S3 protocols and disk representations, so the "bucket" argument can look just like a folder path or can be the "root" folder in an S3 URL and both are intelligently parsed out.
+Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, although you will be operating over local files you may RRASSLE those into ether a local directory or an S3 bucket using the same commands.  RRASSLER also handles all "folder structure" differences between S3 protocols and disk representations, so the "bucket" argument can look just like a folder path or can be the "root" folder in an S3 URL and both are parsed out.
 
 ## The "minimal" catalog entry form
 

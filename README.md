@@ -45,16 +45,17 @@ library(data.table)
 RRASSLER::marco()                           # A "hello world" test
 ```
 
-> Note: RRASSLER creates data as part of it’s processing. Although every
-> effort has been made to ensure that the form of that data is not so
-> inflexible that future bug-fixes and enhancements break the resulting
-> structure, we can make no guarentee that changes made, particularly to
-> parsing process and accuracy, edge case handling, and accounting,
-> would not require “reprocessing” records, something that is best
-> accomplished using the original data. As noted above, this package and
-> several of it’s cohort are still actively being developed. Although
-> the core logic of record creation has been stabilized for the time
-> being, the “final” form of these tables is still in flux.
+> Note: RRASSLER generates data as part of it’s processing. Although
+> every effort has been made to ensure that the form of that data is not
+> so inflexible that future bug-fixes and enhancements break the
+> resulting structure, we can make no guarantee that changes made,
+> particularly to parsing process and accuracy, edge case handling, and
+> ultimately accounting; would not require “reprocessing” records,
+> something that is best accomplished using the original data. As noted
+> above, this package and several of it’s cohort are still actively
+> being developed. Although the core logic of record creation has been
+> stabilized for the time being, the “final” form of these tables is
+> still in flux.
 
 # Tutorials
 
@@ -99,15 +100,17 @@ pointers, the resulting structure provides a bottoms up approach
 amenable to walking continental scale applications back to the specific
 point, cross section, and HEC-RAS model they were sourced from.
 
-### Discussion
+## Discussion
 
-#### I am both an archivist/model creator and a RRASSLER user
+### I am both an archivist/model creator and a RRASSLER user
 
 You will unfortunately have to keep two copies of the data. RRASSLER
 isn’t creating anything you don’t already have in the archive in one
 form or another, and completely removes all metadata and formatting that
 your archive has so painstakingly created. Don’t change your workflow,
-consider RRASSLER a “post-processing” step to your archiving work.
+consider RRASSLER a “post-processing” step to your archiving work, whose
+primary purpose is to make a selection of your models more amenable to
+operational deployments.
 
 #### Limitations
 
@@ -120,9 +123,10 @@ reprojection operations may alter the surfaces slightly, even if they
 are stated to have come from the same input database. Do your own sanity
 checks and try not to lose your mind, it’s probably easier to go out and
 measure it again. Finally, this was developed, tested, and deployed over
-primarily 1D data. Although 2D model will ingest, there was no
-consideration for those and is not accounting or copying *.tif* files so
-the value of these models is greatly diminished.
+primarily 1D data. Although 2D model may appear to ingest correctly,
+there was no consideration for those in either parsing or processing,
+and is not accounting or copying *.tif* files so the value of these
+models is greatly diminished.
 
 #### Getting involved
 
@@ -132,7 +136,7 @@ attempting to align the world. General instructions on *how* to
 contribute can be found at [CONTRIBUTING](CONTRIBUTING.md). More
 specifically, the following are known shortcomings and next steps.
 
-#### A few next steps
+### A few next steps
 
 ##### Hardening and extention
 
@@ -165,15 +169,16 @@ straightforward; since most valuable and standardized 2D models come
 with an associated *.tif* file which is footprintable, and new model
 formats are provided as *.HDF*, which has cloud compatible
 characteristics and is being developed, the actual work of constructing
-the utility which would account for those models needs to be
-demonstrated.
+the utility which would account for those models needs to be done.
 
 ### Dependencies
 
-Built using [RStudio](https://posit.co/downloads/) and
-[rocker-versioned2](https://github.com/rocker-org/rocker-versioned2),
-*geodev.Dockerfile* docker file provided for reproducibility. Typically
-deployed alongside [a RAS2FIM conda
+This was written tested, and partially deployed using using
+[rocker-versioned2](https://github.com/rocker-org/rocker-versioned2), a
+*geodev.Dockerfile* docker file is provided for reproducibility.
+Typically deployed via package installation on an
+[RStudio](https://posit.co/downloads/) instance and alongside [a RAS2FIM
+conda
 environment](https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md)
 in Windows.
 

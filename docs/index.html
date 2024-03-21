@@ -81,7 +81,7 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
 <span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="reference/marco.html">marco</a></span><span class="op">(</span><span class="op">)</span>                           <span class="co"># A "hello world" test</span></span></code></pre></div>
 <blockquote>
-<p>Note: RRASSLER creates data as part of it’s processing. Although every effort has been made to ensure that the form of that data is not so inflexible that future bug-fixes and enhancements break the resulting structure, we can make no guarentee that changes made, particularly to parsing process and accuracy, edge case handling, and accounting, would not require “reprocessing” records, something that is best accomplished using the original data. As noted above, this package and several of it’s cohort are still actively being developed. Although the core logic of record creation has been stabilized for the time being, the “final” form of these tables is still in flux.</p>
+<p>Note: RRASSLER generates data as part of it’s processing. Although every effort has been made to ensure that the form of that data is not so inflexible that future bug-fixes and enhancements break the resulting structure, we can make no guarantee that changes made, particularly to parsing process and accuracy, edge case handling, and ultimately accounting; would not require “reprocessing” records, something that is best accomplished using the original data. As noted above, this package and several of it’s cohort are still actively being developed. Although the core logic of record creation has been stabilized for the time being, the “final” form of these tables is still in flux.</p>
 </blockquote>
 </div>
 <div class="section level1">
@@ -105,27 +105,28 @@
 </h3>
 <p>There are few hydraulic models as prolific as HEC-RAS, and since it’s first named release in 1995 users have created these models using public and private data and countless hours of engineering scrutinization in order to generate the best possible purpose-built representation of the world. Like any model, some level of input massaging is necessary in order to get the data into the specified mathematical format a model requires. Like most domain specific software solutions, that massaging was rather, forceful, to the point of permanently altering the shape of those inputs into something that most geospatial data readers are unable to handle. This creates a great deal of friction both in terms of model accountability and interoperability, particularly when you take the standpoint as a model consumer. The R based HEC-RAS Wrestler (RRASSLER) is here to mediate that. By internally versioning and aligning data and pointers, the resulting structure provides a bottoms up approach amenable to walking continental scale applications back to the specific point, cross section, and HEC-RAS model they were sourced from.</p>
 </div>
-<div class="section level3">
-<h3 id="discussion">Discussion<a class="anchor" aria-label="anchor" href="#discussion"></a>
-</h3>
-<div class="section level4">
-<h4 id="i-am-both-an-archivistmodel-creator-and-a-rrassler-user">I am both an archivist/model creator and a RRASSLER user<a class="anchor" aria-label="anchor" href="#i-am-both-an-archivistmodel-creator-and-a-rrassler-user"></a>
-</h4>
-<p>You will unfortunately have to keep two copies of the data. RRASSLER isn’t creating anything you don’t already have in the archive in one form or another, and completely removes all metadata and formatting that your archive has so painstakingly created. Don’t change your workflow, consider RRASSLER a “post-processing” step to your archiving work.</p>
 </div>
+<div class="section level2">
+<h2 id="discussion">Discussion<a class="anchor" aria-label="anchor" href="#discussion"></a>
+</h2>
+<div class="section level3">
+<h3 id="i-am-both-an-archivistmodel-creator-and-a-rrassler-user">I am both an archivist/model creator and a RRASSLER user<a class="anchor" aria-label="anchor" href="#i-am-both-an-archivistmodel-creator-and-a-rrassler-user"></a>
+</h3>
+<p>You will unfortunately have to keep two copies of the data. RRASSLER isn’t creating anything you don’t already have in the archive in one form or another, and completely removes all metadata and formatting that your archive has so painstakingly created. Don’t change your workflow, consider RRASSLER a “post-processing” step to your archiving work, whose primary purpose is to make a selection of your models more amenable to operational deployments.</p>
 <div class="section level4">
 <h4 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
 </h4>
-<p>Aligning the different model surfaces is hard. Although every effort was made to account for standard edge cases and unit cohesion, you will, more often than not, find that a surface you use and a model do not align. That is not particularly surprising, but it is often disconcerting. 3DEP timestamps, resolutions, and even order of reprojection operations may alter the surfaces slightly, even if they are stated to have come from the same input database. Do your own sanity checks and try not to lose your mind, it’s probably easier to go out and measure it again. Finally, this was developed, tested, and deployed over primarily 1D data. Although 2D model will ingest, there was no consideration for those and is not accounting or copying <em>.tif</em> files so the value of these models is greatly diminished.</p>
+<p>Aligning the different model surfaces is hard. Although every effort was made to account for standard edge cases and unit cohesion, you will, more often than not, find that a surface you use and a model do not align. That is not particularly surprising, but it is often disconcerting. 3DEP timestamps, resolutions, and even order of reprojection operations may alter the surfaces slightly, even if they are stated to have come from the same input database. Do your own sanity checks and try not to lose your mind, it’s probably easier to go out and measure it again. Finally, this was developed, tested, and deployed over primarily 1D data. Although 2D model may appear to ingest correctly, there was no consideration for those in either parsing or processing, and is not accounting or copying <em>.tif</em> files so the value of these models is greatly diminished.</p>
 </div>
 <div class="section level4">
 <h4 id="getting-involved">Getting involved<a class="anchor" aria-label="anchor" href="#getting-involved"></a>
 </h4>
 <p>If you have questions, concerns, bug reports, etc, please file an issue in this repository’s Issue Tracker. I know we are not the only ones attempting to align the world. General instructions on <em>how</em> to contribute can be found at <a href="CONTRIBUTING.html">CONTRIBUTING</a>. More specifically, the following are known shortcomings and next steps.</p>
 </div>
-<div class="section level4">
-<h4 id="a-few-next-steps">A few next steps<a class="anchor" aria-label="anchor" href="#a-few-next-steps"></a>
-</h4>
+</div>
+<div class="section level3">
+<h3 id="a-few-next-steps">A few next steps<a class="anchor" aria-label="anchor" href="#a-few-next-steps"></a>
+</h3>
 <div class="section level5">
 <h5 id="hardening-and-extention">Hardening and extention<a class="anchor" aria-label="anchor" href="#hardening-and-extention"></a>
 </h5>
@@ -139,14 +140,13 @@
 <div class="section level5">
 <h5 id="id_2d-rrassler">2D RRASSLER<a class="anchor" aria-label="anchor" href="#id_2d-rrassler"></a>
 </h5>
-<p>Many of the same considerations, concerns, and hurdles experienced working with and manipulating 1D RAS data will be encountered as we move into 2D model accounting. While many of the technical advancements and standards make the accounting of 2D models a bit more theoretically straightforward; since most valuable and standardized 2D models come with an associated <em>.tif</em> file which is footprintable, and new model formats are provided as <em>.HDF</em>, which has cloud compatible characteristics and is being developed, the actual work of constructing the utility which would account for those models needs to be demonstrated.</p>
-</div>
+<p>Many of the same considerations, concerns, and hurdles experienced working with and manipulating 1D RAS data will be encountered as we move into 2D model accounting. While many of the technical advancements and standards make the accounting of 2D models a bit more theoretically straightforward; since most valuable and standardized 2D models come with an associated <em>.tif</em> file which is footprintable, and new model formats are provided as <em>.HDF</em>, which has cloud compatible characteristics and is being developed, the actual work of constructing the utility which would account for those models needs to be done.</p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
 </h3>
-<p>Built using <a href="https://posit.co/downloads/" class="external-link">RStudio</a> and <a href="https://github.com/rocker-org/rocker-versioned2" class="external-link">rocker-versioned2</a>, <em>geodev.Dockerfile</em> docker file provided for reproducibility. Typically deployed alongside <a href="https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md" class="external-link">a RAS2FIM conda environment</a> in Windows.</p>
+<p>This was written tested, and partially deployed using using <a href="https://github.com/rocker-org/rocker-versioned2" class="external-link">rocker-versioned2</a>, a <em>geodev.Dockerfile</em> docker file is provided for reproducibility. Typically deployed via package installation on an <a href="https://posit.co/downloads/" class="external-link">RStudio</a> instance and alongside <a href="https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md" class="external-link">a RAS2FIM conda environment</a> in Windows.</p>
 </div>
 </div>
 <div class="section level2">

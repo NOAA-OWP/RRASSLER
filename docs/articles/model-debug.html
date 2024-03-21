@@ -89,7 +89,31 @@ execution.</p>
 <span><span class="co"># ras_dbase &lt;- file.path("~/data/ras_catalog/")</span></span>
 <span><span class="co"># Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")</span></span>
 <span><span class="co"># ras_dbase &lt;- "s3://ras-models/"</span></span>
-<span><span class="co">## Note: paste HUC8 key into folder</span></span></code></pre></div>
+<span><span class="co">## Note: paste HUC8 key into folder</span></span>
+<span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="st">"RRASSLER"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"NOAA-OWP/RRASSLER@dev_merge"</span><span class="op">)</span></span>
+<span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/marco.html">marco</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Running in:"</span>,<span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">""</span>, package <span class="op">=</span> <span class="st">"RRASSLER"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ras_dbase</span> <span class="op">&lt;-</span> <span class="st">"C:/Users/rdp-user/Desktop/testing"</span></span>
+<span></span>
+<span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/ingest_into_database.html">ingest_into_database</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,</span>
+<span>                               top_of_dir_to_scrape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">""</span>, package <span class="op">=</span> <span class="st">"RRASSLER"</span><span class="op">)</span>,<span class="st">"extdata/sample_ras/FEMA-R6-BLE-sample-dataset/"</span>,fsep <span class="op">=</span> <span class="va">.Platform</span><span class="op">$</span><span class="va">file.sep</span><span class="op">)</span>,</span>
+<span>                               code_to_place_in_source <span class="op">=</span> <span class="st">"test: FEMA6"</span>,</span>
+<span>                               proj_override <span class="op">=</span> <span class="st">"EPSG:2277"</span>,</span>
+<span>                               apply_vdat_trans <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                               is_quiet <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                               is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                               overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                               parallel_proc <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/refresh_master_files.html">refresh_master_files</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/append_catalog_fields.html">append_catalog_fields</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,</span>
+<span>                                out_name <span class="op">=</span> <span class="st">"OWP_ras_model_catalog.csv"</span>,</span>
+<span>                                overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="model-extraction-tests">Model extraction tests<a class="anchor" aria-label="anchor" href="#model-extraction-tests"></a>
 </h3>

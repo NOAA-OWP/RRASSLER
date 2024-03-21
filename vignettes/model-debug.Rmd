@@ -28,6 +28,30 @@ ras_dbase <- "../inst/extdata/sample_output/ras_catalog/"
 # Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
 # ras_dbase <- "s3://ras-models/"
 ## Note: paste HUC8 key into folder
+utils::remove.packages("RRASSLER")
+remotes::install_github("NOAA-OWP/RRASSLER@dev_merge")
+RRASSLER::marco()
+
+message(paste("Running in:",fs::path_package("", package = "RRASSLER")))
+
+ras_dbase <- "C:/Users/rdp-user/Desktop/testing"
+
+RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,
+                               top_of_dir_to_scrape = file.path(fs::path_package("", package = "RRASSLER"),"extdata/sample_ras/FEMA-R6-BLE-sample-dataset/",fsep = .Platform$file.sep),
+                               code_to_place_in_source = "test: FEMA6",
+                               proj_override = "EPSG:2277",
+                               apply_vdat_trans = FALSE,
+                               is_quiet = FALSE,
+                               is_verbose = TRUE,
+                               overwrite = FALSE,
+                               parallel_proc = FALSE)
+
+RRASSLER::refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
+
+RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,
+                                out_name = "OWP_ras_model_catalog.csv",
+                                overwrite = FALSE,
+                                is_verbose = TRUE)
 ```
 
 ## Model extraction tests

@@ -27,6 +27,8 @@ Our last set of sample data is taken directly from the [RAS2FIM](https://github.
 ```{r, eval = FALSE}
 message(paste("Running in:",fs::path_package("", package = "RRASSLER")))
 ras_dbase <- fs::path_package("./inst/extdata/sample_output/ras_catalog/", package = "RRASSLER")
+# or: ras_dbase <- file.path(fs::path_package("", package = "RRASSLER"),)
+fs::path_package("extdata/sample_output/ras_catalog/", package = "RRASSLER")
 ```
 
 ## B) As a developer using the docker setup
@@ -64,7 +66,7 @@ RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrap
 RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = ras_dbase,HUCID ="12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 ```
 
-(and if you need to restart it should a hiccup occour)
+(and if you need to restart it should a hiccup occur)
 ```{r, eval = FALSE}
 RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = file.path(ras_dbase,"_temp","BLE","12090301","12090301_models",fsep = .Platform$file.sep),code_to_place_in_source = "FEMA Region 6:12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 ```

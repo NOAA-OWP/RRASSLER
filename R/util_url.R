@@ -10,9 +10,9 @@
 #' #EXAMPLE1
 #' some_urls <-
 #' c(
-#'   "https://stackoverflow.com/questions/52911812/check-if-url-exists-in-r",
-#'   "http://jim.is/a/bad/programmer/",
-#'   "https://github.com/NOAA-OWP/inundation-mapping"
+#'   "https://jimcoll.github.io/a/bad/programmer/",    # Should 404
+#'   "https://github.com/NOAA-OWP/inundation-mapping", # Should exist
+#'   "https://nooneshouldeverhavethisurl.gov/badtest"  # Does not exist in any form
 #' )
 #' data.frame(
 #'   exists = sapply(some_urls, url_exists, USE.NAMES = FALSE),
@@ -35,7 +35,7 @@ url_exists <-
     # pkgdown::build_site(new_process=FALSE)
     # devtools::load_all()
 
-    # x = "http://jim.is/a/bad/programmer/"
+    # x = "http://jimcoll.github.io/a/bad/programmer/"
     # non_2xx_return_value = FALSE
     # is_quiet = FALSE
 
@@ -82,12 +82,7 @@ url_exists <-
 
       if (((httr::status_code(res$result) %/% 200) != 1)) {
         if (!is_quiet)
-          warning(
-            sprintf(
-              "Requests for [%s] responded but without an HTTP status code in the 200-299 range",
-              x
-            )
-          )
+          warning(sprintf("Requests for [%s] responded but without an HTTP status code in the 200-299 range",x))
         return(non_2xx_return_value)
       }
 
