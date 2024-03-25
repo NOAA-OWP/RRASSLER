@@ -335,6 +335,7 @@ process_ras_g_to_xyz <- function(geom_path,
       }
 
       pt_n <- point_slice[point_index, ]$n
+      pt_n <- point_slice[point_index, ]$n
       pt_b <- "test"
       normalized_point_database <- rbind(
         normalized_point_database,

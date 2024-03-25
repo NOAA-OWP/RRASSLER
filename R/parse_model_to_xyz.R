@@ -29,7 +29,6 @@
 #' @export
 #' @importFrom stringr str_sub
 #' @importFrom unglue unglue_vec
-
 parse_model_to_xyz <- function(geom_path,
                                units,
                                proj_string,

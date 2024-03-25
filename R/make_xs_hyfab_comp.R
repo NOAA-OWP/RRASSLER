@@ -1,5 +1,5 @@
 #' @title make_xs_hyfab_comp
-#' @description FUNCTION_DESCRIPTION
+#' @description dev
 #' @param path_to_ras_dbase PARAM_DESCRIPTION
 #' @param network_path PARAM_DESCRIPTION, Default: NULL
 #' @return OUTPUT_DESCRIPTION

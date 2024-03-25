@@ -161,7 +161,9 @@ append_catalog_fields <- function(path_to_ras_dbase = NULL,
       if (is_verbose) {
         print_warning_block()
         message("No HUC found")
+        message("No HUC found")
       }
+      ras_catalog_dbase[row, hucs := noquote(paste0("{}"))]
       ras_catalog_dbase[row, hucs := noquote(paste0("{}"))]
     } else {
       footprint <- sf::st_read(file.path(path_to_ras_dbase,"models",ras_catalog_dbase[row, final_name_key],"RRASSLER_hull.fgb",fsep = .Platform$file.sep),quiet = TRUE)

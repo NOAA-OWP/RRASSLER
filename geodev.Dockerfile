@@ -29,9 +29,6 @@ RUN /rocker_scripts/install_quarto.sh
 RUN apt-get update &&\
     apt-get install -y binutils libproj-dev gdal-bin
 
-RUN add-apt-repository ppa:saiarcot895/chromium-beta
-RUN apt-get install -y chromium-browser
-
 RUN R -q -e 'install.packages("devtools")'
 RUN R -q -e 'install.packages("remotes")'
 RUN R -q -e 'install.packages("BiocManager")'
@@ -71,18 +68,7 @@ RUN R -q -e 'install.packages("concaveman")'
 
 RUN R -q -e 'BiocManager::install("rhdf5")'
 
-RUN R -q -e 'remotes::install_github("stefano-meschiari/latex2exp")'
 RUN R -q -e 'remotes::install_github("mikejohnson51/AOI")'
-RUN R -q -e 'remotes::install_github("mikejohnson51/nwmTools")'
-RUN R -q -e 'remotes::install_github("onofriAndreaPG/aomisc")'
-RUN R -q -e 'devtools::install_github("ropensci/terrainr")'
-RUN R -q -e 'remotes::install_github("trelliscope/trelliscope")'
-RUN R -q -e 'remotes::install_github("yonicd/sinew")'
-RUN R -q -e 'remotes::install_github("thomasp85/scico")'
-RUN R -q -e 'remotes::install_github("rstudio/gt")'
-RUN R -q -e 'remotes::install_github("jthomasmock/gtExtras")'
-RUN R -q -e 'remotes::install_github("renkun-ken/formattable")'
-RUN R -q -e 'remotes::install_github("haozhu233/kableExtra")'
 
 EXPOSE 8787
 

@@ -17,15 +17,19 @@ Depends:
   R (>= 3.5),
   magrittr, 
   foreach,
+  foreach,
   data.table
 Imports: 
     AOI,
     arrow,
     aws.s3,
+    aws.s3,
     cowplot,
     data.table,
     doParallel,
+    doParallel,
     dplyr,
+    foreach,
     foreach,
     ggplot2,
     glue,
@@ -37,6 +41,7 @@ Imports:
     lwgeom,
     mapview,
     nhdplusTools,
+    parallel,
     parallel,
     rhdf5,
     sf,
@@ -52,4 +57,5 @@ Remotes:
 Encoding: UTF-8
 RoxygenNote: 7.3.1
 LazyData: true
+VignetteBuilder: knitr
 VignetteBuilder: knitr
