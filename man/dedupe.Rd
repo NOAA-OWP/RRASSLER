@@ -31,6 +31,8 @@ if(interactive()){
 Other post-process: 
 \code{\link{append_catalog_fields}()},
 \code{\link{catalog_integrity_checks}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{refresh_master_files}()},
 \code{\link{reprocess_table_row}()},
 \code{\link{update_models_from_table}()}
 }

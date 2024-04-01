@@ -2,7 +2,7 @@
 #' @description A hello world tester
 #' @return a hello world message (polo!)
 #' @family helper
-#' @details No, I did not draw this.  It has taken me longer to document this function than it did to copy-paste it from Google
+#' @details No, I did not draw this.  It has taken me longer to document this function than it did to copy-paste it from Google (https://www.asciiart.eu/art-and-design/sculptures)
 #' @examples
 #' RRASSLER::marco()
 #' @rdname marco

@@ -12,6 +12,7 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  database_path <- file.path("~/data/ras_catalog/")
 #'  RRASSLER::scrape_ble_lib(database_path,'12090301',is_quiet = FALSE,overwrite = FALSE,files = "ms")
 #'  }
 #' }
@@ -35,10 +36,10 @@ scrape_ble_lib <-
     # pkgdown::build_site(new_process=FALSE)
     # devtools::load_all()
 
+    ## -- Start --
     fn_time_start <- Sys.time()
 
-    output_dir <-
-      file.path(database_path, "_temp", "BLE", HUCID, fsep = .Platform$file.sep)
+    output_dir <- file.path(database_path, "_temp", "BLE", HUCID, fsep = .Platform$file.sep)
     if (file.exists(output_dir)) {
       if (overwrite) {
         unlink(output_dir, recursive = TRUE)
@@ -176,7 +177,7 @@ scrape_ble_lib <-
           )$size) * 1e-9, 3)
         message(
           glue::glue(
-            "Scraped {disk_size} GB in {round(difftime(Sys.time(), fn_time_start, units='mins'), digits = 2)} minutes"
+            "Downloaded {disk_size} GB in {round(difftime(Sys.time(), fn_time_start, units='mins'), digits = 2)} minutes"
           )
         )
       }

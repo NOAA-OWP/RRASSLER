@@ -4,7 +4,7 @@
 #' @param excel_row if you opened this up in excel (1 based index) the row you want to process
 #' @return updates a row to hopefully place the model in a better space
 #' @family post-process
-#' @details DETAILS
+#' @details in dev
 #' @examples
 #' \dontrun{
 #' if(interactive()){
@@ -35,9 +35,14 @@
 #' @importFrom AOI aoi_get
 #' @importFrom arrow write_parquet
 
-reprocess_table_row <- function(path_to_ras_dbase, excel_row) {
+reprocess_table_row <- function(path_to_ras_dbase, excel_row = NULL, zero_row = NULL, path_name = NULL) {
   # path_to_ras_dbase = "H:/ras_dbase"
   # excel_row = 3682
+
+  ## -- Start --
+
+  # Input validation
+
   row = excel_row - 1
   ras_catalog_dbase = load_catalog_csv_as_DT(file.path(path_to_ras_dbase, "accounting.csv", fsep = .Platform$file.sep))
 

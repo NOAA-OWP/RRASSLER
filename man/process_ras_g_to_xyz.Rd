@@ -42,17 +42,21 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ # g_path <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/12090301/12090301_models/Model/Alum Creek-Colorado River/ALUM 006/ALUM 006.g01"
+ g_path <- fs::path_package("extdata/shapes.fgb", package = "mypkg")
+ pts <- process_ras_g_to_xyz(geom_path = g_path,units = "English Units",proj_string = "EPSG:2277",vdat = FALSE,quiet = FALSE)
  }
 }
 }
 \seealso{
-[read.delim][utils::read.delim]
- [as.data.table][data.table::as.data.table]
- [fill][tidyr::fill]
- [sf_linestring][sfheaders::sf_linestring]
- [st_sf][sf::st_sf], [st_cast][sf::st_cast], [st_crs][sf::st_crs], [st_transform][sf::st_transform], [st_coordinates][sf::st_coordinates], [st_as_sf][sf::st_as_sf], [st_set_crs][sf::st_set_crs], [st_length][sf::st_length]
- [decimal_date][lubridate::decimal_date], [ymd][lubridate::ymd]
- [GET][httr::GET], [http_error][httr::http_error], [content][httr::content]
- [st_linesubstring][lwgeom::st_linesubstring], [st_endpoint][lwgeom::st_endpoint]
- [glue][glue::glue]
+\code{\link[utils]{glob2rx}}, \code{\link[utils]{read.table}}
+ \code{\link[glue]{glue}}
+ \code{\link[data.table]{as.data.table}}
+ \code{\link[stringr]{str_split}}, \code{\link[stringr]{str_trim}}, \code{\link[stringr]{str_flatten}}, \code{\link[stringr]{str_sub}}
+ \code{\link[sfheaders]{sf_linestring}}
+ \code{\link[sf]{sf}}, \code{\link[sf]{st_cast}}, \code{\link[sf]{st_crs}}, \code{\link[sf]{st_read}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_as_sf}}, \code{\link[sf]{geos_measures}}
+ \code{\link[tidyr]{fill}}
+ \code{\link[lubridate]{decimal_date}}, \code{\link[lubridate]{ymd}}
+ \code{\link[httr]{GET}}, \code{\link[httr]{http_error}}, \code{\link[httr]{content}}
+ \code{\link[lwgeom]{st_linesubstring}}, \code{\link[lwgeom]{st_startpoint}}
 }

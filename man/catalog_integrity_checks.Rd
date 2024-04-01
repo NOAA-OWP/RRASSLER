@@ -15,10 +15,10 @@ catalog_integrity_checks(path_to_ras_dbase, quiet = TRUE)
 OUTPUT_DESCRIPTION
 }
 \description{
-Check the status of the catalog for errors and inconsistencies
+Check the status of the catalog for errors and inconsistencies.  See also https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/CHANGELOG.md#v20beta6---2023-12-04---pr212 for added utilities
 }
 \details{
-DETAILS
+todo
 }
 \examples{
 \dontrun{
@@ -32,6 +32,8 @@ if(interactive()){
 Other post-process: 
 \code{\link{append_catalog_fields}()},
 \code{\link{dedupe}()},
+\code{\link{parse_and_plot_old}()},
+\code{\link{refresh_master_files}()},
 \code{\link{reprocess_table_row}()},
 \code{\link{update_models_from_table}()}
 }

@@ -18,7 +18,6 @@
 #' @importFrom sf st_crs
 
 get_datum_from_crs <- function(x) {
-
   # sinew::moga(file.path(getwd(),"R/get_datum_from_crs.R"),overwrite = TRUE)
 
   ## -- Start --

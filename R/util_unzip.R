@@ -31,6 +31,8 @@ util_unzip <- function(zippath, is_quiet = FALSE) {
   # devtools::load_all()
   fn_time_start <- Sys.time()
 
+  if(!is_quiet) { message(glue::glue("Unzipping: {zippath}")) }
+
   if (stringr::str_sub(zippath,-3,-1) == "zip") {
     utils::unzip(zippath, exdir = file.path(
       dirname(zippath),
@@ -54,11 +56,7 @@ util_unzip <- function(zippath, is_quiet = FALSE) {
   i = 1
 
   while (length(files_to_process) > 0) {
-    print(
-      glue::glue(
-        "Unzipping iteration: {i} - Files processed: {length(list_of_processed_zips)}"
-      )
-    )
+    if(!is_quiet) { message(glue::glue("Unzipping iteration: {i} - Files processed: {length(list_of_processed_zips)}")) }
     for (zip_file in files_to_process) {
       utils::unzip(zip_file,
                    exdir = file.path(
@@ -91,11 +89,7 @@ util_unzip <- function(zippath, is_quiet = FALSE) {
       round(sum(file.info(
         list.files(zippath, full.names = TRUE, recursive = TRUE)
       )$size) * 1e-9, 3)
-    print(
-      glue::glue(
-        "Finished: Unzipped {length(list_of_processed_zips)} files with a disk size of ~{disk_size} GB in {round(difftime(Sys.time(), fn_time_start, units='mins'), digits = 2)} minutes"
-      )
-    )
+    message(glue::glue("Finished: Unzipped {length(list_of_processed_zips)} files with a disk size of ~{disk_size} GB in {round(difftime(Sys.time(), fn_time_start, units='mins'), digits = 2)} minutes"))
   }
   return(TRUE)
 }

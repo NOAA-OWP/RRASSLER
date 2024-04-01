@@ -9,25 +9,68 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/Files.PNG)
+![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/Files.PNG)
 
 The primary use of RRASSLER is to spin out a accountable set of models.  This "database" has a consistent structure and the herein described metadata and assorted sidecar files which make that data more FAIR.
 
 ## Model Catalog
+
 Users may look at the _model_catalog.csv_'s, and the models underneath, but should avoid manual manipulation of individual files, paths, or other aspects.  RRASSLER scripts will do all needed manipulation, file sorting, and cataloging for you but there is very limited error checking should the workflow be applied incorrectly.  As a general rule of thumb, once you've selected your destination for the catalog, only manipulate the csv, preferably _never_ with EXCEL, which may chew up data along edge cases.
 
 ## "PostProcessing"
 
-There is not really a deliniation between processing steps wihtin RRASSLER, ones the files have been placed into the RRASSL'd structure the bulk of the work is done but it would be nice if we could put a spatial index and tracking sheet together programatically.  That is what these final steps accomplish, parsing out the different valud HUC units and RRASSL'd metadata and placing them in single files which makes them findable.  There are two primary parts to PostProcessing:
+There is not really a delineation between processing steps within RRASSLER, ones the files have been placed into the RRASSL'd structure the bulk of the work is done but it would be nice if we could put a spatial index and tracking sheet together programatically.  That is what these final steps accomplish, parsing out the different units and RRASSL'd metadata and placing them in single files which makes them more findable.  There are two primary parts to PostProcessing: Generating the catalog index and mapping utilities.
+
+### 1A) If you need to pick up after a previous run make sure you set your catalog location appropritly
+## Internal to the package
+```{r, eval = FALSE}
+ras_dbase <- "../inst/extdata/sample_output/ras_catalog/"
+```
+
+## A Local path
+```{r, eval = FALSE}
+ras_dbase <- file.path("~/data/ras_catalog/")
+```
+
+## Or set a cloud account and path up like so:
+```{r, eval = FALSE}
+Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
+ras_dbase <- "s3://ras-models/"
+```
+
+
+### 1) Remerge the generated catalog index
+These catalog index files are simply summations of the entirety of the RRASSLE'd structure.  We're 
+
+```{r, eval=FALSE}
+refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
+```
+
+This will create or recreate the index files at the top of the catalog, including:  
+* Model footprints: _model_footprints.fgb_  
+* Cross sections: _XS.fgb_  
+* Points: _point_database.parquet_  
+
+![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/GIS_features.PNG)
+
 
 ## What did that make?
 
 > [in line with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html)
 
-```{r, eval=FALSE}
-cat_path <- path/to/catalog
 
-> points <- arrow::read_parquet(file.path(cat_path,"point_database.parquet",fsep = .Platform$file.sep))
+```{r, eval=FALSE}
+points <- arrow::read_parquet(file.path(ras_dbase,"point_database.parquet",fsep = .Platform$file.sep))
+points
+cross_sections <- sf::st_read(file.path(ras_dbase,"xs.fgb",fsep = .Platform$file.sep))
+cross_sections
+footprints <- sf::st_read(file.path(ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep))
+footprints
+mapview::mapview(footprints) + mapview::mapview(cross_sections)
+```
+
+```{r, eval=FALSE}
+> points <- arrow::read_parquet(file.path(gsub("/$", "", ras_dbase),"/point_database.parquet",fsep = .Platform$file.sep))
 > points
          xid    xid_length      xid_d         x        y         z    n source master_id
       1:   1  231.8369 [m]    0.00000 -97.29359 29.98529 137.83666 0.05      3         1
@@ -36,7 +79,7 @@ cat_path <- path/to/catalog
       4:   1  231.8369 [m]    4.23672 -97.29357 29.98525 137.62330 0.05      3         1
       5:   1  231.8369 [m]    6.79704 -97.29356 29.98523 137.47699 0.05      3         1
       
-> cross_sections <- sf::st_read(file.path(cat_path,"xs.fgb",fsep = .Platform$file.sep))
+> cross_sections <- sf::st_read(file.path(ras_dbase,"xs.fgb",fsep = .Platform$file.sep))
 Reading layer `XS' from data source `G:\data\ras_catalog\XS.fgb' using driver `FlatGeobuf'
 Simple feature collection with 24901 features and 1 field
 Geometry type: LINESTRING
@@ -57,7 +100,7 @@ First 5 features:
 4      11261 LINESTRING (-96.50289 29.71...
 5      12037 LINESTRING (-96.48813 29.73...
 
-> footprints <- sf::st_read(file.path(cat_path,"model_footprints.fgb",fsep = .Platform$file.sep))
+> footprints <- sf::st_read(file.path(ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep))
 Reading layer `model_footprints' from data source `G:\data\ras_catalog\model_footprints.fgb' using driver `FlatGeobuf'
 Simple feature collection with 1316 features and 7 fields
 Geometry type: POLYGON
@@ -114,23 +157,15 @@ First 5 features:
 
 ### Add geographic context
 
-1) Remerge the generated catalog index
-
 ```{r, eval=FALSE}
-RRASSLER::refresh_master_files(path_to_ras_dbase = cat_path,verbose = TRUE)
+footprints <- sf::st_read(file.path(ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep))
 ```
 
-This will create or recreate the index files at the top of the catalog, including:  
-* Model footprints: _model_footprints.fgb_  
-* Cross sections: _XS.fgb_  
-* Points: _point_database.parquet_  
-
-![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/GIS_features.PNG)
 
 3) Create a handy map to view
 
 ```{r, eval=FALSE}
-RRASSLER::map_library(path_to_ras_dbase = cat_path,NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
+RRASSLER::map_library(path_to_ras_dbase = ras_dbase,NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
 ```
 
 This function will create a stand alone leaflet map which is useful in "interactively" exploring the data, facilitating simple queries, and inspirational presentations.
@@ -140,6 +175,6 @@ This function will create a stand alone leaflet map which is useful in "interact
 ### Extend database for ras2fim deployments
 
 ```{r, eval=FALSE}
-RRASSLER::append_catalog_fields(path_to_ras_dbase = cat_path,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)
+RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)
 ```
 

@@ -9,13 +9,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Making an "archive"
+# Making an "RRASSLE'd Catalog"
 
-Dispite our efforts not to "archive" or "catalog" HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the tasks and formats different model producers use.  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
+Despite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the tasks and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
 
 ### Ingest logic
 
-In order to wrassle that friction, RRASSLER has a few theoretical value judgments that need to be described in order to help understand why it does what it does and how to use it properly.  RRASSLER is focused on making the critical data objects needed to run a HEC-RAS model readily available and accountable as a model (as opposed to as individual data points or large clusters of otherwise "vistigal" data; and with an emphasis on the particular geometric realization of the model).  It is also designed to be a standardized and centralized source of models, regardless of their origin.  For that reason, RRASSLER expects to operate within it's own controlled directory, or "HECRAS_model_catalog".   Users first download and unpack desired models into a temporary location, and then point RRASSLER at that directory and the place which you want to store your catalog.  It will:  
+In order to wrassle that friction, RRASSLER has a few theoretical value judgments that need to be described in order to help understand why it does what it does and how to use it properly.  RRASSLER is focused on making the critical data objects needed to run a HEC-RAS model readily available and accountable as a model, as opposed to as individual data points or large clusters of otherwise "vistigal" data; and with an emphasis on the particular geometric realization of the model.  It is also designed to be a standardized and centralized source of models, regardless of their origin.  For that reason, RRASSLER expects to operate within it's own controlled directory, or "HECRAS_model_catalog".   Users first download and unpack desired models into a temporary location, and then point RRASSLER at that directory and the place which you want to store your catalog.  It will:  
 
 1) Greedly scrape the entire directory structure for any HEC-RAS model projects  (defined as *.prj)
 2) for each geometric realization of that model (variation of *.g##), grab all files such that:  
@@ -36,11 +36,11 @@ In order to wrassle that friction, RRASSLER has a few theoretical value judgment
 | .dss                                                  | Data files                                                               |
 | .rasmap                                               | Output plan                                                              |
 
-3) Attempt to place the model in space.  This is done by attempting to parse the g** and g**.hdf files, guess at projections, and pulling and collating the data into an xid-xyz table. 
+3) Attempt to place the model in space.  This is done by attempting to parse the g** and g**.hdf files, intelligently guess at projections, and pulling and collating the data into an xid-xyz table. 
 4) Using that extracted geometry, attempt to create a model footprint (hull).
-    5) If that process errors out, the model is appended with a 3_, and placed into the catalog
-    6) If the hull was created, we then attempt to joint that model the the reference hydrofabric and locate the "Primary downstream divergence" (the first COMID from the maximum levelpath underneath that footprint).  If that process errors out for any reason, the model is appended with a 1_
-    7) If there was no feature to join, the model 
+    5) If that process errors out, the model is appended with a 3_, and placed into the catalog.  The resulting extracted geometry will allow you to determine why a footprint was unable to be created.
+    6) If the hull was created, we then attempt to joint that model the the reference hydrofabric and locate the "Primary downstream divergence" (the first COMID from the maximum levelpath underneath that footprint).  If that process errors out for any reason, the model is appended with a 1_, 
+    7) If there was no feature to join, the model is 
     8) If the model was joined, the ID of the primary downstream divergence is appended to the model key.
     9) If that can be constructed, the model was assumed to be correctly placed in space.  The relevant model files are copied to the uniquely parsed "final_model_name_key" folder under the _/models/_ folder.  
 5) If the creation of the model hull errors out, the model is placed in the _/models/_unprocessed_ folder for further investigation, correction, and rewrassling.
@@ -48,13 +48,13 @@ In order to wrassle that friction, RRASSLER has a few theoretical value judgment
 
 This workflow is loosely diagrammed as follows:
 
-![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png)
+![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png)
 
 Let's take a look at a few "real life" examples of these outputs and how we should interpret them.
 
-![](https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/RRASSLER_names.png)
+![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_names.png)
 
-Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, although you will be operating over local files you may RRASSLE those into ether a local directory or an s3 bucket using the same commands.  RRASSLER also handles all "folder structure" differences between S3 protocols and disk representations, so the "bucket" argument can look just like a folder path or can be the "root" folder in an S3 URL and both are intelligently parsed out.
+Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, although you will be operating over local files you may RRASSLE those into ether a local directory or an S3 bucket using the same commands.  RRASSLER also handles all "folder structure" differences between S3 protocols and disk representations, so the "bucket" argument can look just like a folder path or can be the "root" folder in an S3 URL and both are parsed out.
 
 ## The "minimal" catalog entry form
 
@@ -83,7 +83,8 @@ As mentioned, the form of the RRASSL'd record is based on hydrofabric specificat
 
 | Attribute       | Description                                                                                                                                                                                                                                                                                    | relevant layers |
 |-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| master_id       | A catalog specific, globally unique transect hy_id                                                                                                                                                                                                                                             | transects       |
+| xid             | A model specific transect id                                                                                                                                                                                                                                                                   | transects       |
+| master_id       | A catalog specific, globally unique transect id                                                                                                                                                                                                                                                | transects       |
 | mean_shift      | The amount of space added to normalize a cross section's station-elevation to geographic distance.  Positive indicates that distance was added to the station-elevation series to make it match to the line (length) as it was specified in the geography.  This is reported as a running sum. | cs_pts          |
 | roughness       | (Optional) status is now (Required)                                                                                                                                                                                                                                                            | cs_pts          |
 | Geometry        | Simple Features Geometry (POLYGON)                                                                                                                                                                                                                                                             | hulls           |
@@ -95,7 +96,7 @@ As mentioned, the form of the RRASSL'd record is based on hydrofabric specificat
 | units           | The units of the model ("Feet" or "Meter")                                                                                                                                                                                                                                                     | hulls           |
 | source          | The source of the model                                                                                                                                                                                                                                                                        | hulls           |
 
-Go ahead and look at the index files we created with code like so:
+Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which look like so (in R):
 
 ```{r, eval=FALSE}
 cat_path <- path/to/catalog
@@ -150,4 +151,13 @@ First 5 features:
 3            23285   CLEAR 002 EPSG:2277  Foot   5791782_CLEAR 002_g01_1688926594 FEMA Region 6         23291 POLYGON ((-96.54638 29.7554...
 4            23279   CLEAR 001 EPSG:2277  Foot   5791782_CLEAR 001_g01_1688926594 FEMA Region 6         23284 POLYGON ((-96.55299 29.7509...
 5            23264 BUCKNER 034 EPSG:2277  Foot 5791782_BUCKNER 034_g01_1688926582 FEMA Region 6         23278 POLYGON ((-96.55418 29.7420...
+```
+
+or like so if python is your preferred tooling:
+
+```{python, eval=FALSE}
+import os
+import geopandas as gpd
+dat = gpd("../inst/extdata/sample_output/ras_catalog/model_footprints.fgb")
+head(dat)
 ```

@@ -42,10 +42,10 @@ shotgun_proj_test(
 OUTPUT_DESCRIPTION
 }
 \description{
-FUNCTION_DESCRIPTION
+a helper function to geographically test projections
 }
 \details{
-DETAILS
+in dev
 }
 \examples{
 \dontrun{
@@ -57,11 +57,9 @@ if(interactive()){
 }
 \seealso{
 \code{\link[glue]{glue}}
- \code{\link[sfheaders]{sf_linestring}}
- \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_as_sf}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_write}}
+ \code{\link[sfheaders]{sf_linestring}}, \code{\link[sfheaders]{sf_polygon}}
+ \code{\link[sf]{st_crs}}, \code{\link[sf]{st_coordinates}}, \code{\link[sf]{st_write}}
  \code{\link[lwgeom]{st_startpoint}}
- \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{distinct}}
- \code{\link[holyhull]{holyhull}}
 
 Other pre-process: 
 \code{\link{scrape_ble_lib}()}

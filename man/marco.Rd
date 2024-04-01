@@ -20,9 +20,10 @@ RRASSLER::marco()
 }
 \seealso{
 Other helper: 
+\code{\link{move_dbase}()},
 \code{\link{print_error_block}()},
 \code{\link{print_warning_block}()},
 \code{\link{url_exists}()},
-\code{\link{util_unzip}()}
+\code{\link{util_ras2plucker}()}
 }
 \concept{helper}
