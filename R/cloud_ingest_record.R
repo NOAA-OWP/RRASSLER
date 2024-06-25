@@ -139,6 +139,9 @@ cloud_ingest_record <- function(in_file = NULL,
 
   if (is.na(current_model_projection) & !is.null(proj_override)) {
     current_model_projection = proj_override
+    if(file.exists(proj_override)) {
+      list_of_files <- append(list_of_files,proj_override)
+    }
   }
 
   # For each geometric realization of the model

@@ -236,7 +236,6 @@ process_ras_hdf_to_xyz <- function(geom_path,
 
     sf_return <- sfheaders::sf_linestring(
       obj = data.frame(x_coords, y_coords, xid, stream_stn, river, reach),
-      obj = data.frame(x_coords, y_coords, xid, stream_stn, river, reach),
       x = "x_coords",
       y = "y_coords",
       # , z =

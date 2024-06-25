@@ -29,6 +29,7 @@
 #' @export
 #' @importFrom stringr str_sub
 #' @importFrom unglue unglue_vec
+
 parse_model_to_xyz <- function(geom_path,
                                units,
                                proj_string,
@@ -37,7 +38,6 @@ parse_model_to_xyz <- function(geom_path,
                                vdat_trans = FALSE,
                                quiet = FALSE,
                                is_verbose = TRUE) {
-
   # sinew::moga(file.path(getwd(),"R/parse_model_to_xyz.R"),overwrite = TRUE)
   # devtools::document()
   # pkgdown::build_site(new_process=FALSE)

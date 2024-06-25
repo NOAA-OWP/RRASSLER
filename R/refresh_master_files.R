@@ -41,7 +41,7 @@
 refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
   # sinew::moga(file.path(getwd(),"R/refresh_master_files.R"),overwrite = TRUE)
   # devtools::document()
-  # pkgdown::build_site(new_process=TRUE)
+  # pkgdown::build_site(new_process=FALSE)
   # devtools::load_all()
   #
   #
@@ -240,6 +240,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
     # Remerge master features
     if(is_verbose) { message("Loading file paths") }
     massive_file_list <- list.files(path_to_ras_dbase, full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
+    # massive_file_list <- list.files(path_to_ras_dbase, full.names=TRUE, pattern = grepl("*RRASSLER*"), ignore.case=TRUE, recursive=TRUE)
 
     xyz_files <- massive_file_list[grepl("*RRASSLER_cs_pts.parquet$", massive_file_list)] %>% sort()
     hull_files <- massive_file_list[grepl("*RRASSLER_hull.fgb$", massive_file_list)] %>% sort()
@@ -264,7 +265,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
     master_id <- 0
     rows_in_table <- length(hull_files)
     for(index in 1:rows_in_table) {
-      # index = 7822
+      # index = 9488
       final_folder_name <- basename(dirname(hull_files[index]))
       if(is_verbose) { message(glue::glue("Processing {index} of {rows_in_table}:{final_folder_name}")) }
 
@@ -287,10 +288,10 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       point_concat <- data.table::rbindlist(list(point_concat, point_data))
       master_id <- max(point_data[,master_id])
 
-      hull$Name <- row$model_name
+      hull$model_name <- row$model_name
       hull$crs <- row$crs
       hull$units <- row$units
-      hull$path <- row$final_name_key
+      hull$final_name_key <- row$final_name_key
       hull$source <- row$source
       hull$end_master_id <- master_id
       hull_concat <- rbind(hull_concat,hull)

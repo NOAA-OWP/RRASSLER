@@ -20,10 +20,10 @@ RRASSLER::print_warning_block()
 }
 \seealso{
 Other helper: 
+\code{\link{load_catalog_csv_as_DT}()},
 \code{\link{marco}()},
-\code{\link{move_dbase}()},
 \code{\link{print_error_block}()},
 \code{\link{url_exists}()},
-\code{\link{util_ras2plucker}()}
+\code{\link{util_unzip}()}
 }
 \concept{helper}

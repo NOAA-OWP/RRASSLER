@@ -20,7 +20,7 @@ Our first set of sample data comes to us from the FEMA region 6 Base Level Engin
 
 ### Sample RAS2FIM data
 
-Our last set of sample data is taken directly from the [RAS2FIM](https://github.com/NOAA-OWP/ras2fim) repo from Iowa.  This folder ("ras2fim-sample-dataset") has both the input and output from a [RAS2FIM (v1)](https://github.com/NOAA-OWP/ras2fim/tree/main) run, and the models are given to us in "SI Units" and in "[EPSG:26915](https://epsg.io/26915)".  To save you the keystrokes, I've provided three different sections below which all RRASSLE sample data to a location of your choice.  You'll need to decide for yourself how and where you want to run, but there is no reason to run them all.  The first step is to decide what path you want:
+Our last set of sample data is taken directly from the [RAS2FIM](https://github.com/NOAA-OWP/ras2fim) repo from Iowa.  This folder ("ras2fim-sample-dataset") has both the input and output from a [RAS2FIM (v1)](https://github.com/NOAA-OWP/ras2fim/tree/V1) run, and the models are given to us in "SI Units" and in "[EPSG:26915](https://epsg.io/26915)".  To save you the keystrokes, I've provided three different sections below which all RRASSLE sample data to a location of your choice.  You'll need to decide for yourself how and where you want to run, but there is no reason to run them all.  The first step is to decide what path you want:
 
 # Step 1: Select a location
 ## A) Internal to the package
@@ -73,4 +73,4 @@ RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrap
 
 ## Next steps
 
-At this point in your RRASSLER workflow, we've ingested all the models we have on hand.  In a "real world" deployment, you might have hundreds or thousands more to ingest, and so you'd work your way through those before applying the rest of the PostProcess routines.  However, you can also deploy and redeploy those as needed, so the next article will walk you through how to accomplish that and what we generate with that step.
+At this point in your RRASSLER workflow, we've ingested all the models we have on hand.  In a "real world" deployment, you might have hundreds or thousands more to ingest, and so you'd work your way through those before applying the rest of the post-process routines.  However, you can also deploy and redeploy those as needed, so the next article will walk you through how to accomplish that and what we generate with that step.

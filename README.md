@@ -1,14 +1,9 @@
 
-![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/_rassler_key_image.png)
+# pkgdown <img src="man/figures/logo.png" align="right" />
+
+![](man/figures/_rassler_key_image.png)
 
 <!-- badges: start -->
-
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![License:
-MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://choosealicense.com/licenses/mit/)
-[![Project Status:
-Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -70,6 +65,9 @@ There are several tutorials available at the [Article
 index](https://NOAA-OWP.github.io/RRASSLER/docs/articles/index.html)
 including:
 
+- [Data
+  Model](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html):
+  The data standard we are building to.
 - [Ingest
   steps](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html):
   What RRASSLER is doing to data?
@@ -181,8 +179,7 @@ the utility which would account for those models needs to be done.
 ### Dependencies
 
 This was written tested, and partially deployed using using
-[rocker-versioned2](https://github.com/rocker-org/rocker-versioned2), a
-*geodev.Dockerfile* docker file is provided for reproducibility.
+[rocker-versioned2](https://github.com/rocker-org/rocker-versioned2).
 Typically deployed via package installation on an
 [RStudio](https://posit.co/downloads/) instance and alongside [a RAS2FIM
 conda

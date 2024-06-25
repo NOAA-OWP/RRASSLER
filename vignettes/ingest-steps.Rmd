@@ -11,7 +11,7 @@ vignette: >
 
 # Making an "RRASSLE'd Catalog"
 
-Despite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the tasks and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
+Despite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the objectives that the archives were aiming to accomplish and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
 
 ### Ingest logic
 
@@ -48,55 +48,17 @@ In order to wrassle that friction, RRASSLER has a few theoretical value judgment
 
 This workflow is loosely diagrammed as follows:
 
-![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_algo.drawio.png)
+![](../man/figures/RRASSLER_algo.drawio.png)
 
 Let's take a look at a few "real life" examples of these outputs and how we should interpret them.
 
-![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/RRASSLER_names.png)
+![](../man/figures/RRASSLER_names.png)
 
 Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, although you will be operating over local files you may RRASSLE those into ether a local directory or an S3 bucket using the same commands.  RRASSLER also handles all "folder structure" differences between S3 protocols and disk representations, so the "bucket" argument can look just like a folder path or can be the "root" folder in an S3 URL and both are parsed out.
 
 ## The "minimal" catalog entry form
 
-As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are:
-
-## Hydrofabric cross section representations
-
-| Attribute     | Description                                                                          | relevant layers   |
-|---------------|--------------------------------------------------------------------------------------|-------------------|
-| hy_id         | A hydrofabric specific, globally unique flowpath/flowline identifier                 | transects, cs_pts |
-| geometry      | Simple Features Geometry (LINESTRING)                                                | transects         |
-| cs_source     | Source of transect information                                                       | transects, cs_pts |
-| cs_id         | Identifier, unique to a hy_id, that increases from the inlet to the outlet transects | transects         |
-| cs_measure    | Percent along the flowpath from inlet                                                | transects         |
-| cs_length     | Width (in meters) of cross section transect                                          | cs_pts            |
-| pt_id         | Identifier, unique to cs_id, that increases from left bank to right bank             | cs_pts            |
-| pt_measure    | Distance of cs_id, starting at 0, in meters                                          | cs_pts            |
-| relative_dist | Percent along the transect from left bank (0-1)                                      | cs_pts            |
-| X             | X coordinate in CRS of geometry                                                      | cs_pts            |
-| Y             | Y coordinate in CRS of geometry                                                      | cs_pts            |
-| Z             | Z coordinate (in meters) in CRS of geometry                                          | cs_pts            |
-| Z_source      | Source of elevation data                                                             | cs_pts            |
-| roughness     | (Optional) Estimated Manning's Roughness value                                       | cs_pts            |
-
-## RAS Source Extensions:
-
-| Attribute       | Description                                                                                                                                                                                                                                                                                    | relevant layers |
-|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| xid             | A model specific transect id                                                                                                                                                                                                                                                                   | transects       |
-| master_id       | A catalog specific, globally unique transect id                                                                                                                                                                                                                                                | transects       |
-| mean_shift      | The amount of space added to normalize a cross section's station-elevation to geographic distance.  Positive indicates that distance was added to the station-elevation series to make it match to the line (length) as it was specified in the geography.  This is reported as a running sum. | cs_pts          |
-| roughness       | (Optional) status is now (Required)                                                                                                                                                                                                                                                            | cs_pts          |
-| Geometry        | Simple Features Geometry (POLYGON)                                                                                                                                                                                                                                                             | hulls           |
-| start_master_id | The start master_id of the model cross sections                                                                                                                                                                                                                                                | hulls           |
-| end_master_id   | The end master_id of the model cross sections                                                                                                                                                                                                                                                  | hulls           |
-| Name            | The name of the model                                                                                                                                                                                                                                                                          | hulls           |
-| path            | the folder path to the original model                                                                                                                                                                                                                                                          | hulls           |
-| crs             | the native CRS of the model                                                                                                                                                                                                                                                                    | hulls           |
-| units           | The units of the model ("Feet" or "Meter")                                                                                                                                                                                                                                                     | hulls           |
-| source          | The source of the model                                                                                                                                                                                                                                                                        | hulls           |
-
-Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which look like so (in R):
+As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are augmented by RAS specific attributes as defined in our standing [data model page](https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html).  See the RRASSLER spesific data model page [here](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html).  Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which you can query (in R) like so:
 
 ```{r, eval=FALSE}
 cat_path <- path/to/catalog
@@ -157,7 +119,35 @@ or like so if python is your preferred tooling:
 
 ```{python, eval=FALSE}
 import os
-import geopandas as gpd
-dat = gpd("../inst/extdata/sample_output/ras_catalog/model_footprints.fgb")
-head(dat)
+import pandas
+import geopandas
+import pyarrow.parquet
+
+cat_path = path/to/catalog
+points = pandas.read_parquet(os.path.join(cat_path, 'point_database.parquet'), engine='pyarrow')
+points
+ 	xid 	xid_length 	xid_d 	relative_dist 	x 	y 	z 	n 	source 	master_id
+0 	1 	282.819375 	0.00000 	0.000000 	-97.228405 	30.209038 	180.481224 	0.16 	3.0 	1.0
+1 	1 	282.819375 	1.92024 	0.006790 	-97.228416 	30.209023 	180.206904 	0.16 	3.0 	1.0
+2 	1 	282.819375 	3.99288 	0.014118 	-97.228428 	30.209007 	180.161184 	0.16 	3.0 	1.0
+3 	1 	282.819375 	5.76072 	0.020369 	-97.228438 	30.208994 	179.947824 	0.16 	3.0 	1.0
+4 	1 	282.819375 	8.74776 	0.030931 	-97.228454 	30.208971 	179.767992 	0.16 	3.0 	1.0
+cross_sections = geopandas.read_file(os.path.join(cat_path, 'model_footprints.fgb'))
+cross_sections
+master_id 	geometry
+0 	38.0 	LINESTRING (-96.00866 43.37436, -96.00866 43.3...
+1 	85.0 	LINESTRING (-96.00866 43.37436, -96.00866 43.3...
+2 	86.0 	LINESTRING (-96.01016 43.37394, -96.01017 43.3...
+3 	39.0 	LINESTRING (-96.01016 43.37394, -96.01017 43.3...
+4 	87.0 	LINESTRING (-96.01221 43.37459, -96.01222 43.3...
+footprints = geopandas.read_file(os.path.join(cat_path, 'model_footprints.fgb'))
+footprints
+id 	start_master_id 	model_name 	crs 	units 	final_name_key 	source 	end_master_id 	geometry
+0 	1 	38.0 	7242449 	EPSG:26915 	SI Units 	7242483_7242449_g01_1634841246 	test: IFC 	49.0 	POLYGON ((-96.00866 43.37436, -96.00866 43.374...
+1 	1 	50.0 	7242483 	EPSG:26915 	SI Units 	7242511_7242483_g01_1634841246 	test: IFC 	71.0 	POLYGON ((-96.02147 43.37233, -96.02148 43.372...
+2 	1 	85.0 	10170204000897 	EPSG:26915 	SI Units 	7242581_10170204000897_g01_1616607646 	test: IFC 	146.0 	POLYGON ((-96.00866 43.37436, -96.00866 43.374...
+3 	1 	72.0 	7242511 	EPSG:26915 	SI Units 	7242531_7242511_g01_1634841246 	test: IFC 	84.0 	POLYGON ((-96.04800 43.35928, -96.04802 43.359...
+4 	1 	147.0 	7242531 	EPSG:26915 	SI Units 	7242581_7242531_g01_1634841246 	test: IFC 	158.0 	POLYGON ((-96.05628 43.35093, -96.05632 43.350...
+5 	1 	159.0 	7242581 	EPSG:26915 	SI Units 	7242581_7242581_g01_1634841246 	test: IFC 	177.0 	POLYGON ((-96.06632 43.34152, -96.06633 43.341...
 ```
+

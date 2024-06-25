@@ -122,7 +122,7 @@ disk_ingest_record <- function(in_file = NULL,
   xml_files <- list.files(dir_of_file,pattern = utils::glob2rx(glue::glue("{current_model_name}.xml$")),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
   # pdf_files <- list.files(dir_of_file, pattern=utils::glob2rx(glue::glue("{current_model_name}.pdf$")), full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
   p_files <- p_files[!p_files %in% prj_files]
-  list_of_files <- c(g_files,ghdf_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
+  list_of_files <- c(g_files,ghdf_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,xml_files,rasmap_files)
 
   if (length(g_files) == 0) {
     print_warning_block()
@@ -136,7 +136,7 @@ disk_ingest_record <- function(in_file = NULL,
     file_text <- read.delim(potential_file, header = FALSE)
 
     if (any(c('PROJCS', 'GEOGCS', 'DATUM', 'PROJECTION') == file_text)) {
-      current_model_projection = sf::st_crs(potential_file)
+      current_model_projection = potential_file
     } else if (grepl("SI Units", file_text, fixed = TRUE)) {
       current_last_modified = as.integer(as.POSIXct(file.info(potential_file)$mtime))
       current_model_units = "SI Units"
@@ -147,10 +147,9 @@ disk_ingest_record <- function(in_file = NULL,
   }
 
   if (is.na(current_model_projection) & !is.null(proj_override)) {
+    current_model_projection = proj_override
     if(file.exists(proj_override)) {
-      current_model_projection = sf::st_crs(readLines(proj_override))
-    } else {
-      current_model_projection = proj_override
+      list_of_files <- append(list_of_files,proj_override)
     }
   }
 
@@ -162,7 +161,6 @@ disk_ingest_record <- function(in_file = NULL,
     # Do we have enough info to parse the file at this point?
     cond1 = !is.na(current_model_units)
     cond2 = !is.na(current_model_projection)
-    cond3 = file.exists(paste0(g_file, ".hdf"))
 
     # We don't know either the projection or the units and can't parse this yet
     if (!(cond1 & cond2)) {
@@ -187,6 +185,8 @@ disk_ingest_record <- function(in_file = NULL,
         }
         notes <- glue::glue("{notes} * Time added to filename:{time_added_to_unique}")
       }
+
+      if(file.exists())
 
       new_row <-
         data.table::data.table(
@@ -261,6 +261,9 @@ disk_ingest_record <- function(in_file = NULL,
       }
 
       dir.create(file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,fsep = .Platform$file.sep))
+      if(file.exists(proj_override)) {
+        current_model_projection <- basebnanme(proj_override)
+      }
       new_row <-
         data.table::data.table(
           current_nhdplus_comid,
@@ -278,14 +281,8 @@ disk_ingest_record <- function(in_file = NULL,
 
       data.table::fwrite(new_row,file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,"RRASSLER_metadata.csv",fsep = .Platform$file.sep),row.names = FALSE)
 
-      if(cond3) {
-        files_to_copy <- list_of_files
-      } else {
-        files_to_copy <- c(g_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
-      }
-
       file.copy(
-        files_to_copy,
+        list_of_files,
         file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,fsep = .Platform$file.sep)
       )
       next
@@ -344,7 +341,9 @@ disk_ingest_record <- function(in_file = NULL,
       }
       notes <- glue::glue("{extrated_pts[[2]]} * Time added to filename:{time_added_to_unique}")
     }
-
+    if(file.exists(proj_override)) {
+      current_model_projection <- basebnanme(proj_override)
+    }
     new_row <-
       data.table::data.table(
         current_nhdplus_comid,
@@ -383,13 +382,8 @@ disk_ingest_record <- function(in_file = NULL,
       quiet = is_verbose
     )
 
-    if(cond3) {
-      files_to_copy <- list_of_files
-    } else {
-      files_to_copy <- c(g_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
-    }
     file.copy(
-      files_to_copy,
+      list_of_files,
       file.path(path_to_ras_dbase,"models",current_final_name_key,fsep = .Platform$file.sep)
     )
 

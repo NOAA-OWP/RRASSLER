@@ -4,10 +4,10 @@ template:
   bootswatch: litera
 authors:
    NOAA:
-     html: "<img src='https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/noaa-logo.png' height='36' alt='NOAA OWP'/>"
+     html: "<img src='man/figures/noaa-logo.png' height='36' alt='NOAA OWP'/>"
      href: "https://water.noaa.gov/about/nwm"
    Lynker:
-     html: "<img src='https://raw.githubusercontent.com/JimColl/RRASSLER/main/man/figures/lynker-logo.png' height='36' alt='Lynker'/>"
+     html: "<img src='man/figures/lynker-logo.png' height='36' alt='Lynker'/>"
      href: "https://lynker-intel.com/"
    sidebar:
     roles: [cre, ctb, fnd]
@@ -29,7 +29,7 @@ reference:
   desc: Core RRASSLER logic
   contents:
   - has_concept("ingest")
-- subtitle: Postprocess
+- subtitle: post-process
   desc: Database helpers and mappers
   contents:
   - has_concept("post-process")
@@ -42,7 +42,7 @@ articles:
 - title: Articles
   desc: Tutorials, How-To's, and Snippets
   contents:
+  - RRASSLER-format
   - ingest-steps
   - deploying-rrassler
   - mapping-rrassler
-  - model-debug

@@ -35,7 +35,7 @@
 
 ingest_FEMA6_BLE <- function(path_to_ras_dbase,
                              HUCID,
-                             proj_override = proj_override,
+                             proj_override = NULL,
                              apply_vdat_trans = FALSE,
                              is_quiet = FALSE,
                              is_verbose = TRUE,
@@ -82,12 +82,16 @@ ingest_FEMA6_BLE <- function(path_to_ras_dbase,
     if(!is_quiet) { message(glue::glue("Looking for a projection")) }
     scrape_ble_lib(database_path = path_to_ras_dbase,HUCID,is_quiet = is_quiet,overwrite = overwrite,files = "s")
     zip_file <- file.path(path_to_ras_dbase,"_temp","BLE",HUCID,glue::glue("{HUCID}_SpatialData.zip"),fsep = .Platform$file.sep)
-    utils::unzip(zip_file,exdir = file.path(dirname(zip_file),gsub('.{4}$', '', basename(zip_file)),fsep = .Platform$file.sep))
+    utils::unzip(
+      zip_file,
+      exdir = file.path(dirname(zip_file),gsub('.{4}$', '', basename(zip_file)),fsep = .Platform$file.sep))
     path_to_gdb <- file.path(path_to_ras_dbase,"_temp","BLE",HUCID,glue::glue("{HUCID}_SpatialData"),"Spatial Files",glue::glue("{HUCID}_SpatialData.gdb"),fsep = .Platform$file.sep)
     fc <- sf::st_read(path_to_gdb,layer="BLE_DEP01PCT")
     if (!is.null(sf::st_crs(fc))) {
       proj_override <- sf::st_crs(fc)
     } else {
+      print_warning_block()
+      message("No proj found")
       return(FALSE)
     }
   }

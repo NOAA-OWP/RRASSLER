@@ -22,6 +22,8 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ get_datum_from_crs("EPSG:6349")
+
  }
 }
 }

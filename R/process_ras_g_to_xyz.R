@@ -141,11 +141,17 @@ process_ras_g_to_xyz <- function(geom_path,
   non_numeric_rows <- append(grep("^[A-Za-z]", file_text$V1),grep("^#", file_text$V1)) |> sort()
 
   # Quick logic check
+  if(length(xs_xy_row_heads) == 0) {
+    print_error_block()
+    message("There were no 'XS GIS Cut Line', this may not be a 'spatial' model")
+    return(FALSE)
+  }
+
   if(!all.equal(length(xs_xy_row_heads),
                 length(xs_statele_row_heads),
                 length(xs_mann_row_heads))) {
     print_error_block()
-    message("An incorrectly formatted g file was found (lines did not match up)")
+    message("An oddly formatted g file was found (lines did not match up)")
     return(FALSE)
   }
 
@@ -247,8 +253,8 @@ process_ras_g_to_xyz <- function(geom_path,
       sf::st_crs(sf_xs_lines) = sf::st_crs(sf::st_read(proj_string,layer="BLE_DEP01PCT"))
       sf::st_crs(sf_reach_lines) = sf::st_crs(sf::st_read(proj_string,layer="BLE_DEP01PCT"))
     } else {
-      sf::st_crs(sf_xs_lines) = readLines(proj_string)
-      sf::st_crs(sf_reach_lines) = readLines(proj_string)
+      sf::st_crs(sf_xs_lines) = sf::st_crs(proj_string)
+      sf::st_crs(sf_reach_lines) = sf::st_crs(proj_string)
     }
   } else {
     sf::st_crs(sf_xs_lines) = proj_string
@@ -334,7 +340,6 @@ process_ras_g_to_xyz <- function(geom_path,
         pt_z <- (point_slice[point_index, ]$Z * stn_unit_norm) * elev_unit_norm
       }
 
-      pt_n <- point_slice[point_index, ]$n
       pt_n <- point_slice[point_index, ]$n
       pt_b <- "test"
       normalized_point_database <- rbind(

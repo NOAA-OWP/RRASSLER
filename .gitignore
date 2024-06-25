@@ -1,7 +1,7 @@
-.Rhistory
-.Rproj.user
-.rosm.cache
-/trash
-/inProgress
-/paper
-/inst/extdata/HUC8.fgb
+trash
+inst/extdata/sample_output/ras_catalog/HUC8.fgb
+inst/extdata/sample_ras/timing_samples
+.Rbuildignore
+model-debug.Rmd
+cookbooks.R
+OWP_cookbooks.R
