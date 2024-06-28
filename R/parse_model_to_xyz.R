@@ -40,7 +40,7 @@ parse_model_to_xyz <- function(geom_path,
                                is_verbose = TRUE) {
   # sinew::moga(file.path(getwd(),"R/parse_model_to_xyz.R"),overwrite = TRUE)
   # devtools::document()
-  # pkgdown::build_site(new_process=FALSE)
+  # pkgdown::build_site(new_process=TRUE)
   # devtools::load_all()
   #
   # geom_path = g_path

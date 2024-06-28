@@ -1,7 +1,7 @@
 
-# pkgdown <img src="man/figures/logo.png" align="right" />
+# RRASSLER
 
-![](man/figures/_rassler_key_image.png)
+![](https://github.com/NOAA-OWP/RRASSLER/blob/dev/man/figures/_rassler_key_image.png?raw=true)
 
 <!-- badges: start -->
 
@@ -62,20 +62,20 @@ RRASSLER::marco()                           # A "hello world" test
 # Tutorials
 
 There are several tutorials available at the [Article
-index](https://NOAA-OWP.github.io/RRASSLER/docs/articles/index.html)
+index](https://NOAA-OWP.github.io/RRASSLER/articles/index.html)
 including:
 
 - [Data
-  Model](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html):
+  Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html):
   The data standard we are building to.
 - [Ingest
-  steps](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html):
+  steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html):
   What RRASSLER is doing to data?
 - [Deploying
-  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Deploying-RRASSLER.html):
+  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Deploying-RRASSLER.html):
   How to make your own “HEC-RAS model catalog”.
 - [Mapping
-  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Mapping-RRASSLER.html):
+  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html):
   Adding (geographic) context to our data.
 
 See the [package
@@ -148,21 +148,6 @@ specifically, the following are known shortcomings and next steps.
 Efforts to harden the workflow and algorithm, extend this workflow into
 your language of choice, and general improvements would all be uses of
 time.
-
-##### RRASSTAC
-
-Although not the most obvious use of
-[STAC](https://stacspec.org/en/about/), or SpatioTemporal Asset Catalog,
-HEC-RAS models (most easily the footprints generated in the cataloging
-of the models) could be extended to the STAC framework as a STAC Item,
-and by that analogy each version of the catalog is a STAC collection.
-Formalizing this, most likely through an additional function such as
-*STAC_catalog.R*, which would generate the needed json’s and then
-appropriately serve those, would be a worthy task to undertake. The
-obvious extension of that, exposing the model cross sections with XYZ
-LINESTRING geometry as STAC items, is in theory what RRASSLER is
-accomplishing, but the framework and analogous STAC deployment is less
-clear and could also be explored.
 
 ##### 2D RRASSLER
 

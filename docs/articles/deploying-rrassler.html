@@ -89,14 +89,14 @@
 <div class="section level2">
 <h2 id="deploy-rrassler-over-sample-data">Deploy RRASSLER over sample data<a class="anchor" aria-label="anchor" href="#deploy-rrassler-over-sample-data"></a>
 </h2>
-<p>This tutorial will walk you through the use of RRASSLER over some
-sample data and a cursory overview of the resulting data RRASSLER
-creates. As outlined in the ingest steps, RRASSLER can be thought of as
-a two step process. That first step is to ingest HEC-RAS models into the
-RRASSLE’d structure, and the second step is to generate the spatial
-index. We’ll make the assumption you are at least passingly familiar
-with the form and function of HEC-RAS data, but if not go back and read
-<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html" class="external-link">Ingest
+<p>This tutorial will walk you through the technical steps you’d use to
+run RRASSLER over some sample data and a cursory overview of the
+resulting data RRASSLER creates. As outlined in the <a href="https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html" class="external-link">ingest
+steps</a> documentation, RRASSLER can be thought of as a two step
+process. That first step is to ingest HEC-RAS models into the RRASSLE’d
+structure, and the second step is to generate the spatial index. We’ll
+make the assumption you are at least passingly familiar with the form
+and function of HEC-RAS data, but if not go back and read <a href="https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html" class="external-link">Ingest
 steps</a>.</p>
 <div class="section level3">
 <h3 id="assessing-the-sample-data">Assessing the sample data<a class="anchor" aria-label="anchor" href="#assessing-the-sample-data"></a>
@@ -110,8 +110,8 @@ from <a href="https://webapps.usgs.gov/infrm/estBFE/" class="external-link uri">
 Texas specific dashboard at <a href="https://www.arcgis.com/apps/dashboards/1e98f1e511fc40d3b08790a4251a64ee" class="external-link uri">https://www.arcgis.com/apps/dashboards/1e98f1e511fc40d3b08790a4251a64ee</a>
 for more BLE models. For testing purposes, we’ve selected 3 models from
 HUC 12090301 and left them in their original folder structure
-(“\12090301\12090301_modelsCreek-Colorado River”). All models use
-English units and are assumed to have “<a href="https://epsg.io/2277" class="external-link">EPSG:2277</a>” as their projection.</p>
+(“\12090301\12090301_modelsCreek-Colorado River"). All models use
+English units and are assumed to have”<a href="https://epsg.io/2277" class="external-link">EPSG:2277</a>” as their projection.</p>
 </div>
 <div class="section level4">
 <h4 id="sample-ras2fim-data">Sample RAS2FIM data<a class="anchor" aria-label="anchor" href="#sample-ras2fim-data"></a>
@@ -134,13 +134,10 @@ run them all. The first step is to decide what path you want:</p>
 <h3 id="a-internal-to-the-package">A) Internal to the package<a class="anchor" aria-label="anchor" href="#a-internal-to-the-package"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Running in:"</span>,<span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">""</span>, package <span class="op">=</span> <span class="st">"RRASSLER"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">ras_dbase</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"./inst/extdata/sample_output/ras_catalog/"</span>, package <span class="op">=</span> <span class="st">"RRASSLER"</span><span class="op">)</span></span>
-<span><span class="co"># or: ras_dbase &lt;- file.path(fs::path_package("", package = "RRASSLER"),)</span></span>
-<span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"extdata/sample_output/ras_catalog/"</span>, package <span class="op">=</span> <span class="st">"RRASSLER"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ras_dbase</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"/extdata/sample_output/ras_catalog/"</span>, package <span class="op">=</span> <span class="st">"RRASSLER"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="b-as-a-developer-using-the-docker-setup">B) As a developer using the docker setup<a class="anchor" aria-label="anchor" href="#b-as-a-developer-using-the-docker-setup"></a>
+<h3 id="b-as-a-developer-using-a-rockerd-docker-setup">B) As a developer using a rockerd docker setup<a class="anchor" aria-label="anchor" href="#b-as-a-developer-using-a-rockerd-docker-setup"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ras_dbase</span> <span class="op">&lt;-</span> <span class="st">"../inst/extdata/sample_output/ras_catalog/"</span></span></code></pre></div>
@@ -189,9 +186,9 @@ run!</p>
 models we have on hand. In a “real world” deployment, you might have
 hundreds or thousands more to ingest, and so you’d work your way through
 those before applying the rest of the post-process routines. However,
-you can also deploy and redeploy those as needed, so the next article
-will walk you through how to accomplish that and what we generate with
-that step.</p>
+you can also deploy and redeploy those as needed, so the article on <a href="https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html" class="external-link">mapping
+RRASSLER</a> will walk you through how to accomplish that and what we
+generate with those post-processing steps.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

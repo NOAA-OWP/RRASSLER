@@ -72,10 +72,10 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="pkgdown-">pkgdown <a class="anchor" aria-label="anchor" href="#pkgdown-"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="rrassler">RRASSLER<a class="anchor" aria-label="anchor" href="#rrassler"></a>
 </h1>
 </div>
-<p><img src="reference/figures/_rassler_key_image.png"></p>
+<p><img src="https://github.com/NOAA-OWP/RRASSLER/blob/dev/man/figures/_rassler_key_image.png?raw=true"></p>
 <!-- badges: start -->
 
 </div>
@@ -103,16 +103,16 @@
 <div class="section level1">
 <h1 id="tutorials">Tutorials<a class="anchor" aria-label="anchor" href="#tutorials"></a>
 </h1>
-<p>There are several tutorials available at the <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/index.html" class="external-link">Article index</a> including:</p>
+<p>There are several tutorials available at the <a href="https://NOAA-OWP.github.io/RRASSLER/articles/index.html" class="external-link">Article index</a> including:</p>
 <ul>
 <li>
-<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html" class="external-link">Data Model</a>: The data standard we are building to.</li>
+<a href="https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html" class="external-link">Data Model</a>: The data standard we are building to.</li>
 <li>
-<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html" class="external-link">Ingest steps</a>: What RRASSLER is doing to data?</li>
+<a href="https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html" class="external-link">Ingest steps</a>: What RRASSLER is doing to data?</li>
 <li>
-<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Deploying-RRASSLER.html" class="external-link">Deploying RRASSLER</a>: How to make your own “HEC-RAS model catalog”.</li>
+<a href="https://NOAA-OWP.github.io/RRASSLER/articles/Deploying-RRASSLER.html" class="external-link">Deploying RRASSLER</a>: How to make your own “HEC-RAS model catalog”.</li>
 <li>
-<a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/Mapping-RRASSLER.html" class="external-link">Mapping RRASSLER</a>: Adding (geographic) context to our data.</li>
+<a href="https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html" class="external-link">Mapping RRASSLER</a>: Adding (geographic) context to our data.</li>
 </ul>
 <p>See the <a href="https://NOAA-OWP.github.io/RRASSLER/index.html" class="external-link">package documentation</a> for <a href="https://NOAA-OWP.github.io/RRASSLER/reference/index.html" class="external-link">function references</a> and additional information.</p>
 <div class="section level2">
@@ -149,11 +149,6 @@
 <h5 id="hardening-and-extention">Hardening and extention<a class="anchor" aria-label="anchor" href="#hardening-and-extention"></a>
 </h5>
 <p>Efforts to harden the workflow and algorithm, extend this workflow into your language of choice, and general improvements would all be uses of time.</p>
-</div>
-<div class="section level5">
-<h5 id="rrasstac">RRASSTAC<a class="anchor" aria-label="anchor" href="#rrasstac"></a>
-</h5>
-<p>Although not the most obvious use of <a href="https://stacspec.org/en/about/" class="external-link">STAC</a>, or SpatioTemporal Asset Catalog, HEC-RAS models (most easily the footprints generated in the cataloging of the models) could be extended to the STAC framework as a STAC Item, and by that analogy each version of the catalog is a STAC collection. Formalizing this, most likely through an additional function such as <em>STAC_catalog.R</em>, which would generate the needed json’s and then appropriately serve those, would be a worthy task to undertake. The obvious extension of that, exposing the model cross sections with XYZ LINESTRING geometry as STAC items, is in theory what RRASSLER is accomplishing, but the framework and analogous STAC deployment is less clear and could also be explored.</p>
 </div>
 <div class="section level5">
 <h5 id="id_2d-rrassler">2D RRASSLER<a class="anchor" aria-label="anchor" href="#id_2d-rrassler"></a>

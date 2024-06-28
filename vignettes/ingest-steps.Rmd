@@ -20,21 +20,21 @@ In order to wrassle that friction, RRASSLER has a few theoretical value judgment
 1) Greedly scrape the entire directory structure for any HEC-RAS model projects  (defined as *.prj)
 2) for each geometric realization of that model (variation of *.g##), grab all files such that:  
 
-| File grep Pattern (# denotes single numeric wildcard) | HEC-RAS Model Use                                                        |
-|-------------------------------------------------------|--------------------------------------------------------------------------|
-| .g##                                                  | Geometry definitions                                                     |
-| .prj                                                  | Projection (can be non-standard proj4 string defined file)               |
-| .prj                                                  | Project (same extension, defines how RAS models are wired)               |
-| .p##                                                  | Plan file, used to drive the model                                       |
-| .f##                                                  | Steady Flow file. Profile information, flow data and boundary conditions |
-| .h##                                                  | Hydraulic Design data file                                               |
-| .v##                                                  | Velocity file                                                            |
-| .o##                                                  | Output file                                                              |
-| .r##                                                  | Run file for steady flow                                                 |
-| .u##                                                  | Steady Flow file. Profile information, flow data and boundary conditions |
-| .x##                                                  | Run file for unsteady flow                                               |
-| .dss                                                  | Data files                                                               |
-| .rasmap                                               | Output plan                                                              |
+| File grep Pattern (# denotes single numeric wildcard) | HEC-RAS Model Use                                                          |
+|-------------------------------------------------------|----------------------------------------------------------------------------|
+| .g##                                                  | Geometry definitions                                                       |
+| .prj                                                  | Projection (can be non-standard proj4 string defined file)                 |
+| .prj                                                  | Project (same extension, defines how RAS models are wired)                 |
+| .p##                                                  | Plan file, used to drive the model                                         |
+| .f##                                                  | Steady Flow file. Profile information, flow data and boundary conditions   |
+| .h##                                                  | Hydraulic Design data file                                                 |
+| .v##                                                  | Velocity file                                                              |
+| .o##                                                  | Output file                                                                |
+| .r##                                                  | Run file for steady flow                                                   |
+| .u##                                                  | unsteady Flow file. Profile information, flow data and boundary conditions |
+| .x##                                                  | Run file for unsteady flow                                                 |
+| .dss                                                  | Data files                                                                 |
+| .rasmap                                               | Output plan                                                                |
 
 3) Attempt to place the model in space.  This is done by attempting to parse the g** and g**.hdf files, intelligently guess at projections, and pulling and collating the data into an xid-xyz table. 
 4) Using that extracted geometry, attempt to create a model footprint (hull).
@@ -58,61 +58,64 @@ Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, 
 
 ## The "minimal" catalog entry form
 
-As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are augmented by RAS specific attributes as defined in our standing [data model page](https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html).  See the RRASSLER spesific data model page [here](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html).  Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which you can query (in R) like so:
+As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are augmented by RAS specific attributes as defined in our standing [data model page](https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html).  See the RRASSLER specific data model page [here](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html).  Slightly more tangibly, when RRASSLER has been run over a model, the record will have the following pattern and schema which you can query (in R) like so:
 
 ```{r, eval=FALSE}
-cat_path <- path/to/catalog
+ras_dbase <- path/to/catalog
+first_model <- list.dirs(file.path(ras_dbase ,"models",fsep = .Platform$file.sep),full.names = F, recursive = F)[2]
 
-> points <- arrow::read_parquet(file.path(cat_path,"point_database.parquet",fsep = .Platform$file.sep))
+> points <- arrow::read_parquet(file.path(ras_dbase ,"models",first_model,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep))
 > points
-         xid    xid_length      xid_d         x        y         z    n source master_id
-      1:   1  231.8369 [m]    0.00000 -97.29359 29.98529 137.83666 0.05      3         1
-      2:   1  231.8369 [m]    0.85344 -97.29358 29.98528 137.83666 0.05      3         1
-      3:   1  231.8369 [m]    2.56032 -97.29358 29.98527 137.68426 0.05      3         1
-      4:   1  231.8369 [m]    4.23672 -97.29357 29.98525 137.62330 0.05      3         1
-      5:   1  231.8369 [m]    6.79704 -97.29356 29.98523 137.47699 0.05      3         1
+     xid xid_length xid_d relative_dist     x     y     z     n source
+   <int>        [m] <dbl>         <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>
+ 1     1       283.  0          0       -97.2  30.2  180.  0.16      3
+ 2     1       283.  1.92       0.00679 -97.2  30.2  180.  0.16      3
+ 3     1       283.  3.99       0.0141  -97.2  30.2  180.  0.16      3
+ 4     1       283.  5.76       0.0204  -97.2  30.2  180.  0.16      3
+ 5     1       283.  8.75       0.0309  -97.2  30.2  180.  0.16      3
+ 6     1       283. 10.5        0.0372  -97.2  30.2  180.  0.16      3
+ 7     1       283. 12.6        0.0444  -97.2  30.2  180.  0.16      3
+ 8     1       283. 15.3        0.0540  -97.2  30.2  180.  0.16      3
+ 9     1       283. 17.0        0.0602  -97.2  30.2  179.  0.16      3
+10     1       283. 19.7        0.0695  -97.2  30.2  179.  0.16      3
       
-> cross_sections <- sf::st_read(file.path(cat_path,"xs.fgb",fsep = .Platform$file.sep))
-Reading layer `XS' from data source `G:\data\ras_catalog\XS.fgb' using driver `FlatGeobuf'
-Simple feature collection with 24901 features and 1 field
-Geometry type: LINESTRING
-Dimension:     XY
-Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
-Geodetic CRS:  NAD83(2011) + NAVD88 height
-> cross_sections
-Simple feature collection with 24901 features and 1 field
-Geometry type: LINESTRING
-Dimension:     XY
-Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
-Geodetic CRS:  NAD83(2011) + NAVD88 height
-First 5 features:
-   master_id                       geometry
-1      12038 LINESTRING (-96.50289 29.71...
-2      11520 LINESTRING (-96.50289 29.71...
-3      11779 LINESTRING (-96.50289 29.71...
-4      11261 LINESTRING (-96.50289 29.71...
-5      12037 LINESTRING (-96.48813 29.73...
-
-> footprints <- sf::st_read(file.path(cat_path,"model_footprints.fgb",fsep = .Platform$file.sep))
-Reading layer `model_footprints' from data source `G:\data\ras_catalog\model_footprints.fgb' using driver `FlatGeobuf'
-Simple feature collection with 1316 features and 7 fields
+> footprint <- sf::st_read(file.path(ras_dbase ,"models",first_model,"RRASSLER_hull.fgb",fsep = .Platform$file.sep))
+Reading layer `RRASSLER_hull' from data source `/.../RRASSLER/inst/extdata/sample_output/ras_catalog/models/5789080_ALUM 107_g01_1691071096/RRASSLER_hull.fgb' using driver `FlatGeobuf'
+Simple feature collection with 1 feature and 1 field
 Geometry type: POLYGON
 Dimension:     XY
-Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
-Geodetic CRS:  WGS 84
-> footprints
-Simple feature collection with 1316 features and 7 fields
+Bounding box:  xmin: -97.23015 ymin: 30.20139 xmax: -97.21034 ymax: 30.20904
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+> footprint
+Simple feature collection with 1 feature and 1 field
 Geometry type: POLYGON
 Dimension:     XY
-Bounding box:  xmin: -97.60178 ymin: 29.69069 xmax: -96.44944 ymax: 30.41321
-Geodetic CRS:  WGS 84
-First 5 features:
-   start_master_id        Name       crs units                               path        source end_master_id                       geometry
-1              897 BUCKNER 001 EPSG:2277  Foot       2_BUCKNER 001_g01_1688926581 FEMA Region 6           909 POLYGON ((-96.58433 29.7028...
-2             1111 BUCKNER 035 EPSG:2277  Foot       2_BUCKNER 035_g01_1688926582 FEMA Region 6          1125 POLYGON ((-96.53977 29.7482...
-3            23285   CLEAR 002 EPSG:2277  Foot   5791782_CLEAR 002_g01_1688926594 FEMA Region 6         23291 POLYGON ((-96.54638 29.7554...
-4            23279   CLEAR 001 EPSG:2277  Foot   5791782_CLEAR 001_g01_1688926594 FEMA Region 6         23284 POLYGON ((-96.55299 29.7509...
-5            23264 BUCKNER 034 EPSG:2277  Foot 5791782_BUCKNER 034_g01_1688926582 FEMA Region 6         23278 POLYGON ((-96.55418 29.7420...
+Bounding box:  xmin: -97.23015 ymin: 30.20139 xmax: -97.21034 ymax: 30.20904
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+  id                       geometry
+1  1 POLYGON ((-97.22841 30.2090...
+               
+> streamline <- sf::st_read(file.path(ras_dbase ,"models",first_model,"RRASSLER_river.fgb",fsep = .Platform$file.sep))
+Reading layer `RRASSLER_river' from data source `/.../RRASSLER/inst/extdata/sample_output/ras_catalog/models/5789080_ALUM 107_g01_1691071096/RRASSLER_river.fgb' using driver `FlatGeobuf'
+Simple feature collection with 1 feature and 1 field
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -97.22998 ymin: 30.20063 xmax: -97.21019 ymax: 30.21019
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+> streamline
+Simple feature collection with 1 feature and 1 field
+Geometry type: LINESTRING
+Dimension:     XY
+Bounding box:  xmin: -97.22998 ymin: 30.20063 xmax: -97.21019 ymax: 30.21019
+Geodetic CRS:  NAD83(2011) + NAVD88 height
+  reach_id                       geometry
+1        1 LINESTRING (-97.22997 30.21...
+                       
+> model_metadata <- data.table::fread(file.path(ras_dbase ,"models",first_model,"RRASSLER_metadata.csv",fsep = .Platform$file.sep))
+> model_metadata
+   nhdplus_comid model_name g_file last_modified      source         units       crs             initial_scrape_name                  final_name_key                                              notes
+           <int>     <char> <char>         <int>      <char>        <char>    <char>                          <char>                          <char>                                             <char>
+1:       5789080   ALUM 107    g01    1691071096 test: FEMA6 English Units EPSG:2277 5789080_ALUM 107_g01_1691071096 5789080_ALUM 107_g01_1691071096 * profiles normalized by:7.091436580325 * G parsed               
 ```
 
 or like so if python is your preferred tooling:
@@ -124,30 +127,32 @@ import geopandas
 import pyarrow.parquet
 
 cat_path = path/to/catalog
-points = pandas.read_parquet(os.path.join(cat_path, 'point_database.parquet'), engine='pyarrow')
+first_model = os.listdir(os.path.join(ras_dbase, 'models'))[0]
+
+points = pandas.read_parquet(os.path.join(ras_dbase,"models",first_model,"RRASSLER_cs_pts.parquet"), engine='pyarrow')
 points
- 	xid 	xid_length 	xid_d 	relative_dist 	x 	y 	z 	n 	source 	master_id
-0 	1 	282.819375 	0.00000 	0.000000 	-97.228405 	30.209038 	180.481224 	0.16 	3.0 	1.0
-1 	1 	282.819375 	1.92024 	0.006790 	-97.228416 	30.209023 	180.206904 	0.16 	3.0 	1.0
-2 	1 	282.819375 	3.99288 	0.014118 	-97.228428 	30.209007 	180.161184 	0.16 	3.0 	1.0
-3 	1 	282.819375 	5.76072 	0.020369 	-97.228438 	30.208994 	179.947824 	0.16 	3.0 	1.0
-4 	1 	282.819375 	8.74776 	0.030931 	-97.228454 	30.208971 	179.767992 	0.16 	3.0 	1.0
-cross_sections = geopandas.read_file(os.path.join(cat_path, 'model_footprints.fgb'))
-cross_sections
-master_id 	geometry
-0 	38.0 	LINESTRING (-96.00866 43.37436, -96.00866 43.3...
-1 	85.0 	LINESTRING (-96.00866 43.37436, -96.00866 43.3...
-2 	86.0 	LINESTRING (-96.01016 43.37394, -96.01017 43.3...
-3 	39.0 	LINESTRING (-96.01016 43.37394, -96.01017 43.3...
-4 	87.0 	LINESTRING (-96.01221 43.37459, -96.01222 43.3...
-footprints = geopandas.read_file(os.path.join(cat_path, 'model_footprints.fgb'))
-footprints
-id 	start_master_id 	model_name 	crs 	units 	final_name_key 	source 	end_master_id 	geometry
-0 	1 	38.0 	7242449 	EPSG:26915 	SI Units 	7242483_7242449_g01_1634841246 	test: IFC 	49.0 	POLYGON ((-96.00866 43.37436, -96.00866 43.374...
-1 	1 	50.0 	7242483 	EPSG:26915 	SI Units 	7242511_7242483_g01_1634841246 	test: IFC 	71.0 	POLYGON ((-96.02147 43.37233, -96.02148 43.372...
-2 	1 	85.0 	10170204000897 	EPSG:26915 	SI Units 	7242581_10170204000897_g01_1616607646 	test: IFC 	146.0 	POLYGON ((-96.00866 43.37436, -96.00866 43.374...
-3 	1 	72.0 	7242511 	EPSG:26915 	SI Units 	7242531_7242511_g01_1634841246 	test: IFC 	84.0 	POLYGON ((-96.04800 43.35928, -96.04802 43.359...
-4 	1 	147.0 	7242531 	EPSG:26915 	SI Units 	7242581_7242531_g01_1634841246 	test: IFC 	158.0 	POLYGON ((-96.05628 43.35093, -96.05632 43.350...
-5 	1 	159.0 	7242581 	EPSG:26915 	SI Units 	7242581_7242581_g01_1634841246 	test: IFC 	177.0 	POLYGON ((-96.06632 43.34152, -96.06633 43.341...
+	xid 	xid_length 	xid_d 	relative_dist 	x 	y 	z 	n 	source
+0 	1 	282.819375 	0.00000 	0.000000 	-97.228405 	30.209038 	180.481224 	0.16 	3.0
+1 	1 	282.819375 	1.92024 	0.006790 	-97.228416 	30.209023 	180.206904 	0.16 	3.0
+2 	1 	282.819375 	3.99288 	0.014118 	-97.228428 	30.209007 	180.161184 	0.16 	3.0
+3 	1 	282.819375 	5.76072 	0.020369 	-97.228438 	30.208994 	179.947824 	0.16 	3.0
+4 	1 	282.819375 	8.74776 	0.030931 	-97.228454 	30.208971 	179.767992 	0.16 	3.0
+
+footprint = geopandas.read_file(os.path.join(ras_dbase,"models",first_model,"RRASSLER_hull.fgb"))
+footprint
+	id 	geometry
+0 	1 	POLYGON ((-97.22841 30.20904, -97.22842 30.209...
+
+streamline = geopandas.read_file(os.path.join(ras_dbase,"models",first_model,"RRASSLER_river.fgb"))
+streamline
+	reach_id 	geometry
+0 	1 	LINESTRING (-97.22997 30.21019, -97.22998 30.2...
+
+model_metadata = pandas.read_csv(os.path.join(ras_dbase,"models",first_model,"RRASSLER_metadata.csv"))
+model_metadata
+ 	nhdplus_comid 	model_name 	g_file 	last_modified 	source 	units 	crs 	initial_scrape_name 	final_name_key 	notes
+0 	5789080 	ALUM 107 	g01 	1691071096 	test: FEMA6 	English Units 	EPSG:2277 	5789080_ALUM 107_g01_1691071096 	5789080_ALUM 107_g01_1691071096 	* profiles normalized by:7.091436580325 * G pa...
 ```
 
+## Next steps
+That process is repeated as many times as needed and over as many models as you have avalible.  The next part of the RRASSLER processing chain, [post-processing and Mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html), can be run at any point in time as the workflow does not need to interact with the record format in any manner whatsoever.

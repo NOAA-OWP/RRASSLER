@@ -14,8 +14,7 @@ vignette: >
 Once RRASSLER processing has been run all the way through, the data generated will have the following schema:
 
 ```{r, echo = FALSE}
-# ras_dbase <- fs::path_package("/inst/extdata/sample_output/ras_catalog/", package = "RRASSLER")
-ras_dbase <- file.path("~/Dropbox/root/projects/RRASSLER/RRASSLER/inst/extdata/sample_output/ras_catalog/")
+ras_dbase <- fs::path_package("/extdata/sample_output/ras_catalog/", package = "RRASSLER")
 
 model_footprints.fgb <- sf::st_read(file.path(ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep),quiet=TRUE)
 point_database.parquet <- arrow::open_dataset(file.path(ras_dbase,"point_database.parquet",fsep = .Platform$file.sep)) |> head(5) |> dplyr::collect()
@@ -77,7 +76,7 @@ my_dat |>
 meta = tibble::tribble(
   ~Attribute, ~Description, ~Table,
   "id","A table spesific id, otherwise meaningless","RRASSLER_hull.fgb, model_footprints.fgb, XS.fgb",
-  "nhdplus_comid","The nhdplus comid from the 'primary dowwnstream divergance' of the intersection of RRASSLER_hull.fgb, from nhdplusTools","RRASSLER_hull.fgb",
+  "nhdplus_comid","The nhdplus comid from the 'primary dowwnstream divergance' of the intersection of RRASSLER_hull.fgb, from nhdplusTools","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
   "geometry","Simple Features Geometry (LINESTRING or POLYGON)","RRASSLER_hull.fgb, RRASSLER_river.fgb, model_footprints.fgb",
   "master_id","A database sepseific ID for a cross section","XS.fgb",
   "start_master_id","The starting 'master_id' from the cross section database for that model","model_footprints.fgb",
@@ -107,3 +106,5 @@ meta = tibble::tribble(
 
 formattable::formattable(meta)
 ```
+
+To generate this data, follow the [ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html) artical to learn how RRASSLER processes a model to generate that data.

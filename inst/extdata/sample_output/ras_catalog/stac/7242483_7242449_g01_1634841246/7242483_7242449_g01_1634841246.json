@@ -4070,7 +4070,7 @@
   ],
   "assets": {
     "7242483_7242449_g01_1634841246": {
-      "href": "/media/sf_G_DRIVE/Dropbox/root/projects/RRASSLER/RRASSLER/inst/extdata/sample_output/ras_catalog/models/7242483_7242449_g01_1634841246/RRASSLER_hull.fgb",
+      "href": "s3://lynker-spatial/bathymetry/RRASSLER_sample_catalog/models/7242483_7242449_g01_1634841246/RRASSLER_hull.fgb",
       "type": "application/vnd.flatgeobuf"
     }
   },
