@@ -26,9 +26,9 @@ gratefully pilfered from https://stackoverflow.com/questions/52911812/check-if-u
 #EXAMPLE1
 some_urls <-
 c(
-  "https://stackoverflow.com/questions/52911812/check-if-url-exists-in-r",
-  "http://jim.is/a/bad/programmer/",
-  "https://github.com/NOAA-OWP/inundation-mapping"
+  "https://jimcoll.github.io/a/bad/programmer/",    # Should 404
+  "https://github.com/NOAA-OWP/inundation-mapping", # Should exist
+  "https://nooneshouldeverhavethisurl.gov/badtest"  # Does not exist in any form
 )
 data.frame(
   exists = sapply(some_urls, url_exists, USE.NAMES = FALSE),
@@ -40,10 +40,10 @@ data.frame(
 \code{\link[httr]{HEAD}}, \code{\link[httr]{GET}}, \code{\link[httr]{status_code}}
 
 Other helper: 
+\code{\link{load_catalog_csv_as_DT}()},
 \code{\link{marco}()},
-\code{\link{move_dbase}()},
 \code{\link{print_error_block}()},
 \code{\link{print_warning_block}()},
-\code{\link{util_ras2plucker}()}
+\code{\link{util_unzip}()}
 }
 \concept{helper}

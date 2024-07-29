@@ -1,0 +1,58 @@
+{
+  "type": "Catalog",
+  "id": "RASSTAC",
+  "stac_version": "1.0.0",
+  "description": "RRASSLER catalog in STAC form.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "./catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./7242483_7242449_g01_1634841246/7242483_7242449_g01_1634841246.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./7242511_7242483_g01_1634841246/7242511_7242483_g01_1634841246.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./7242581_10170204000897_g01_1616607646/7242581_10170204000897_g01_1616607646.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./7242531_7242511_g01_1634841246/7242531_7242511_g01_1634841246.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./7242581_7242531_g01_1634841246/7242581_7242531_g01_1634841246.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./7242581_7242581_g01_1634841246/7242581_7242581_g01_1634841246.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./5789080_ALUM 107_g01_1691071096/5789080_ALUM 107_g01_1691071096.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./5789080_ALUM 114_g01_1691071096/5789080_ALUM 114_g01_1691071096.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "item",
+      "href": "./5790952_ALUM 006_g01_1691071095/5790952_ALUM 006_g01_1691071095.json",
+      "type": "application/json"
+    }
+  ]
+}

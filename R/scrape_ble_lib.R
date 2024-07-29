@@ -40,22 +40,10 @@ scrape_ble_lib <-
     fn_time_start <- Sys.time()
 
     output_dir <- file.path(database_path, "_temp", "BLE", HUCID, fsep = .Platform$file.sep)
-    if (file.exists(output_dir)) {
-      if (overwrite) {
-        unlink(output_dir, recursive = TRUE)
-      } else {
-        print_warning_block()
-        print("file downloaded and overwrite is set to FALSE")
-        return(FALSE)
+    if (!dir.exists(output_dir)) {
+        dir.create(output_dir)
       }
-    }
-
-    template_hucs <-
-      sf::st_transform(sf::st_read(
-        file.path(database_path, "HUC8.fgb", fsep = .Platform$file.sep),
-        quiet = is_quiet
-      ),
-      sf::st_crs("EPSG:5070"))
+    template_hucs <- sf::st_transform(sf::st_read(file.path(database_path, "HUC8.fgb", fsep = .Platform$file.sep),quiet = is_quiet), sf::st_crs("EPSG:5070"))
     Potential_features <- template_hucs[template_hucs$huc8 == HUCID, ]
 
     if (nrow(Potential_features) == 0) {
@@ -63,88 +51,52 @@ scrape_ble_lib <-
       print("No features found")
       return(FALSE)
     }
-    Potential_features$SpatialData_url =
-      paste0(
-        "https://ebfedata.s3.amazonaws.com/",
-        Potential_features$huc8,
-        "_",
-        gsub(
-          " ",
-          "",
-          gsub("-", "", Potential_features$name, fixed = TRUE),
-          fixed = TRUE
-        ),
-        "/",
-        Potential_features$huc8,
-        "_SpatialData.zip"
-      )
-    Potential_features$RASData_url =
-      paste0(
-        "https://ebfedata.s3.amazonaws.com/",
-        Potential_features$huc8,
-        "_",
-        gsub(
-          " ",
-          "",
-          gsub("-", "", Potential_features$name, fixed = TRUE),
-          fixed = TRUE
-        ),
-        "/",
-        Potential_features$huc8,
-        "_Models.zip"
-      )
-    Potential_features$Reports_url =
-      paste0(
-        "https://ebfedata.s3.amazonaws.com/",
-        Potential_features$huc8,
-        "_",
-        gsub(
-          " ",
-          "",
-          gsub("-", "", Potential_features$name, fixed = TRUE),
-          fixed = TRUE
-        ),
-        "/",
-        Potential_features$huc8,
-        "_Documents.zip"
-      )
+    Potential_features$SpatialData_url = paste0("https://ebfedata.s3.amazonaws.com/",Potential_features$huc8,"_",gsub(" ","",gsub("-", "", Potential_features$name, fixed = TRUE),fixed = TRUE),"/",Potential_features$huc8,"_SpatialData.zip")
+    Potential_features$RASData_url = paste0("https://ebfedata.s3.amazonaws.com/",Potential_features$huc8,"_",gsub(" ","",gsub("-", "", Potential_features$name, fixed = TRUE),fixed = TRUE),"/",Potential_features$huc8,"_Models.zip")
+    Potential_features$Reports_url = paste0("https://ebfedata.s3.amazonaws.com/",Potential_features$huc8,"_",gsub(" ","",gsub("-", "", Potential_features$name, fixed = TRUE),fixed = TRUE),"/",Potential_features$huc8,"_Documents.zip")
 
     if (url_exists(Potential_features$SpatialData_url)) {
       dir.create(output_dir, recursive = TRUE)
-      if (!dir.exists(output_dir)) {
-        dir.create(output_dir)
-      }
+
+
       if (grepl("m", files, fixed = TRUE)) {
-        if (!is_quiet) {
-          message("Trying models")
+
+        if (file.exists(file.path(output_dir,basename(Potential_features$RASData_url),fsep = .Platform$file.sep))) {
+          if (overwrite) {
+            unlink(file.path(output_dir,basename(Potential_features$RASData_url),fsep = .Platform$file.sep), recursive = TRUE)
+          } else {
+            print_warning_block()
+            print("file downloaded and overwrite is set to FALSE")
+          }
         }
+
+        if (!is_quiet) { message("Trying models") }
         httr::GET(
           Potential_features$RASData_url,
           httr::write_disk(
-            file.path(
-              output_dir,
-              basename(Potential_features$RASData_url),
-              fsep = .Platform$file.sep
-            ),
-            overwrite = TRUE
-          ),
-          overwrite = TRUE
-        )
+            file.path(output_dir,basename(Potential_features$RASData_url),fsep = .Platform$file.sep),
+            overwrite = TRUE),
+          overwrite = TRUE)
       }
       if (grepl("s", files, fixed = TRUE)) {
         if (!is_quiet) {
           message("Trying spatial")
         }
+
+        if (file.exists(file.path(output_dir,basename(Potential_features$SpatialData_url),fsep = .Platform$file.sep))) {
+          if (overwrite) {
+            unlink(file.path(output_dir,basename(Potential_features$SpatialData_url),fsep = .Platform$file.sep), recursive = TRUE)
+          } else {
+            print_warning_block()
+            print("file downloaded and overwrite is set to FALSE")
+          }
+        }
+
         httr::GET(
           Potential_features$SpatialData_url,
           httr::write_disk(
-            file.path(
-              output_dir,
-              basename(Potential_features$SpatialData_url),
-              fsep = .Platform$file.sep
-            ),
-            overwrite = TRUE
-          ),
+            file.path(output_dir,basename(Potential_features$SpatialData_url),fsep = .Platform$file.sep),
+            overwrite = TRUE),
           overwrite = TRUE
         )
       }
@@ -152,35 +104,30 @@ scrape_ble_lib <-
         if (!is_quiet) {
           message("Trying docs")
         }
+
+        if (file.exists(file.path(output_dir,basename(Potential_features$Reports_url),fsep = .Platform$file.sep))) {
+          if (overwrite) {
+            unlink(file.path(output_dir,basename(Potential_features$Reports_url),fsep = .Platform$file.sep), recursive = TRUE)
+          } else {
+            print_warning_block()
+            print("file downloaded and overwrite is set to FALSE")
+          }
+        }
+
         httr::GET(
           Potential_features$Reports_url,
           httr::write_disk(
-            file.path(
-              output_dir,
-              basename(Potential_features$Reports_url),
-              fsep = .Platform$file.sep
-            ),
-            overwrite = TRUE
-          ),
+            file.path(output_dir,basename(Potential_features$Reports_url),fsep = .Platform$file.sep),
+            overwrite = TRUE),
           overwrite = TRUE
         )
       }
 
       if (!is_quiet) {
-        disk_size <-
-          round(sum(file.info(
-            list.files(
-              output_dir,
-              full.names = TRUE,
-              recursive = TRUE
-            )
-          )$size) * 1e-9, 3)
-        message(
-          glue::glue(
-            "Downloaded {disk_size} GB in {round(difftime(Sys.time(), fn_time_start, units='mins'), digits = 2)} minutes"
-          )
-        )
+        disk_size <- round(sum(file.info(list.files(output_dir,full.names = TRUE,recursive = TRUE))$size) * 1e-9, 3)
+        message(glue::glue("Downloaded {disk_size} GB in {round(difftime(Sys.time(), fn_time_start, units='mins'), digits = 2)} minutes"))
       }
+
       return(TRUE)
     } else {
       if (!is_quiet) {

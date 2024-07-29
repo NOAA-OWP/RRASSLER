@@ -45,8 +45,5 @@ if(interactive()){
 \code{\link[sf]{st_transform}}, \code{\link[sf]{st_read}}, \code{\link[sf]{st_crs}}
  \code{\link[httr]{GET}}, \code{\link[httr]{write_disk}}
  \code{\link[glue]{glue}}
-
-Other pre-process: 
-\code{\link{shotgun_proj_test}()}
 }
 \concept{pre-process}

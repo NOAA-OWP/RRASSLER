@@ -7,12 +7,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   eval = FALSE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  fig.path = "man/figures/",
   out.width = "100%"
 )
 ```
+# pkgdown <img src="man/figures/logo.png" align="right" />
 
-![](https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/main/man/figures/_rassler_key_image.png)
+![](https://github.com/NOAA-OWP/RRASSLER/blob/dev/man/figures/_rassler_key_image.png?raw=true)
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -42,11 +43,12 @@ RRASSLER::marco()	                        # A "hello world" test
 
 # Tutorials
 
-There are several tutorials available at the [Article index](https://NOAA-OWP.github.io/RRASSLER/docs/articles/index.html) including:
+There are several tutorials available at the [Article index](https://NOAA-OWP.github.io/RRASSLER/articles/index.html) including:
 
-* [Ingest steps](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Ingest-steps.html): What RRASSLER is doing to data?
-* [Deploying RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Deploying-RRASSLER.html): How to make your own "HEC-RAS model catalog".
-* [Mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/docs/articles/Mapping-RRASSLER.html): Adding (geographic) context to our data.
+* [Data Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html): The data standard we are building to.
+* [Ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html): What RRASSLER is doing to data?
+* [Deploying RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Deploying-RRASSLER.html): How to make your own "HEC-RAS model catalog".
+* [Mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html): Adding (geographic) context to our data.
 
 See the [package documentation](https://NOAA-OWP.github.io/RRASSLER/index.html) for [function references](https://NOAA-OWP.github.io/RRASSLER/reference/index.html) and additional information.
 
@@ -72,15 +74,12 @@ If you have questions, concerns, bug reports, etc, please file an issue in this 
 ##### Hardening and extention  
 Efforts to harden the workflow and algorithm, extend this workflow into your language of choice, and general improvements would all be uses of time. 
 
-##### RRASSTAC  
-Although not the most obvious use of [STAC](https://stacspec.org/en/about/), or SpatioTemporal Asset Catalog, HEC-RAS models (most easily the footprints generated in the cataloging of the models) could be extended to the STAC framework as a STAC Item, and by that analogy each version of the catalog is a STAC collection.  Formalizing this, most likely through an additional function such as _STAC_catalog.R_, which would generate the needed json's and then appropriately serve those, would be a worthy task to undertake.  The obvious extension of that, exposing the model cross sections with XYZ LINESTRING geometry as STAC items, is in theory what RRASSLER is accomplishing, but the framework and analogous STAC deployment is less clear and could also be explored.
-
 ##### 2D RRASSLER
 Many of the same considerations, concerns, and hurdles experienced working with and manipulating 1D RAS data will be encountered as we move into 2D model accounting.  While many of the technical advancements and standards make the accounting of 2D models a bit more theoretically straightforward; since most valuable and standardized 2D models come with an associated _.tif_ file which is footprintable, and new model formats are provided as _.HDF_, which has cloud compatible characteristics and is being developed, the actual work of constructing the utility which would account for those models needs to be done.
 
 ### Dependencies
 
-This was written tested, and partially deployed using using [rocker-versioned2](https://github.com/rocker-org/rocker-versioned2), a _geodev.Dockerfile_ docker file is provided for reproducibility.  Typically deployed via package installation on an [RStudio](https://posit.co/downloads/) instance and alongside [a RAS2FIM conda environment](https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md) in Windows.
+This was written tested, and partially deployed using using [rocker-versioned2](https://github.com/rocker-org/rocker-versioned2).  Typically deployed via package installation on an [RStudio](https://posit.co/downloads/) instance and alongside [a RAS2FIM conda environment](https://github.com/NOAA-OWP/ras2fim/blob/dev/doc/INSTALL.md) in Windows.
 
 ## Open source licensing info
 

@@ -7,6 +7,8 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  get_datum_from_crs("EPSG:6349")
+#'
 #'  }
 #' }
 #' @seealso
@@ -19,10 +21,9 @@
 
 get_datum_from_crs <- function(x) {
   # sinew::moga(file.path(getwd(),"R/get_datum_from_crs.R"),overwrite = TRUE)
+  # x <- "EPSG:6349"
 
   ## -- Start --
-  # x <- sf_cross_section_lines
-
   xcrs <- sf::st_crs(x)
   if (is.na(xcrs)) {
     stop("No CRS defined")

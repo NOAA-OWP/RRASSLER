@@ -8,7 +8,8 @@ append_catalog_fields(
   path_to_ras_dbase = NULL,
   out_name = NULL,
   overwrite = FALSE,
-  is_verbose = TRUE
+  is_verbose = TRUE,
+  HUC8_override = NULL
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ append_catalog_fields(
 \item{overwrite}{flag to dictate whether or not to overwrite the out_name, should it exist. set to TRUE to delete and (re)generate, FALSE to safely exit, Default: FALSE}
 
 \item{is_verbose}{flag to determine whether print statements are suppressed, TRUE to show messages and FALSE to surpress them, Default: TRUE}
+
+\item{HUC8_override}{a path to the spatial key if you need to run this over a temp dir for eg ras2fim, Default: NULL}
 }
 \value{
 a new csv with helper columns
@@ -44,11 +47,6 @@ if(interactive()){
  \code{\link[data.table]{fwrite}}
 
 Other post-process: 
-\code{\link{catalog_integrity_checks}()},
-\code{\link{dedupe}()},
-\code{\link{parse_and_plot_old}()},
-\code{\link{refresh_master_files}()},
-\code{\link{reprocess_table_row}()},
-\code{\link{update_models_from_table}()}
+\code{\link{refresh_master_files}()}
 }
 \concept{post-process}

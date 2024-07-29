@@ -51,9 +51,12 @@ map_library <-  function(path_to_ras_dbase,
   #
   # devtools::load_all()
   #
-  # path_to_ras_dbase = "/home/rstudio/g/data/ras_dbase"
-  # AOI_to_map="12090301"
-  # name="12090301_input_models"
+  # path_to_ras_dbase = file.path("~/data/ras_catalog/")
+  # path_to_ras_dbase = "./inst/extdata/sample_output/ras_catalog/"
+  # # AOI_to_map="12090301"
+  # AOI_to_map=NULL
+  # # name="12090301_input_models"
+  # name = "model_map"
   # plot_lines=TRUE
   # chart_lines=FALSE
   # chart_lines=TRUE
@@ -74,17 +77,19 @@ map_library <-  function(path_to_ras_dbase,
 
   if(class(AOI_to_map)=="sf") {
     template_hucs <- AOI_to_map
-  } else {
+  } else if(!is.null(AOI_to_map)) {
     template_hucs <- sf::st_transform(sf::st_read(file.path(path_to_ras_dbase,"HUC8.fgb",fsep=.Platform$file.sep),quiet=FALSE),sf::st_crs("EPSG:6349"))
     template_hucs <- template_hucs[template_hucs$huc8 %in% AOI_to_map,]
   }
 
   ras_catalog_dbase = load_catalog_csv_as_DT(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))
-  hull_features <- sf::st_read(file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep)) |> sf::st_make_valid()
+  hull_features <- sf::st_read(file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep)) %>% sf::st_make_valid()
+  hull_features <- hull_features[!sf::st_is_empty(hull_features$geometry), ]
 
   if(plot_lines) {
 
     xs_features <- sf::st_read(file.path(path_to_ras_dbase,"XS.fgb",fsep = .Platform$file.sep))
+    xs_features <- xs_features[!sf::st_is_empty(xs_features$geometry), ]
 
     if(!is.null(AOI_to_map)){
       valid_xs_range <- c()
@@ -134,44 +139,44 @@ map_library <-  function(path_to_ras_dbase,
       #   create_xs_plot(unique(xs_lines_to_map$master_id)[i])
       # })
 
-      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) |>
-        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") |>
-        leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") |>
-        leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") |>
-        leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") |>
-        leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") |>
-        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") |>
-        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") |>
-        leafem::addFeatures(xs_features,
+      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
+        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
+        # leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") %>%
+        # leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") %>%
+        # leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") %>%
+        # leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") %>%
+        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") %>%
+        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
+        leafem::addFeatures(sf::st_transform(xs_features,"EPSG:4326"),
                             fillColor = 'black',
                             popup = leafpop::popupGraph(popup_charts_for_lines,
                                                         width = 400,
                                                         height = 300,
                                                         type = "png"),
-                            group = "XS") |>
-        leafem::addFeatures(hull_features,opacity = 1,fillOpacity = 0.3,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") |>
+                            group = "XS") %>%
+        leafem::addFeatures(sf::st_transform(hull_features,"EPSG:4326"),opacity = 1,fillOpacity = 0.3,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") %>%
         leaflet::addLegend("bottomright",colors = c("black","red"),
                            labels = c(paste0("Cross sections (click for chart)"), paste0("Model footprints")),
-                           title = "RAS model database",opacity = 1) |>
+                           title = "RAS model database",opacity = 1) %>%
         leaflet::addLayersControl(
           baseGroups = c(
-            "OpenStreetMap", "Stamen.Toner",
-            "Stamen.Terrain", "Esri.WorldStreetMap",
-            "Wikimedia", "CartoDB.Positron", "Esri.WorldImagery"
+            # "OpenStreetMap",
+            # "Stamen.Toner", "Stamen.Terrain", "Esri.WorldStreetMap","Wikimedia",
+            "CartoDB.Positron", "Esri.WorldImagery"
           ),
           position = "topleft",
           overlayGroups = c("Footprints","XS")
         )
     } else {
-      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) |>
-        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") |>
-        leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") |>
-        leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") |>
-        leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") |>
-        leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") |>
-        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") |>
-        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") |>
-        leafem::addFeatures(xs_features,
+      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
+        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
+        # leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") %>%
+        # leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") %>%
+        # leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") %>%
+        # leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") %>%
+        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") %>%
+        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
+        leafem::addFeatures(sf::st_transform(xs_features,"EPSG:4326"),
                             Color = 'black',
                             stroke = TRUE,
                             weight = 1.25,
@@ -179,40 +184,40 @@ map_library <-  function(path_to_ras_dbase,
                             fill = TRUE,
                             # fillColor = 'black',
                             fillOpacity = 0,
-                            group = "XS") |>
-        leafem::addFeatures(hull_features,opacity = 1,fillOpacity = 0,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") |>
+                            group = "XS") %>%
+        leafem::addFeatures(sf::st_transform(hull_features,"EPSG:4326"),opacity = 1,fillOpacity = 0,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") %>%
         # leafgl::addGlPolygons(ahulls,fillOpacity = 0,stroke = TRUE,color = 'black',popup="huc10", group = "huc") %>%
         leaflet::addLegend("bottomright",colors = c("black","black"),
-                           labels = c(paste0("Cross sections (click for chart)"), paste0("Model footprints")),
-                           title = "RAS model database",opacity = 1) |>
+                           labels = c(paste0("Cross sections"), paste0("Model footprints")),
+                           title = "RAS model database",opacity = 1) %>%
         leaflet::addLayersControl(
           baseGroups = c(
-            "OpenStreetMap", "Stamen.Toner",
-            "Stamen.Terrain", "Esri.WorldStreetMap",
-            "Wikimedia", "CartoDB.Positron", "Esri.WorldImagery"
+            # "OpenStreetMap",
+            # "Stamen.Toner", "Stamen.Terrain", "Esri.WorldStreetMap","Wikimedia",
+            "CartoDB.Positron", "Esri.WorldImagery"
           ),
           position = "topleft",
           overlayGroups = c("Footprints","XS")
         )
     }
   } else {
-    m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) |>
-      leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") |>
-      leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") |>
-      leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") |>
-      leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") |>
-      leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") |>
-      leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") |>
-      leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") |>
-      leafem::addFeatures(hull_features,opacity = 1,fillOpacity = 0,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") |>
+    m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
+      leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
+      # leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") %>%
+      # leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") %>%
+      # leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") %>%
+      # leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") %>%
+      leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") %>%
+      leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
+      leafem::addFeatures(sf::st_transform(hull_features,"EPSG:4326"),opacity = 1,fillOpacity = 0,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") %>%
       leaflet::addLegend("bottomright",colors = c("black"),
                          labels = c(paste0("Model footprints")),
-                         title = "RAS model database",opacity = 1) |>
+                         title = "RAS model database",opacity = 1) %>%
       leaflet::addLayersControl(
         baseGroups = c(
-          "OpenStreetMap", "Stamen.Toner",
-          "Stamen.Terrain", "Esri.WorldStreetMap",
-          "Wikimedia", "CartoDB.Positron", "Esri.WorldImagery"
+          # "OpenStreetMap",
+          # "Stamen.Toner", "Stamen.Terrain", "Esri.WorldStreetMap","Wikimedia",
+          "CartoDB.Positron", "Esri.WorldImagery"
         ),
         position = "topleft",
         overlayGroups = c("Footprints")

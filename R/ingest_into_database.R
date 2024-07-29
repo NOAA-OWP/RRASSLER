@@ -121,6 +121,25 @@ ingest_into_database <- function(path_to_ras_dbase,
     }
   }
 
+  # Form of logic below:
+  # if parallel_proc {
+  #   if(cloud) {
+  #     ## model by model
+  #     # To single temp
+  #     # push
+  #   } else {
+  #     Write to disk
+  #   }
+  # } else {
+  #   if(cloud) {
+  #     ## model by model
+  #     # To single temp
+  #     # push
+  #   } else {
+  #     Write to disk
+  #   }
+  # }
+
   if (parallel_proc) {
     # Set up par proc
     no_cores <- parallel::detectCores() - free_treads

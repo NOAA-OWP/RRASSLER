@@ -4,6 +4,7 @@
 #' @param out_name the name of the csv you want to generate, Default: NULL
 #' @param overwrite flag to dictate whether or not to overwrite the out_name, should it exist. set to TRUE to delete and (re)generate, FALSE to safely exit, Default: FALSE
 #' @param is_verbose flag to determine whether print statements are suppressed, TRUE to show messages and FALSE to surpress them, Default: TRUE
+#' @param HUC8_override a path to the spatial key if you need to run this over a temp dir for eg ras2fim, Default: NULL
 #' @return a new csv with helper columns
 #' @family post-process
 #' @details DETAILS
@@ -30,7 +31,8 @@
 append_catalog_fields <- function(path_to_ras_dbase = NULL,
                                   out_name = NULL,
                                   overwrite = FALSE,
-                                  is_verbose = TRUE) {
+                                  is_verbose = TRUE,
+                                  HUC8_override = NULL) {
   # sinew::moga(file.path(getwd(),"R/append_catalog_fields.R"),overwrite = TRUE)
   # devtools::document()
   # pkgdown::build_site(new_process=TRUE)
@@ -91,11 +93,19 @@ append_catalog_fields <- function(path_to_ras_dbase = NULL,
     return(FALSE)
   }
   # TODO: Could remove dependency, could use NHDPlusTools, I'm trying to be nice to servers?
-  if(!file.exists(file.path(process_dir,"HUC8.fgb",fsep = .Platform$file.sep))) {
-    print_error_block()
-    message("Missing spatial key")
-    return(FALSE)
+  template_hucs_path <- file.path(process_dir,"HUC8.fgb",fsep = .Platform$file.sep)
+  if(!file.exists(template_hucs_path)) {
+    if(!file.exists(HUC8_override)) {
+      print_error_block()
+      message("Missing spatial key")
+      return(FALSE)
+    }
+    template_hucs_path <- HUC8_override
   }
+  template_hucs <-
+    sf::st_transform(
+      sf::st_read(template_hucs_path,quiet = !is_verbose),
+      sf::st_crs("EPSG:6349"))
 
   # Are we overwriting something we shouldn't?
   if(cloud) {
@@ -147,12 +157,7 @@ append_catalog_fields <- function(path_to_ras_dbase = NULL,
   sf::sf_use_s2(FALSE)
   ras_catalog_dbase <- ras_catalog_dbase[, hucs := character()]
   list_vec <- c()
-  template_hucs <-
-    sf::st_transform(sf::st_read(
-      file.path(path_to_ras_dbase, "HUC8.fgb", fsep = .Platform$file.sep),
-      quiet = !is_verbose
-    ),
-    sf::st_crs("EPSG:6349"))
+
   for (row in 1:nrow(ras_catalog_dbase)) {
     if (is_verbose) { message(glue::glue("Processing row:{row} of {nrow(ras_catalog_dbase)}")) }
     if (is.na(ras_catalog_dbase[row, final_name_key]) ||
@@ -161,9 +166,7 @@ append_catalog_fields <- function(path_to_ras_dbase = NULL,
       if (is_verbose) {
         print_warning_block()
         message("No HUC found")
-        message("No HUC found")
       }
-      ras_catalog_dbase[row, hucs := noquote(paste0("{}"))]
       ras_catalog_dbase[row, hucs := noquote(paste0("{}"))]
     } else {
       footprint <- sf::st_read(file.path(path_to_ras_dbase,"models",ras_catalog_dbase[row, final_name_key],"RRASSLER_hull.fgb",fsep = .Platform$file.sep),quiet = TRUE)
@@ -177,6 +180,8 @@ append_catalog_fields <- function(path_to_ras_dbase = NULL,
   # https://github.com/NOAA-OWP/RRASSLER/issues/7
   ras_catalog_dbase <- ras_catalog_dbase[, source_code := "ras"]
   ras_catalog_dbase <- ras_catalog_dbase[ras_catalog_dbase$source %like% c('FEMA Region 6'), source_code := "ble"]
+  ras_catalog_dbase <- ras_catalog_dbase[ras_catalog_dbase$source %like% c('IFC'), source_code := "ifc"]
+  ras_catalog_dbase <- ras_catalog_dbase[ras_catalog_dbase$source %like% c('RFC'), source_code := "rfc"]
 
   # Status field
   ras_catalog_dbase <- ras_catalog_dbase[, status := character()]

@@ -7,7 +7,7 @@
 ingest_FEMA6_BLE(
   path_to_ras_dbase,
   HUCID,
-  proj_override = proj_override,
+  proj_override = NULL,
   apply_vdat_trans = FALSE,
   is_quiet = FALSE,
   is_verbose = TRUE,
@@ -46,10 +46,8 @@ a RRASSLE'd catalog of models or added desired HUC8 models
 }
 \description{
 helper to ingest FEMA region 6 BLE data
-helper to ingest FEMA region 6 BLE data
 }
 \details{
-As one of the best centralized and accessible databases, the FEMA region 6 BLE data are perfect candidates to RRASSL.  This provides a wrapper around BLE scrapers and the ingest_into_database function.
 As one of the best centralized and accessible databases, the FEMA region 6 BLE data are perfect candidates to RRASSL.  This provides a wrapper around BLE scrapers and the ingest_into_database function.
 }
 \examples{
