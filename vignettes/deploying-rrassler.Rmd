@@ -11,7 +11,7 @@ vignette: >
 
 # Deploy RRASSLER over sample data
 
-This tutorial will walk you through the technical steps you'd use to run RRASSLER over some sample data and a cursory overview of the resulting data RRASSLER creates.  As outlined in the [ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html) documentation, RRASSLER can be thought of as a two step process.  That first step is to ingest HEC-RAS models into the RRASSLE'd structure, and the second step is to generate the spatial index.  We'll make the assumption you are at least passingly familiar with the form and function of HEC-RAS data, but if not go back and read [Ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html).
+This tutorial will walk you through the technical steps you'd use to run RRASSLER over some sample data and a cursory overview of the resulting data RRASSLER creates.  As outlined in the [ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/ingest-steps.html) documentation, RRASSLER can be thought of as a two step process.  That first step is to ingest HEC-RAS models into the RRASSLE'd structure, and the second step is to generate the spatial index.  We'll make the assumption you are at least passingly familiar with the form and function of HEC-RAS data, but if not go back and read [Ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/ingest-steps.html).
 
 ## Assessing the sample data
 
@@ -70,4 +70,4 @@ RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrap
 
 ## Next steps
 
-At this point in your RRASSLER workflow, we've ingested all the models we have on hand.  In a "real world" deployment, you might have hundreds or thousands more to ingest, and so you'd work your way through those before applying the rest of the post-process routines.  However, you can also deploy and redeploy those as needed, so the article on [mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html) will walk you through how to accomplish that and what we generate with those post-processing steps.
+At this point in your RRASSLER workflow, we've ingested all the models we have on hand.  In a "real world" deployment, you might have hundreds or thousands more to ingest, and so you'd work your way through those before applying the rest of the post-process routines.  However, you can also deploy and redeploy those as needed, so the article on [mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/mapping-rrassler.html) will walk you through how to accomplish that and what we generate with those post-processing steps.

@@ -4,11 +4,12 @@
 #' @param is_quiet if TRUE, function will suppress message, Default: TRUE
 #' @return returns the model_catalog as a data.table object with enforced column types
 #' @family helper
-#' @details DETAILS
+#' @details a little utility that sets column types on load for some of our sillier edge cases.  the vector applied is `data.table::fread(path_to_csv,colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))`
 #' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  ras_catalog_dbase = load_catalog_csv_as_DT(file.path(path_to_ras_dbase, "accounting.csv", fsep = .Platform$file.sep),is_quiet = !is_verbose)
 #'  }
 #' }
 #' @seealso
@@ -17,7 +18,6 @@
 #' @export
 #' @import magrittr
 #' @import data.table
-
 load_catalog_csv_as_DT <- function(path_to_csv, is_quiet = TRUE) {
   # sinew::moga(file.path(getwd(),"R/load_catalog_csv_as_DT.R"),overwrite = TRUE)
   # devtools::document()

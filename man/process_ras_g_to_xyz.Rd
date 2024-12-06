@@ -43,7 +43,6 @@ DETAILS
 if(interactive()){
  #EXAMPLE1
  # g_path <- "./inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/12090301/12090301_models/Model/Alum Creek-Colorado River/ALUM 006/ALUM 006.g01"
- g_path <- fs::path_package("extdata/shapes.fgb", package = "mypkg")
  pts <- process_ras_g_to_xyz(geom_path = g_path,units = "English Units",proj_string = "EPSG:2277",vdat = FALSE,quiet = FALSE)
  }
 }

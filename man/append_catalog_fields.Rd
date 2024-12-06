@@ -30,7 +30,7 @@ a new csv with helper columns
 adds helper fields to accounting.csv.
 }
 \details{
-DETAILS
+TRUE
 }
 \examples{
 \dontrun{

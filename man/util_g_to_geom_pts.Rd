@@ -7,19 +7,19 @@
 util_g_to_geom_pts(geom_path, units, proj_string, quiet = FALSE)
 }
 \arguments{
-\item{geom_path}{PARAM_DESCRIPTION}
+\item{geom_path}{path to a file to parse}
 
-\item{units}{PARAM_DESCRIPTION}
+\item{units}{units found in the project, "English Units" or "SI Units"}
 
-\item{proj_string}{PARAM_DESCRIPTION}
+\item{proj_string}{a projection string to apply}
 
-\item{quiet}{PARAM_DESCRIPTION, Default: FALSE}
+\item{quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
 }
 \value{
-OUTPUT_DESCRIPTION
+sf points
 }
 \description{
-FUNCTION_DESCRIPTION
+A wrapper of a few different utilities across rrassler to read files in directly as points
 }
 \details{
 DETAILS

@@ -5,8 +5,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="&quot;post-processing and add context to your 'HECRAS_model_catalog'&quot;
-">
 <title>Mapping RRASSLER • RRASSLER</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -16,59 +14,45 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Mapping RRASSLER">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Mapping RRASSLER">
+<meta name="description" content="&quot;post-processing and add context to your 'HECRAS_model_catalog'&quot;
+">
 <meta property="og:description" content="&quot;post-processing and add context to your 'HECRAS_model_catalog'&quot;
 ">
 <meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/index.html">Articles</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/NOAA-OWP/RRASSLER/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/NOAA-OWP/RRASSLER/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -141,16 +125,20 @@ your catalog location appropritly<a class="anchor" aria-label="anchor" href="#a-
 <div class="section level3">
 <h3 id="remerge-the-generated-catalog-index">1) Remerge the generated catalog index<a class="anchor" aria-label="anchor" href="#remerge-the-generated-catalog-index"></a>
 </h3>
-<p>These catalog index files are simply summations of the entirety of
-the RRASSLE’d structure. We’re</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/refresh_master_files.html">refresh_master_files</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/refresh_master_files.html">refresh_master_files</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>This will create or recreate the index files at the top of the
-catalog, including:<br>
-* The Accounting sheet: <em>accounting.csv</em> * Model footprints:
-<em>model_footprints.fgb</em><br>
-* Cross sections: <em>XS.fgb</em><br>
-* Points: <em>point_database.parquet</em></p>
+catalog, including:</p>
+<ul>
+<li>The Accounting sheet: <em>accounting.csv</em>
+</li>
+<li>Model footprints: <em>model_footprints.fgb</em><br>
+</li>
+<li>Cross sections: <em>XS.fgb</em><br>
+</li>
+<li>Points: <em>point_database.parquet</em>
+</li>
+</ul>
 <p><img src="../reference/figures/GIS_features.PNG"></p>
 <div class="section level4">
 <h4 id="what-did-that-make">What did that make?<a class="anchor" aria-label="anchor" href="#what-did-that-make"></a>
@@ -160,7 +148,7 @@ specifications with modifications based on the nature of HEC-RAS data as
 outlined <a href="https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html" class="external-link">with
 Next Gen hydrofabric parameters</a>. These are augmented by RAS specific
 attributes as defined in our standing <a href="https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html" class="external-link">data
-model page</a>. See the RRASSLER spesific data model page <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html" class="external-link">here</a>.
+model page</a>. See the RRASSLER specific data model page <a href="https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html" class="external-link">here</a>.
 Slightly more tangibly, when RRASSLER has been run all the way through,
 you’ll have access to the index files which you can query (in R) like
 so:</p>
@@ -231,56 +219,64 @@ so:</p>
 <span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a><span class="dv">8</span><span class="sc">:</span>       <span class="dv">7242581</span>        <span class="dv">7242531</span>    g01    <span class="dv">1634841246</span>   test<span class="sc">:</span> IFC      SI Units EPSG<span class="sc">:</span><span class="dv">26915</span>        <span class="dv">7242581</span>_7242531_g01_1634841246        <span class="dv">7242581</span>_7242531_g01_1634841246    <span class="sc">*</span> profiles normalized by<span class="sc">:-</span><span class="fl">11.2094011902594</span> <span class="sc">*</span> G parsed</span>
 <span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a><span class="dv">9</span><span class="sc">:</span>       <span class="dv">7242581</span>        <span class="dv">7242581</span>    g01    <span class="dv">1634841246</span>   test<span class="sc">:</span> IFC      SI Units EPSG<span class="sc">:</span><span class="dv">26915</span>        <span class="dv">7242581</span>_7242581_g01_1634841246        <span class="dv">7242581</span>_7242581_g01_1634841246    <span class="sc">*</span> profiles normalized by<span class="sc">:-</span><span class="fl">29.0414282453886</span> <span class="sc">*</span> G parsed                                                                                                                     </span></code></pre></div>
 <p>or like so if python is your preferred tooling:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="im">import</span> pandas</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="im">import</span> geopandas</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="im">import</span> pyarrow.parquet</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>cat_path <span class="op">=</span> path<span class="op">/</span>to<span class="op">/</span>catalog</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>points <span class="op">=</span> pandas.read_parquet(os.path.join(cat_path, <span class="st">'point_database.parquet'</span>), engine<span class="op">=</span><span class="st">'pyarrow'</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>points</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    xid     xid_length  xid_d   relative_dist   x   y   z   n   source  master_id</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="dv">0</span>   <span class="dv">1</span>   <span class="fl">282.819375</span>  <span class="fl">0.00000</span>     <span class="fl">0.000000</span>    <span class="op">-</span><span class="fl">97.228405</span>  <span class="fl">30.209038</span>   <span class="fl">180.481224</span>  <span class="fl">0.16</span>    <span class="fl">3.0</span>     <span class="fl">1.0</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="dv">1</span>   <span class="dv">1</span>   <span class="fl">282.819375</span>  <span class="fl">1.92024</span>     <span class="fl">0.006790</span>    <span class="op">-</span><span class="fl">97.228416</span>  <span class="fl">30.209023</span>   <span class="fl">180.206904</span>  <span class="fl">0.16</span>    <span class="fl">3.0</span>     <span class="fl">1.0</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="dv">2</span>   <span class="dv">1</span>   <span class="fl">282.819375</span>  <span class="fl">3.99288</span>     <span class="fl">0.014118</span>    <span class="op">-</span><span class="fl">97.228428</span>  <span class="fl">30.209007</span>   <span class="fl">180.161184</span>  <span class="fl">0.16</span>    <span class="fl">3.0</span>     <span class="fl">1.0</span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="dv">3</span>   <span class="dv">1</span>   <span class="fl">282.819375</span>  <span class="fl">5.76072</span>     <span class="fl">0.020369</span>    <span class="op">-</span><span class="fl">97.228438</span>  <span class="fl">30.208994</span>   <span class="fl">179.947824</span>  <span class="fl">0.16</span>    <span class="fl">3.0</span>     <span class="fl">1.0</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="dv">4</span>   <span class="dv">1</span>   <span class="fl">282.819375</span>  <span class="fl">8.74776</span>     <span class="fl">0.030931</span>    <span class="op">-</span><span class="fl">97.228454</span>  <span class="fl">30.208971</span>   <span class="fl">179.767992</span>  <span class="fl">0.16</span>    <span class="fl">3.0</span>     <span class="fl">1.0</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>cross_sections <span class="op">=</span> geopandas.read_file(os.path.join(cat_path, <span class="st">'model_footprints.fgb'</span>))</span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>cross_sections</span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>master_id   geometry</span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="dv">0</span>   <span class="fl">38.0</span>    LINESTRING (<span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.37436</span>, <span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.3</span>...</span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="dv">1</span>   <span class="fl">85.0</span>    LINESTRING (<span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.37436</span>, <span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.3</span>...</span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="dv">2</span>   <span class="fl">86.0</span>    LINESTRING (<span class="op">-</span><span class="fl">96.01016</span> <span class="fl">43.37394</span>, <span class="op">-</span><span class="fl">96.01017</span> <span class="fl">43.3</span>...</span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="dv">3</span>   <span class="fl">39.0</span>    LINESTRING (<span class="op">-</span><span class="fl">96.01016</span> <span class="fl">43.37394</span>, <span class="op">-</span><span class="fl">96.01017</span> <span class="fl">43.3</span>...</span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="dv">4</span>   <span class="fl">87.0</span>    LINESTRING (<span class="op">-</span><span class="fl">96.01221</span> <span class="fl">43.37459</span>, <span class="op">-</span><span class="fl">96.01222</span> <span class="fl">43.3</span>...</span>
-<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>footprints <span class="op">=</span> geopandas.read_file(os.path.join(cat_path, <span class="st">'model_footprints.fgb'</span>))</span>
-<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>footprints</span>
-<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="bu">id</span>  start_master_id     model_name  crs     units   final_name_key  source  end_master_id   geometry</span>
-<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="dv">0</span>   <span class="dv">1</span>   <span class="fl">38.0</span>    <span class="dv">7242449</span>     EPSG:<span class="dv">26915</span>  SI Units    <span class="dv">7242483_7242449</span><span class="er">_g01_1634841246</span>  test: IFC   <span class="fl">49.0</span>    POLYGON ((<span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.37436</span>, <span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.374</span>...</span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="dv">1</span>   <span class="dv">1</span>   <span class="fl">50.0</span>    <span class="dv">7242483</span>     EPSG:<span class="dv">26915</span>  SI Units    <span class="dv">7242511_7242483</span><span class="er">_g01_1634841246</span>  test: IFC   <span class="fl">71.0</span>    POLYGON ((<span class="op">-</span><span class="fl">96.02147</span> <span class="fl">43.37233</span>, <span class="op">-</span><span class="fl">96.02148</span> <span class="fl">43.372</span>...</span>
-<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="dv">2</span>   <span class="dv">1</span>   <span class="fl">85.0</span>    <span class="dv">10170204000897</span>  EPSG:<span class="dv">26915</span>  SI Units    <span class="dv">7242581_10170204000897</span><span class="er">_g01_1616607646</span>   test: IFC   <span class="fl">146.0</span>   POLYGON ((<span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.37436</span>, <span class="op">-</span><span class="fl">96.00866</span> <span class="fl">43.374</span>...</span>
-<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="dv">3</span>   <span class="dv">1</span>   <span class="fl">72.0</span>    <span class="dv">7242511</span>     EPSG:<span class="dv">26915</span>  SI Units    <span class="dv">7242531_7242511</span><span class="er">_g01_1634841246</span>  test: IFC   <span class="fl">84.0</span>    POLYGON ((<span class="op">-</span><span class="fl">96.04800</span> <span class="fl">43.35928</span>, <span class="op">-</span><span class="fl">96.04802</span> <span class="fl">43.359</span>...</span>
-<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="dv">4</span>   <span class="dv">1</span>   <span class="fl">147.0</span>   <span class="dv">7242531</span>     EPSG:<span class="dv">26915</span>  SI Units    <span class="dv">7242581_7242531</span><span class="er">_g01_1634841246</span>  test: IFC   <span class="fl">158.0</span>   POLYGON ((<span class="op">-</span><span class="fl">96.05628</span> <span class="fl">43.35093</span>, <span class="op">-</span><span class="fl">96.05632</span> <span class="fl">43.350</span>...</span>
-<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="dv">5</span>   <span class="dv">1</span>   <span class="fl">159.0</span>   <span class="dv">7242581</span>     EPSG:<span class="dv">26915</span>  SI Units    <span class="dv">7242581_7242581</span><span class="er">_g01_1634841246</span>  test: IFC   <span class="fl">177.0</span>   POLYGON ((<span class="op">-</span><span class="fl">96.06632</span> <span class="fl">43.34152</span>, <span class="op">-</span><span class="fl">96.06633</span> <span class="fl">43.341</span>...</span>
-<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>accounting <span class="op">=</span> pandas.read_csv(os.path.join(ras_dbase,<span class="st">"accounting.csv"</span>))</span>
-<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>accounting</span>
-<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>    nhdplus_comid   model_name  g_file  last_modified   source  units   crs     initial_scrape_name     final_name_key  notes</span>
-<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a><span class="dv">0</span>   <span class="dv">5789080</span>     ALUM <span class="dv">107</span>    g01     <span class="dv">1691071096</span>  test: FEMA6     English Units   EPSG:<span class="dv">2277</span>   <span class="dv">5789080</span><span class="er">_ALUM</span> <span class="dv">107</span><span class="er">_g01_1691071096</span>     <span class="dv">5789080</span><span class="er">_ALUM</span> <span class="dv">107</span><span class="er">_g01_1691071096</span>     <span class="op">*</span> profiles normalized by:<span class="fl">7.091436580325</span> <span class="op">*</span> G pa...</span>
-<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="dv">1</span>   <span class="dv">5789080</span>     ALUM <span class="dv">114</span>    g01     <span class="dv">1691071096</span>  test: FEMA6     English Units   EPSG:<span class="dv">2277</span>   <span class="dv">5789080</span><span class="er">_ALUM</span> <span class="dv">114</span><span class="er">_g01_1691071096</span>     <span class="dv">5789080</span><span class="er">_ALUM</span> <span class="dv">114</span><span class="er">_g01_1691071096</span>     <span class="op">*</span> profiles normalized by:<span class="fl">5.65206610852312</span> <span class="op">*</span> GH...</span>
-<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="dv">2</span>   <span class="dv">5790952</span>     ALUM <span class="dv">00</span><span class="er">6</span>    g01     <span class="dv">1691071095</span>  test: FEMA6     English Units   EPSG:<span class="dv">2277</span>   <span class="dv">5790952</span><span class="er">_ALUM</span> <span class="dv">00</span><span class="er">6_g01_1691071095</span>     <span class="dv">5790952</span><span class="er">_ALUM</span> <span class="dv">00</span><span class="er">6_g01_1691071095</span>     <span class="op">*</span> profiles normalized by:<span class="fl">3.9480012459621</span> <span class="op">*</span> GHD...</span>
-<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a><span class="dv">3</span>   <span class="dv">7242483</span>     <span class="dv">7242449</span>     g01     <span class="dv">1634841246</span>  test: IFC   SI Units    EPSG:<span class="dv">26915</span>  <span class="dv">7242483_7242449</span><span class="er">_g01_1634841246</span>  <span class="dv">7242483_7242449</span><span class="er">_g01_1634841246</span>  <span class="op">*</span> profiles normalized by:<span class="fl">0.317587652014083</span> <span class="op">*</span> G...</span>
-<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a><span class="dv">4</span>   <span class="dv">7242511</span>     <span class="dv">7242483</span>     g01     <span class="dv">1634841246</span>  test: IFC   SI Units    EPSG:<span class="dv">26915</span>  <span class="dv">7242511_7242483</span><span class="er">_g01_1634841246</span>  <span class="dv">7242511_7242483</span><span class="er">_g01_1634841246</span>  <span class="op">*</span> profiles normalized by:<span class="op">-</span><span class="fl">18.1052610894281</span> <span class="op">*</span> G...</span></code></pre></div>
-<p>If you need a refresher on what those field mean, check back on the
-<a href="https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html" class="external-link">Data
-Model</a> page.</p>
-<ol start="3" style="list-style-type: decimal">
-<li>Create a handy map to view</li>
-</ol>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/map_library.html">map_library</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,AOI_to_map <span class="op">=</span> <span class="cn">NULL</span>,name <span class="op">=</span> <span class="st">"model_map"</span>,plot_lines <span class="op">=</span> <span class="cn">TRUE</span>,chart_lines <span class="op">=</span> <span class="cn">FALSE</span>,refresh <span class="op">=</span> <span class="cn">FALSE</span>,quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>```{{python, eval=FALSE}} import os import pandas import geopandas
+import pyarrow.parquet</p>
+<p>cat_path = path/to/catalog points =
+pandas.read_parquet(os.path.join(cat_path, ‘point_database.parquet’),
+engine=‘pyarrow’) points xid xid_length xid_d relative_dist x y z n
+source master_id 0 1 282.819375 0.00000 0.000000 -97.228405 30.209038
+180.481224 0.16 3.0 1.0 1 1 282.819375 1.92024 0.006790 -97.228416
+30.209023 180.206904 0.16 3.0 1.0 2 1 282.819375 3.99288 0.014118
+-97.228428 30.209007 180.161184 0.16 3.0 1.0 3 1 282.819375 5.76072
+0.020369 -97.228438 30.208994 179.947824 0.16 3.0 1.0 4 1 282.819375
+8.74776 0.030931 -97.228454 30.208971 179.767992 0.16 3.0 1.0</p>
+<p>cross_sections = geopandas.read_file(os.path.join(cat_path,
+‘model_footprints.fgb’)) cross_sections master_id geometry 0 38.0
+LINESTRING (-96.00866 43.37436, -96.00866 43.3… 1 85.0 LINESTRING
+(-96.00866 43.37436, -96.00866 43.3… 2 86.0 LINESTRING (-96.01016
+43.37394, -96.01017 43.3… 3 39.0 LINESTRING (-96.01016 43.37394,
+-96.01017 43.3… 4 87.0 LINESTRING (-96.01221 43.37459, -96.01222
+43.3…</p>
+<p>footprints = geopandas.read_file(os.path.join(cat_path,
+‘model_footprints.fgb’)) footprints id start_master_id model_name crs
+units final_name_key source end_master_id geometry 0 1 38.0 7242449
+EPSG:26915 SI Units 7242483_7242449_g01_1634841246 test: IFC 49.0
+POLYGON ((-96.00866 43.37436, -96.00866 43.374… 1 1 50.0 7242483
+EPSG:26915 SI Units 7242511_7242483_g01_1634841246 test: IFC 71.0
+POLYGON ((-96.02147 43.37233, -96.02148 43.372… 2 1 85.0 10170204000897
+EPSG:26915 SI Units 7242581_10170204000897_g01_1616607646 test: IFC
+146.0 POLYGON ((-96.00866 43.37436, -96.00866 43.374… 3 1 72.0 7242511
+EPSG:26915 SI Units 7242531_7242511_g01_1634841246 test: IFC 84.0
+POLYGON ((-96.04800 43.35928, -96.04802 43.359… 4 1 147.0 7242531
+EPSG:26915 SI Units 7242581_7242531_g01_1634841246 test: IFC 158.0
+POLYGON ((-96.05628 43.35093, -96.05632 43.350… 5 1 159.0 7242581
+EPSG:26915 SI Units 7242581_7242581_g01_1634841246 test: IFC 177.0
+POLYGON ((-96.06632 43.34152, -96.06633 43.341…</p>
+<p>accounting =
+pandas.read_csv(os.path.join(ras_dbase,“accounting.csv”)) accounting
+nhdplus_comid model_name g_file last_modified source units crs
+initial_scrape_name final_name_key notes 0 5789080 ALUM 107 g01
+1691071096 test: FEMA6 English Units EPSG:2277 5789080_ALUM
+107_g01_1691071096 5789080_ALUM 107_g01_1691071096 * profiles normalized
+by:7.091436580325 * G pa… 1 5789080 ALUM 114 g01 1691071096 test: FEMA6
+English Units EPSG:2277 5789080_ALUM 114_g01_1691071096 5789080_ALUM
+114_g01_1691071096 * profiles normalized by:5.65206610852312 * GH… 2
+5790952 ALUM 006 g01 1691071095 test: FEMA6 English Units EPSG:2277
+5790952_ALUM 006_g01_1691071095 5790952_ALUM 006_g01_1691071095 *
+profiles normalized by:3.9480012459621 * GHD… 3 7242483 7242449 g01
+1634841246 test: IFC SI Units EPSG:26915 7242483_7242449_g01_1634841246
+7242483_7242449_g01_1634841246 * profiles normalized
+by:0.317587652014083 * G… 4 7242511 7242483 g01 1634841246 test: IFC SI
+Units EPSG:26915 7242511_7242483_g01_1634841246
+7242511_7242483_g01_1634841246 * profiles normalized
+by:-18.1052610894281 * G…</p>
+<pre><code>
+If you need a refresher on what those field mean, check back on the [Data Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html) page.
+
+3) Create a handy map to view
+
+```{{r, eval=FALSE}}
+RRASSLER::map_library(path_to_ras_dbase = ras_dbase,AOI_to_map = NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)</code></pre>
 <p>This function will create a stand alone leaflet map which is useful
 in “interactively” exploring the data, facilitating simple queries, and
 inspirational presentations. Just double click on the generated html
@@ -294,33 +290,32 @@ document (model_map.html) to view it in your web browser</p>
 <p>RAS2FIM pipelines are looking for a few extra helpers in order to
 pipeline these models through the workflow. To generate the needed
 catalog, use the following function.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/append_catalog_fields.html">append_catalog_fields</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,out_name <span class="op">=</span> <span class="st">"OWP_ras_model_catalog.csv"</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><code>{{r, eval=FALSE}} RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)</code></p>
 <p>Congratulations! You now have a RRASSLER catalog and all the pieces
-needed to make HEC-RAS model data more FAIR and ameanable to operational
+needed to make HEC-RAS model data more FAIR and amenable to operational
 accounting and use.</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="reference/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-intel.com/" class="external-link"><img src="reference/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
+  <p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="reference/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-spatial.com/" class="external-link"><img src="reference/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

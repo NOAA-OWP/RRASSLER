@@ -8,13 +8,13 @@ authors:
      href: "https://water.noaa.gov/about/nwm"
    Lynker:
      html: "<img src='man/figures/lynker-logo.png' height='36' alt='Lynker'/>"
-     href: "https://lynker-intel.com/"
+     href: "https://lynker-spatial.com/"
    sidebar:
     roles: [cre, ctb, fnd]
    footer:
     roles: [cre, ctb, fnd]
    citation:
-    roles: [fnd, cre]
+    roles: [cre]
 reference:
 - title: Helpers
 - subtitle:

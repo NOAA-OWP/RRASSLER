@@ -1,6 +1,12 @@
-# RRASSLER 0.1.0  - 2024-06-28
+# RRASSLER 0.1.1  - 2024-12-06
 
 All notable changes to this project will be documented in this file.  We attempt to follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
+
+## Changes
+
+Mini-fied and slimmed down the entire package into a hydrofabric-verse compatible format so that it can pass `devtools::check()` for a premier at AGU.  There will be another PR following shortly that re-adds those temporarily lost functions in a more R package appropriate form shortly.
+
+# RRASSLER 0.1.0  - 2024-06-28
 
 ## Changes
 

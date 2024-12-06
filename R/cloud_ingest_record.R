@@ -45,7 +45,6 @@
 #' @importFrom nhdplusTools get_nhdplus
 #' @importFrom AOI aoi_get
 #' @importFrom arrow write_parquet
-
 cloud_ingest_record <- function(in_file = NULL,
                                 ras_dbase = NULL,
                                 root_bucket = NULL,
@@ -57,7 +56,7 @@ cloud_ingest_record <- function(in_file = NULL,
                                 overwrite = FALSE) {
   # sinew::moga(file.path(getwd(),"R/cloud_ingest_record.R"),overwrite = TRUE)
   # devtools::document()
-  # pkgdown::build_site(new_process=FALSE)
+  # pkgdown::build_site(new_process=TRUE)
   #
   # devtools::load_all()
   #

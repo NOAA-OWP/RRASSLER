@@ -16,6 +16,6 @@ print_warning_block <- function() {
   # devtools::load_all()
 
   ## -- Start --
-  message(cat("NULL_WARNING -- ¯\\_(o_0)_/¯  -- WARNING_"))
+  message(cat("NULL_WARNING -- _(o_0)_/¯  -- WARNING_"))
   return(TRUE)
 }

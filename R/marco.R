@@ -2,7 +2,7 @@
 #' @description A hello world tester
 #' @return a hello world message (polo!)
 #' @family helper
-#' @details No, I did not draw this.  It has taken me longer to document this function than it did to copy-paste it from Google (https://www.asciiart.eu/art-and-design/sculptures)
+#' @details Used to verify that RRASSLER is successfully loaded and test deployment pathways.  Copy-paste-d and not drawn from Google (https://www.asciiart.eu/art-and-design/sculptures)
 #' @examples
 #' RRASSLER::marco()
 #' @rdname marco
@@ -10,8 +10,9 @@
 marco <- function() {
   # sinew::moga(file.path(getwd(),"R/marco.R"),overwrite = TRUE)
   # devtools::document()
-  # pkgdown::build_site(new_process=FALSE)
+  # pkgdown::build_site(new_process=TRUE)
   # devtools::load_all()
+  # devtools::check()
 
   ## -- Start --
   message("                                    **   **                              ")

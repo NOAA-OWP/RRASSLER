@@ -1,6 +1,6 @@
 #' @title get_datum_from_crs
 #' @description attempts to parse datum and datum unit from file based on WKT
-#' @param x PARAM_DESCRIPTION
+#' @param x either the string or the sf crs
 #' @return list of CRS and vertical unit
 #' @details DETAILS
 #' @examples
@@ -8,6 +8,9 @@
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  get_datum_from_crs("EPSG:6349")
+#'
+#'  EXAMPLE2
+#'  get_datum_from_crs(sf::st_crs("EPSG:6349"))
 #'
 #'  }
 #' }
@@ -21,6 +24,9 @@
 
 get_datum_from_crs <- function(x) {
   # sinew::moga(file.path(getwd(),"R/get_datum_from_crs.R"),overwrite = TRUE)
+  # devtools::document()
+  # pkgdown::build_site(new_process=TRUE)
+  # devtools::load_all()
   # x <- "EPSG:6349"
 
   ## -- Start --

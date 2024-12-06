@@ -20,6 +20,13 @@
 #'
 #'  g_path <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/input_iowa/10170204000897/Hydraulic_Models/Simulations/10170204000897.g01"
 #'  pts <- parse_model_to_xyz(geom_path = g_path,units = "SI Units",proj_string = "EPSG:26915",quiet = FALSE)
+#'
+#'  select_model_index <- 120
+#'  target_model <- ras_catalog[select_model_index,]
+#'  pts <- parse_model_to_xyz(geom_path = file.path(ras_dbase,"models",target_model$final_name_key,glue::glue("{target_model$model_name}.{target_model$g_file}"),fsep = .Platform$file.sep),
+#'  units = target_model$units,
+#'  proj_string = target_model$crs,
+#'  quiet = FALSE,is_verbose = TRUE)
 #'  }
 #' }
 #' @seealso

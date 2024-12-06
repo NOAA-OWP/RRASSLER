@@ -2,6 +2,10 @@ trash
 inst/extdata/sample_output/ras_catalog/HUC8.fgb
 inst/extdata/sample_ras/timing_samples
 .Rbuildignore
+.RData
+.Rhistory
+.RRASSLER.Rproj
+.Rproj.user
 model-debug.Rmd
 cookbooks.R
 OWP_cookbooks.R
