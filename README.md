@@ -1,6 +1,4 @@
 
-# pkgdown <img src="man/figures/logo.png" align="right" />
-
 ![](https://github.com/NOAA-OWP/RRASSLER/blob/dev/man/figures/_rassler_key_image.png?raw=true)
 
 <!-- badges: start -->
