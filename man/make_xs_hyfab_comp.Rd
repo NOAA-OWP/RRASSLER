@@ -4,18 +4,30 @@
 \alias{make_xs_hyfab_comp}
 \title{make_xs_hyfab_comp}
 \usage{
-make_xs_hyfab_comp(path_to_ras_dbase, network_path = NULL)
+make_xs_hyfab_comp(
+  path_to_ras_dbase = NULL,
+  line_select_subset = NULL,
+  hf_lines,
+  overwrite = FALSE,
+  is_verbose = TRUE
+)
 }
 \arguments{
-\item{path_to_ras_dbase}{PARAM_DESCRIPTION}
+\item{path_to_ras_dbase}{PARAM_DESCRIPTION, Default: NULL}
 
-\item{network_path}{PARAM_DESCRIPTION, Default: NULL}
+\item{line_select_subset}{PARAM_DESCRIPTION, Default: NULL}
+
+\item{hf_lines}{PARAM_DESCRIPTION}
+
+\item{overwrite}{PARAM_DESCRIPTION, Default: FALSE}
+
+\item{is_verbose}{PARAM_DESCRIPTION, Default: TRUE}
 }
 \value{
 OUTPUT_DESCRIPTION
 }
 \description{
-dev
+FUNCTION_DESCRIPTION
 }
 \details{
 DETAILS
@@ -24,6 +36,14 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ make_xs_hyfab_comp(path_to_ras_dbase = NULL,line_select_subset = NULL,hf_lines,overwrite = FALSE,is_verbose = TRUE)
  }
 }
+}
+\seealso{
+\code{\link[glue]{glue}}
+ \code{\link[sf]{st_read}}, \code{\link[sf]{st_transform}}, \code{\link[sf]{st_crs}}, \code{\link[sf]{sf}}, \code{\link[sf]{sfc}}, \code{\link[sf]{geos_binary_ops}}, \code{\link[sf]{geos_unary}}, \code{\link[sf]{st_cast}}, \code{\link[sf]{geos_measures}}, \code{\link[sf]{st_as_sf}}, \code{\link[sf]{st_write}}
+ \code{\link[arrow]{read_parquet}}, \code{\link[arrow]{write_parquet}}
+ \code{\link[units]{units}}
+ \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}
 }

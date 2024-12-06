@@ -8,10 +8,15 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+library(dm)
+library(labelled)
+```
 
 # Full Data Model
 
-Once RRASSLER processing has been run all the way through, the data generated will have the following schema:
+Once RRASSLER processing has been run all the way through, the data generated will have the following schema, matching as closely as possible the standard HEC-RAS cross section data format:
 
 ```{r, echo = FALSE}
 ras_dbase <- fs::path_package("/extdata/sample_output/ras_catalog/", package = "RRASSLER")
@@ -39,6 +44,17 @@ my_dat <- dm::dm(model_footprints.fgb,
                  RRASSLER_metadata.csv)
 
 my_dat |>
+  dm::dm_set_table_description(
+    "Hulls of cross section lines in a single feature" = model_footprints.fgb,
+    "XYZ tables of each station/elevation across the database" = point_database.parquet,
+    "Cross sections" = XS.fgb,
+    "A rollup catalog of all the models in the database" = accounting.csv,
+    "A catalog appended with helper fields that aid in the downstream accounting at OWP " = OWP_ras_models_catalog.csv,
+    "Hulls of cross section lines for a single model's geometric realization" = RRASSLER_hull.fgb,
+    "XYZ tables of each station/elevation for that model" = RRASSLER_cs_pts.parquet,
+    "River line extraction for the model" = RRASSLER_river.fgb,
+    "Relevant model metadata in an easily accessible form" = RRASSLER_metadata.csv
+  ) |>
   dm::dm_add_pk(model_footprints.fgb, final_name_key) |>
   dm::dm_add_pk(accounting.csv, final_name_key) |>
   dm::dm_add_pk(OWP_ras_models_catalog.csv, final_name_key) |>
@@ -75,20 +91,20 @@ my_dat |>
 ```{r, echo = FALSE}
 meta = tibble::tribble(
   ~Attribute, ~Description, ~Table,
-  "id","A table spesific id, otherwise meaningless","RRASSLER_hull.fgb, model_footprints.fgb, XS.fgb",
-  "nhdplus_comid","The nhdplus comid from the 'primary dowwnstream divergance' of the intersection of RRASSLER_hull.fgb, from nhdplusTools","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
+  "id","A table specific id, otherwise meaningless","RRASSLER_hull.fgb, model_footprints.fgb, XS.fgb",
+  "nhdplus_comid","The nhdplus comid from the 'primary downstream divergence' of the intersection of RRASSLER_hull.fgb, from nhdplusTools","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
   "geometry","Simple Features Geometry (LINESTRING or POLYGON)","RRASSLER_hull.fgb, RRASSLER_river.fgb, model_footprints.fgb",
-  "master_id","A database sepseific ID for a cross section","XS.fgb",
+  "master_id","A database specific ID for a cross section","XS.fgb",
   "start_master_id","The starting 'master_id' from the cross section database for that model","model_footprints.fgb",
   "end_master_id","The ending 'master_id' from the cross section database for that model","model_footprints.fgb",
   "model_name","The name of the model as provided by the filename","RRASSLER_metadata.csv, accounting.csv, model_footprints.fgb, OWP_ras_models_catalog.csv",
-  "g_file","The particular geomentric realization of the model","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
+  "g_file","The particular geometric realization of the model","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
   "units","The units of the parent model","RRASSLER_metadata.csv, accounting.csv,OWP_ras_models_catalog.csv",
   "crs","The CRS of the parent model","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
   "initial_scrape_name","The first final_name_key RRASSLER assigns to the model, used for tracking","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
   "final_name_key","The primary key across the database, defines the path of the data","RRASSLER_metadata.csv, accounting.csv, model_footprints.fgb, OWP_ras_models_catalog.csv",
-  "xid","A model spesific cross section ID","RRASSLER_cs_pts.parquet, point_database.parquet",
-  "xid_length","The lenght of the cross section","RRASSLER_cs_pts.parquet, point_database.parquet",
+  "xid","A model specific cross section ID","RRASSLER_cs_pts.parquet, point_database.parquet",
+  "xid_length","The length of the cross section","RRASSLER_cs_pts.parquet, point_database.parquet",
   "xid_d","The distance of the cross section down the parent stream model","RRASSLER_cs_pts.parquet, point_database.parquet",
   'relative_dist',"Distance of cs_id, starting at 0, in meters","point_database.parquet",
   'x',"X coordinate in EPSG:6349","point_database.parquet",
@@ -96,15 +112,15 @@ meta = tibble::tribble(
   'z',"Z coordinate in EPSG:6349","point_database.parquet",
   'source',"Source of elevation data, encoded per purpose","point_database.parquet, RRASSLER_cs_pts.parquet",
   'source',"Source of the model provider","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
-  'n',"Manning's Roughness value","point_database.parquet",
+  'n',"Manning's roughness value","point_database.parquet",
   "last_modified","The date the ras model was last edited","accounting.csv, OWP_ras_models_catalog.csv",
-  "notes","notes and messages accumulated durring proccessing, seperated by '*'","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
+  "notes","Summary notes and messages accumulated during processing, outputs delineated with a '*'","RRASSLER_metadata.csv, accounting.csv, OWP_ras_models_catalog.csv",
   "date","A human readable data of last processing","OWP_ras_models_catalog.csv",
-  "hucs","A pythonically formatted list (braces and comma separated) that includes each HUC8 that the model intercets","OWP_ras_models_catalog.csv",
+  "hucs","A pythonically formatted list (braces and comma separated) that includes each HUC8 that the model intersects","OWP_ras_models_catalog.csv",
   "status","Status column set for downstream RAS2FIM processing","OWP_ras_models_catalog.csv",
 )
 
 formattable::formattable(meta)
 ```
 
-To generate this data, follow the [ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html) artical to learn how RRASSLER processes a model to generate that data.
+Follow the [ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/ingest-steps.html) article to learn how RRASSLER processes a model to generate this data.

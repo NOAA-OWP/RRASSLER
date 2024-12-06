@@ -13,7 +13,7 @@ a hello world message (polo!)
 A hello world tester
 }
 \details{
-No, I did not draw this.  It has taken me longer to document this function than it did to copy-paste it from Google (https://www.asciiart.eu/art-and-design/sculptures)
+Used to verify that RRASSLER is successfully loaded and test deployment pathways.  Copy-paste-d and not drawn from Google (https://www.asciiart.eu/art-and-design/sculptures)
 }
 \examples{
 RRASSLER::marco()

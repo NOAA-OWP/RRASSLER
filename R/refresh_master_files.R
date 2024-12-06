@@ -2,8 +2,9 @@
 #' @description remerge individual files into spatial model key
 #' @param path_to_ras_dbase The path to the folder in which you are building your catalog, is also location agnostic (disk or cloud), Default: NULL
 #' @param is_verbose flag to determine whether print statements are shown - TRUE to show messages - FALSE to skip non-critical ones, Default: TRUE
+#' @param overwrite flag to determine whether the catalog is either overwritten (overwrite = TRUE), or a duplicated catalog is copied and appended with the date (overwrite = FALSE) as requested [here](https://github.com/NOAA-OWP/RRASSLER/issues/6), Default: TRUE
 #' @return updated master index files including accounting.csv, point_database.parque, XS.fgb, and model_footprints.fgb
-#' @details DETAILS
+#' @details TRUE
 #' @family post-process
 #' @examples
 #' \dontrun{
@@ -13,7 +14,7 @@
 #'
 #'  RRASSLER::refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
 #'
-#'  RRASSLER::refresh_master_files(path_to_ras_dbase = "s3://ras-models/",is_verbose = TRUE)
+#'  RRASSLER::refresh_master_files(path_to_ras_dbase = "s3://ras-models/",is_verbose = TRUE, overwrite = FALSE)
 #'  }
 #' }
 #' @seealso
@@ -37,19 +38,20 @@
 #' @importFrom sf st_read st_set_crs st_crs st_write
 #' @importFrom arrow read_parquet write_parquet
 #' @importFrom sfheaders sf_linestring
+#' @importFrom tools file_path_sans_ext
 
-refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
+refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite = TRUE) {
   # sinew::moga(file.path(getwd(),"R/refresh_master_files.R"),overwrite = TRUE)
   # devtools::document()
-  # pkgdown::build_site(new_process=FALSE)
+  # pkgdown::build_site(new_process=TRUE)
   # devtools::load_all()
-  #
   #
   # path_to_ras_dbase <- file.path("./inst/extdata/sample_output/ras_catalog/")
   # is_verbose = TRUE
   # path_to_ras_dbase <- file.path("s3://ras-models/")
   # is_verbose = TRUE
   # path_to_ras_dbase <- ras_dbase
+  # overwrite = TRUE
 
   ## -- Start --
   fn_time_start <- Sys.time()
@@ -83,6 +85,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
     hull_files <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('RRASSLER_hull.fgb'),]
     meta_files <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('RRASSLER_metadata.csv'),]
 
+    if(is_verbose) { message(glue::glue("Quick unit test")) }
     if(!(length(xyz_files)==length(hull_files))) {
       print_error_block()
       message("Alert, hulls and points dont line up...")
@@ -115,6 +118,8 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
       )
     }
 
+    tools::file_path_sans_ext(basename(file_to_remove))
+
     if(is_verbose) { message("Merging catalog") }
     disk_rrassler_records <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_metadata.csv$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
     full_accounting <- rbindlist(lapply(disk_rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
@@ -122,6 +127,21 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
     if(is_verbose) { message("Writing catalog") }
     if(!(nrow(list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('accounting.csv'),]) == 0)) {
       file_to_remove <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('accounting.csv'),]$list_bucket_data
+      if(!overwrite) {
+        # For https://github.com/NOAA-OWP/RRASSLER/issues/6, cloud
+        aws.s3::save_object(
+          object = file_to_remove,
+          bucket = path_to_root_bucket,
+          file = file.path(process_dir,file_to_remove,fsep = .Platform$file.sep)
+        )
+        backup_name <- glue::glue('{tools::file_path_sans_ext(basename(file_to_remove))}_{format(Sys.time(), "%Y%m%d%H%M%S")}.csv')
+        file.rename(file.path(process_dir,file_to_remove,fsep = .Platform$file.sep), file.path(process_dir,backup_name,fsep = .Platform$file.sep))
+        aws.s3::put_object(
+          file = file.path(process_dir,backup_name,fsep = .Platform$file.sep),
+          object = backup_name,
+          bucket = path_to_root_bucket
+        )
+      }
       aws.s3::delete_object(
         object = file_to_remove,
         bucket = path_to_root_bucket
@@ -250,6 +270,10 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
     full_accounting <- rbindlist(lapply(rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
 
     if(is_verbose) { message("Writing catalog") }
+    if(!overwrite) {
+      # For https://github.com/NOAA-OWP/RRASSLER/issues/6, disk
+      file.copy(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep), file.path(path_to_ras_dbase,glue::glue('accounting_{format(Sys.time(), "%Y%m%d%H%M%S")}.csv'),fsep = .Platform$file.sep))
+    }
     unlink(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))
     data.table::fwrite(full_accounting,file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))
 
@@ -317,9 +341,8 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE) {
 
     if(is_verbose) {
       runtime <- Sys.time() - fn_time_start
-      units(runtime) <- "hours"
       message(glue::glue("(re)-Merged {nrow(hull_concat)} models with {nrow(xs_lines)} cross sections and {nrow(point_concat)} points"))
-      message(glue::glue("Wall time: {round(runtime, digits = 3)} hours"))
+      message(glue::glue("Wall time: {round(units::as_units(runtime,'hours'), digits = 3)} hours"))
     }
   }
 

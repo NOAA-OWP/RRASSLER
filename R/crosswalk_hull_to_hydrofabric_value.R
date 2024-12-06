@@ -2,8 +2,8 @@
 #' @description crosswalk_hull_to_hydrofabric_value
 #' @param hull the model cross section hulls
 #' @param river the river streamlines
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
+#' @return The representative COMID from nhdplusTools
+#' @details Used to tie into hydrofabric models
 #' @family helpers
 #' @examples
 #' \dontrun{

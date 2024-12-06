@@ -51,6 +51,7 @@ if(interactive()){
  list_of_prj_files <- list.files(dir_to_scrape,pattern = glob2rx("*.prj$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
  disk_ingest_record(in_file = list_of_prj_files[1], path_to_ras_dbase = ras_dbase,code_to_place_in_source = "test",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = FALSE,overwrite = FALSE)
 
+ #EXAMPLE2
  dir_to_scrape <- "./inst/extdata/sample_ras/ras2fim-sample-dataset/"
  list_of_prj_files <- list.files(dir_to_scrape,pattern = glob2rx("*.prj$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
  disk_ingest_record(in_file = list_of_prj_files[1], path_to_ras_dbase = ras_dbase,code_to_place_in_source = "test",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE)

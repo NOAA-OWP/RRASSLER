@@ -1,9 +1,9 @@
 #' @title xyz_to_ls
-#' @description FUNCTION_DESCRIPTION
-#' @param dat PARAM_DESCRIPTION, Default: NULL
-#' @param path_to_ras_dbase PARAM_DESCRIPTION, Default: NULL
+#' @description helper to transform points into linestrings
+#' @param dat The dataframe of points, Default: NULL
+#' @param path_to_ras_dbase  The path to the folder in which you are building your catalog, is also location agnostic (disk or cloud), Default: NULL
 #' @param is_quiet PARAM_DESCRIPTION, Default: FALSE
-#' @return OUTPUT_DESCRIPTION
+#' @return linestrings
 #' @details DETAILS
 #' @examples
 #' \dontrun{

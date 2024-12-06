@@ -3,6 +3,10 @@
   "stac_version": "1.0.0",
   "id": "5789080_ALUM 107_g01_1691071096",
   "properties": {
+    "model name": "ALUM 107",
+    "model units": "English Units",
+    "XS_start_id": 1,
+    "XS_end_id": 20,
     "datetime": "2023-08-03T13:58:16Z"
   },
   "geometry": {

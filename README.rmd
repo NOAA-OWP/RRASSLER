@@ -10,7 +10,9 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/",
   out.width = "100%"
 )
+knitr::include_graphics(c("man/figures/lynker-logo.png","man/figures/noaa-logo.png"))
 ```
+
 # pkgdown <img src="man/figures/logo.png" align="right" />
 
 ![](https://github.com/NOAA-OWP/RRASSLER/blob/dev/man/figures/_rassler_key_image.png?raw=true)
@@ -46,10 +48,10 @@ RRASSLER::marco()	                        # A "hello world" test
 There are several tutorials available at the [Article index](https://NOAA-OWP.github.io/RRASSLER/articles/index.html) including:
 
 * [Data Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html): The data standard we are building to.
-* [Ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html): What RRASSLER is doing to data?
-* [Deploying RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Deploying-RRASSLER.html): How to make your own "HEC-RAS model catalog".
-* [Mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html): Adding (geographic) context to our data.
-
+* [Ingest steps](https://NOAA-OWP.github.io/RRASSLER/articles/ingest-steps.html): What RRASSLER is doing to data?
+* [Deploying RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/deploying-rrassler.html): How to make your own "HEC-RAS model catalog".
+* [Mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/mapping-rrassler.html): Adding (geographic) context to our data.
+  
 See the [package documentation](https://NOAA-OWP.github.io/RRASSLER/index.html) for [function references](https://NOAA-OWP.github.io/RRASSLER/reference/index.html) and additional information.
 
 ## Explanations
@@ -93,3 +95,4 @@ Credit to the packages used in the development, testing, and deployment of RRASS
 ### For questions 
 
 [Jim Coll](james.coll@noaa.gov) (FIM Developer), [Fernando Salas](fernando.salas@noaa.gov) (Director, OWP Geospatial Intelligence Division)
+

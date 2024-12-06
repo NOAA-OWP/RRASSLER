@@ -3,6 +3,10 @@
   "stac_version": "1.0.0",
   "id": "7242511_7242483_g01_1634841246",
   "properties": {
+    "model name": "7242483",
+    "model units": "SI Units",
+    "XS_start_id": 50,
+    "XS_end_id": 71,
     "datetime": "2021-10-21T18:34:06Z"
   },
   "geometry": {

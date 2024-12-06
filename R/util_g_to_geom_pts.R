@@ -1,18 +1,18 @@
 #' @title util_g_to_geom_pts
-#' @description FUNCTION_DESCRIPTION
-#' @param geom_path PARAM_DESCRIPTION
-#' @param units PARAM_DESCRIPTION
-#' @param proj_string PARAM_DESCRIPTION
-#' @param quiet PARAM_DESCRIPTION, Default: FALSE
-#' @return OUTPUT_DESCRIPTION
+#' @description A wrapper of a few different utilities across rrassler to read files in directly as points
+#' @param geom_path path to a file to parse
+#' @param units units found in the project, "English Units" or "SI Units"
+#' @param proj_string a projection string to apply
+#' @param quiet flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE
+#' @return sf points
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso 
+#' @seealso
 #'  \code{\link[utils]{glob2rx}}, \code{\link[utils]{read.table}}
 #'  \code{\link[glue]{glue}}
 #'  \code{\link[data.table]{as.data.table}}
@@ -21,7 +21,7 @@
 #'  \code{\link[sf]{sf}}, \code{\link[sf]{st_cast}}
 #'  \code{\link[tidyr]{fill}}
 #' @rdname util_g_to_geom_pts
-#' @export 
+#' @export
 #' @importFrom utils glob2rx read.delim
 #' @importFrom glue glue
 #' @importFrom data.table as.data.table

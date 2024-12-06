@@ -7,17 +7,17 @@
 xyz_to_ls(dat = NULL, path_to_ras_dbase = NULL, is_quiet = FALSE)
 }
 \arguments{
-\item{dat}{PARAM_DESCRIPTION, Default: NULL}
+\item{dat}{The dataframe of points, Default: NULL}
 
-\item{path_to_ras_dbase}{PARAM_DESCRIPTION, Default: NULL}
+\item{path_to_ras_dbase}{The path to the folder in which you are building your catalog, is also location agnostic (disk or cloud), Default: NULL}
 
 \item{is_quiet}{PARAM_DESCRIPTION, Default: FALSE}
 }
 \value{
-OUTPUT_DESCRIPTION
+linestrings
 }
 \description{
-FUNCTION_DESCRIPTION
+helper to transform points into linestrings
 }
 \details{
 DETAILS

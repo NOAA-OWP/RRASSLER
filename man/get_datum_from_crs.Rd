@@ -7,7 +7,7 @@
 get_datum_from_crs(x)
 }
 \arguments{
-\item{x}{PARAM_DESCRIPTION}
+\item{x}{either the string or the sf crs}
 }
 \value{
 list of CRS and vertical unit
@@ -23,6 +23,9 @@ DETAILS
 if(interactive()){
  #EXAMPLE1
  get_datum_from_crs("EPSG:6349")
+
+ EXAMPLE2
+ get_datum_from_crs(sf::st_crs("EPSG:6349"))
 
  }
 }

@@ -7,7 +7,7 @@
 #' @param HUC8_override a path to the spatial key if you need to run this over a temp dir for eg ras2fim, Default: NULL
 #' @return a new csv with helper columns
 #' @family post-process
-#' @details DETAILS
+#' @details TRUE
 #' @examples
 #' \dontrun{
 #' if(interactive()){

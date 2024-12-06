@@ -4,12 +4,14 @@
 \alias{refresh_master_files}
 \title{refresh_master_files}
 \usage{
-refresh_master_files(path_to_ras_dbase, is_verbose = TRUE)
+refresh_master_files(path_to_ras_dbase, is_verbose = TRUE, overwrite = TRUE)
 }
 \arguments{
 \item{path_to_ras_dbase}{The path to the folder in which you are building your catalog, is also location agnostic (disk or cloud), Default: NULL}
 
 \item{is_verbose}{flag to determine whether print statements are shown - TRUE to show messages - FALSE to skip non-critical ones, Default: TRUE}
+
+\item{overwrite}{flag to determine whether the catalog is either overwritten (overwrite = TRUE), or a duplicated catalog is copied and appended with the date (overwrite = FALSE) as requested [here](https://github.com/NOAA-OWP/RRASSLER/issues/6), Default: TRUE}
 }
 \value{
 updated master index files including accounting.csv, point_database.parque, XS.fgb, and model_footprints.fgb
@@ -18,7 +20,7 @@ updated master index files including accounting.csv, point_database.parque, XS.f
 remerge individual files into spatial model key
 }
 \details{
-DETAILS
+TRUE
 }
 \examples{
 \dontrun{
@@ -28,7 +30,7 @@ if(interactive()){
 
  RRASSLER::refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
 
- RRASSLER::refresh_master_files(path_to_ras_dbase = "s3://ras-models/",is_verbose = TRUE)
+ RRASSLER::refresh_master_files(path_to_ras_dbase = "s3://ras-models/",is_verbose = TRUE, overwrite = FALSE)
  }
 }
 }

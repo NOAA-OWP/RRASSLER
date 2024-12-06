@@ -12,13 +12,13 @@ crosswalk_hull_to_hydrofabric_value(hull, river)
 \item{river}{the river streamlines}
 }
 \value{
-OUTPUT_DESCRIPTION
+The representative COMID from nhdplusTools
 }
 \description{
 crosswalk_hull_to_hydrofabric_value
 }
 \details{
-DETAILS
+Used to tie into hydrofabric models
 }
 \examples{
 \dontrun{

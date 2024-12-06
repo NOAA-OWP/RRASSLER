@@ -1,6 +1,4 @@
 
-# RRASSLER
-
 ![](https://github.com/NOAA-OWP/RRASSLER/blob/dev/man/figures/_rassler_key_image.png?raw=true)
 
 <!-- badges: start -->
@@ -69,13 +67,13 @@ including:
   Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html):
   The data standard we are building to.
 - [Ingest
-  steps](https://NOAA-OWP.github.io/RRASSLER/articles/Ingest-steps.html):
+  steps](https://NOAA-OWP.github.io/RRASSLER/articles/ingest-steps.html):
   What RRASSLER is doing to data?
 - [Deploying
-  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Deploying-RRASSLER.html):
+  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/deploying-rrassler.html):
   How to make your own “HEC-RAS model catalog”.
 - [Mapping
-  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html):
+  RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/mapping-rrassler.html):
   Adding (geographic) context to our data.
 
 See the [package

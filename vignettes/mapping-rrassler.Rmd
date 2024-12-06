@@ -40,14 +40,14 @@ ras_dbase <- "s3://ras-models/"
 
 
 ### 1) Remerge the generated catalog index
-These catalog index files are simply summations of the entirety of the RRASSLE'd structure.  We're 
 
 ```{r, eval=FALSE}
-RRASSLER::refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
+refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
 ```
 
 This will create or recreate the index files at the top of the catalog, including:  
-* The Accounting sheet: _accounting.csv_
+
+* The Accounting sheet: _accounting.csv_ 
 * Model footprints: _model_footprints.fgb_  
 * Cross sections: _XS.fgb_  
 * Points: _point_database.parquet_  
@@ -56,7 +56,7 @@ This will create or recreate the index files at the top of the catalog, includin
 
 #### What did that make?
 
-As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are augmented by RAS specific attributes as defined in our standing [data model page](https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html).  See the RRASSLER spesific data model page [here](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html).  Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which you can query (in R) like so:
+As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are augmented by RAS specific attributes as defined in our standing [data model page](https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html).  See the RRASSLER specific data model page [here](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html).  Slightly more tangibly, when RRASSLER has been run all the way through, you'll have access to the index files which you can query (in R) like so:
 
 ```{r, eval=FALSE}
 cat_path <- path/to/catalog
@@ -129,7 +129,7 @@ First 5 features:
 
 or like so if python is your preferred tooling:
 
-```{python, eval=FALSE}
+```{{python, eval=FALSE}}
 import os
 import pandas
 import geopandas
@@ -178,7 +178,7 @@ If you need a refresher on what those field mean, check back on the [Data Model]
 
 3) Create a handy map to view
 
-```{r, eval=FALSE}
+```{{r, eval=FALSE}}
 RRASSLER::map_library(path_to_ras_dbase = ras_dbase,AOI_to_map = NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
 ```
 
@@ -190,8 +190,8 @@ This function will create a stand alone leaflet map which is useful in "interact
 
 RAS2FIM pipelines are looking for a few extra helpers in order to pipeline these models through the workflow.  To generate the needed catalog, use the following function.
 
-```{r, eval=FALSE}
+```{{r, eval=FALSE}}
 RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)
 ```
 
-Congratulations!  You now have a RRASSLER catalog and all the pieces needed to make HEC-RAS model data more FAIR and ameanable to operational accounting and use.
+Congratulations!  You now have a RRASSLER catalog and all the pieces needed to make HEC-RAS model data more FAIR and amenable to operational accounting and use.

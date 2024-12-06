@@ -58,7 +58,7 @@ Note that this process is "HECRAS_model_catalog" location agnostic.  Therefore, 
 
 ## The "minimal" catalog entry form
 
-As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are augmented by RAS specific attributes as defined in our standing [data model page](https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html).  See the RRASSLER specific data model page [here](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html).  Slightly more tangibly, when RRASSLER has been run over a model, the record will have the following pattern and schema which you can query (in R) like so:
+As mentioned, the form of the RRASSL'd record is based on hydrofabric specifications with modifications based on the nature of HEC-RAS data as outlined [with Next Gen hydrofabric parameters](https://noaa-owp.github.io/hydrofabric/articles/cs_dm.html).  These are augmented by RAS specific attributes as defined in our standing [cross section data model page](https://noaa-owp.github.io/hydrofabric/articles/RRASSLER-format.html).  See the RRASSLER specific data model page [here](https://NOAA-OWP.github.io/RRASSLER/docs/articles/RRASSLER-format.html).  Slightly more tangibly, when RRASSLER has been run over a model, the record will have the following pattern and schema which you can query (in R) like so:
 
 ```{r, eval=FALSE}
 ras_dbase <- path/to/catalog
@@ -120,7 +120,7 @@ Geodetic CRS:  NAD83(2011) + NAVD88 height
 
 or like so if python is your preferred tooling:
 
-```{python, eval=FALSE}
+```{{python, eval=FALSE}}
 import os
 import pandas
 import geopandas
@@ -155,4 +155,5 @@ model_metadata
 ```
 
 ## Next steps
-That process is repeated as many times as needed and over as many models as you have avalible.  The next part of the RRASSLER processing chain, [post-processing and Mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/Mapping-RRASSLER.html), can be run at any point in time as the workflow does not need to interact with the record format in any manner whatsoever.
+
+That process is repeated as many times as needed and over as many models as you have available.  The next part of the RRASSLER processing chain, [post-processing and Mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/mapping-rrassler.html), can be run at any point in time as the workflow does not need to interact with the record format in any manner whatsoever.
