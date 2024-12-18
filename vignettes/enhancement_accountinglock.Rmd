@@ -1,0 +1,54 @@
+---
+title: "NEWS update (enhancement): accounting lock"
+output: rmarkdown::html_vignette
+description: |
+  "A short enhancement on how RRASSLER generates accounting"
+vignette: >
+  %\VignetteIndexEntry{enhancement_accountinglock}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include=FALSE}
+# Hint: devtools::build_rmd("vignettes/enhancement_accountinglock.rmd")
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+
+library(magrittr)
+library(data.table)
+library(RRASSLER)
+```
+
+# Add overwrite protection
+
+A response to https://github.com/NOAA-OWP/RRASSLER/issues/6
+
+Because RRASSLER overwrites data, and databases can get large, it's desirable to have training wheels (an affectionate term I assure you, I don't know how to ride this bike) on some of the processing steps in case a user errantly sets one of the relevant commands off (primarily  those under the [post-process](https://noaa-owp.github.io/RRASSLER/reference/index.html#post-process) category).   As Rob points out, the most straightforward way to accomplish this is to version the tracking sheets, the leftmost of which is `accounting.csv` which is replaced after merging the many disparate files into their RRASSLE'd outputs.  This PR adds an [overwrite flag](https://noaa-owp.github.io/RRASSLER/reference/refresh_master_files.html#arg-overwrite) to in the `refresh_master_files` [function](https://noaa-owp.github.io/RRASSLER/reference/refresh_master_files.html).  It's also been coded to default to _not_ create this duplication so that the behavior of the toolchain remain consistent with the first release.  Finally, this will place backups in the same directory in order to avoid creating a more sprawling folder structure.  This is a great feature to have since it gives us a safety check and an informal history into the evolution of the catalog, but it's worth keeping in mind that RRASSLER data is not intended to serve as an archive that keeps versions of data, but a catalog that facilitates model accounting and access.
+
+Here's a quick demonstration of this new functionality over the sample data!
+
+```{r}
+ras_dbase <- file.path(fs::path_package("", package = "RRASSLER"),"extdata","sample_output","ras_catalog",fsep = .Platform$file.sep)
+message(paste("Running in:",ras_dbase))
+```
+
+> What's currently in the folder?
+
+```{r}
+fs::dir_tree(path = ras_dbase, recurse = FALSE)
+```
+
+> Existing functionality: nothing new is generated
+
+```{r}
+RRASSLER::refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE)
+fs::dir_tree(path = ras_dbase, recurse = FALSE)
+```
+
+> Added feature: File backup.
+
+```{r}
+refresh_master_files(path_to_ras_dbase = ras_dbase,is_verbose = TRUE,overwrite = FALSE)
+fs::dir_tree(path = ras_dbase, recurse = FALSE)
+```
+
+> Note that we now have a new accounting_{yyyymmddhhmmss}.csv backup.
+

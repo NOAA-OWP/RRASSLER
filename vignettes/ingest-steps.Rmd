@@ -120,7 +120,7 @@ Geodetic CRS:  NAD83(2011) + NAVD88 height
 
 or like so if python is your preferred tooling:
 
-```{{python, eval=FALSE}}
+```{md, eval=FALSE}
 import os
 import pandas
 import geopandas

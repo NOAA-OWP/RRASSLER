@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -292,34 +292,37 @@ record will have the following pattern and schema which you can query
 <span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a>           <span class="sc">&lt;</span>int<span class="sc">&gt;</span>     <span class="er">&lt;</span>char<span class="sc">&gt;</span> <span class="er">&lt;</span>char<span class="sc">&gt;</span>         <span class="er">&lt;</span>int<span class="sc">&gt;</span>      <span class="er">&lt;</span>char<span class="sc">&gt;</span>        <span class="er">&lt;</span>char<span class="sc">&gt;</span>    <span class="er">&lt;</span>char<span class="sc">&gt;</span>                          <span class="er">&lt;</span>char<span class="sc">&gt;</span>                          <span class="er">&lt;</span>char<span class="sc">&gt;</span>                                             <span class="er">&lt;</span>char<span class="sc">&gt;</span></span>
 <span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span>       <span class="dv">5789080</span>   ALUM <span class="dv">107</span>    g01    <span class="dv">1691071096</span> test<span class="sc">:</span> FEMA6 English Units EPSG<span class="sc">:</span><span class="dv">2277</span> <span class="dv">5789080</span>_ALUM <span class="dv">107</span>_g01_1691071096 <span class="dv">5789080</span>_ALUM <span class="dv">107</span>_g01_1691071096 <span class="sc">*</span> profiles normalized by<span class="sc">:</span><span class="fl">7.091436580325</span> <span class="sc">*</span> G parsed               </span></code></pre></div>
 <p>or like so if python is your preferred tooling:</p>
-<p>```{{python, eval=FALSE}} import os import pandas import geopandas
-import pyarrow.parquet</p>
-<p>cat_path = path/to/catalog first_model =
-os.listdir(os.path.join(ras_dbase, ‘models’))[0]</p>
-<p>points =
-pandas.read_parquet(os.path.join(ras_dbase,“models”,first_model,“RRASSLER_cs_pts.parquet”),
-engine=‘pyarrow’) points xid xid_length xid_d relative_dist x y z n
-source 0 1 282.819375 0.00000 0.000000 -97.228405 30.209038 180.481224
-0.16 3.0 1 1 282.819375 1.92024 0.006790 -97.228416 30.209023 180.206904
-0.16 3.0 2 1 282.819375 3.99288 0.014118 -97.228428 30.209007 180.161184
-0.16 3.0 3 1 282.819375 5.76072 0.020369 -97.228438 30.208994 179.947824
-0.16 3.0 4 1 282.819375 8.74776 0.030931 -97.228454 30.208971 179.767992
-0.16 3.0</p>
-<p>footprint =
-geopandas.read_file(os.path.join(ras_dbase,“models”,first_model,“RRASSLER_hull.fgb”))
-footprint id geometry 0 1 POLYGON ((-97.22841 30.20904, -97.22842
-30.209…</p>
-<p>streamline =
-geopandas.read_file(os.path.join(ras_dbase,“models”,first_model,“RRASSLER_river.fgb”))
-streamline reach_id geometry 0 1 LINESTRING (-97.22997 30.21019,
--97.22998 30.2…</p>
-<p>model_metadata =
-pandas.read_csv(os.path.join(ras_dbase,“models”,first_model,“RRASSLER_metadata.csv”))
-model_metadata nhdplus_comid model_name g_file last_modified source
-units crs initial_scrape_name final_name_key notes 0 5789080 ALUM 107
-g01 1691071096 test: FEMA6 English Units EPSG:2277 5789080_ALUM
-107_g01_1691071096 5789080_ALUM 107_g01_1691071096 * profiles normalized
-by:7.091436580325 * G pa… ```</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>import os</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>import pandas</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>import geopandas</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>import pyarrow.parquet</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>cat_path = path/to/catalog</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>first_model = os.listdir(os.path.join(ras_dbase, 'models'))<span class="co">[</span><span class="ot">0</span><span class="co">]</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>points = pandas.read_parquet(os.path.join(ras_dbase,"models",first_model,"RRASSLER_cs_pts.parquet"), engine='pyarrow')</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>points</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    xid     xid_length  xid_d   relative_dist   x   y   z   n   source</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>0   1   282.819375  0.00000     0.000000    -97.228405  30.209038   180.481224  0.16    3.0</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>1   1   282.819375  1.92024     0.006790    -97.228416  30.209023   180.206904  0.16    3.0</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>2   1   282.819375  3.99288     0.014118    -97.228428  30.209007   180.161184  0.16    3.0</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>3   1   282.819375  5.76072     0.020369    -97.228438  30.208994   179.947824  0.16    3.0</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>4   1   282.819375  8.74776     0.030931    -97.228454  30.208971   179.767992  0.16    3.0</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>footprint = geopandas.read_file(os.path.join(ras_dbase,"models",first_model,"RRASSLER_hull.fgb"))</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>footprint</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>    id  geometry</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>0   1   POLYGON ((-97.22841 30.20904, -97.22842 30.209...</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>streamline = geopandas.read_file(os.path.join(ras_dbase,"models",first_model,"RRASSLER_river.fgb"))</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>streamline</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>    reach_id    geometry</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>0   1   LINESTRING (-97.22997 30.21019, -97.22998 30.2...</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>model_metadata = pandas.read_csv(os.path.join(ras_dbase,"models",first_model,"RRASSLER_metadata.csv"))</span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>model_metadata</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>    nhdplus_comid   model_name  g_file  last_modified   source  units   crs     initial_scrape_name     final_name_key  notes</span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>0   5789080     ALUM 107    g01     1691071096  test: FEMA6     English Units   EPSG:2277   5789080_ALUM 107_g01_1691071096     5789080_ALUM 107_g01_1691071096     * profiles normalized by:7.091436580325 * G pa...</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="next-steps">Next steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
@@ -339,7 +342,7 @@ whatsoever.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="reference/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-spatial.com/" class="external-link"><img src="reference/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
+  <p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-spatial.com/" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

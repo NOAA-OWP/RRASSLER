@@ -1,7 +1,7 @@
 #' @title prints error block
 #' @description A error block helper
 #' @return print output
-#' @details line art to draw eyes to printing notices
+#' @details line art to draw eyes to printing notices.  Used when a catastrophic failure or critical logic error was encountered.
 #' @family helper
 #' @examples
 #' RRASSLER::print_error_block()

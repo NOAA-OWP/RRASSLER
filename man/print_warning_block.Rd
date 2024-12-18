@@ -13,7 +13,7 @@ print output
 A warning block helper
 }
 \details{
-line art to draw eyes to printing notices
+line art to draw eyes to printing notices.  Used when I want to alert to an uncritical error or trace RRASSLER behavior.
 }
 \examples{
 RRASSLER::print_warning_block()

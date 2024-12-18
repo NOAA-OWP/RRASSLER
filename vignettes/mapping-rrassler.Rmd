@@ -129,7 +129,7 @@ First 5 features:
 
 or like so if python is your preferred tooling:
 
-```{{python, eval=FALSE}}
+```{md, eval=FALSE}
 import os
 import pandas
 import geopandas
@@ -174,11 +174,11 @@ accounting
 4 	7242511 	7242483 	g01 	1634841246 	test: IFC 	SI Units 	EPSG:26915 	7242511_7242483_g01_1634841246 	7242511_7242483_g01_1634841246 	* profiles normalized by:-18.1052610894281 * G...
 ```
 
-If you need a refresher on what those field mean, check back on the [Data Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html) page.
+If you need a refresher on what those field mean, check back on the [RRASSLER Data Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html) page.
 
 3) Create a handy map to view
 
-```{{r, eval=FALSE}}
+```{r, eval=FALSE}
 RRASSLER::map_library(path_to_ras_dbase = ras_dbase,AOI_to_map = NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
 ```
 
@@ -190,7 +190,7 @@ This function will create a stand alone leaflet map which is useful in "interact
 
 RAS2FIM pipelines are looking for a few extra helpers in order to pipeline these models through the workflow.  To generate the needed catalog, use the following function.
 
-```{{r, eval=FALSE}}
+```{r, eval=FALSE}
 RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)
 ```
 

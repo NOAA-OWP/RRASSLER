@@ -3,7 +3,8 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   deploying-rrassler: deploying-rrassler.html
+  enhancement_accountinglock: enhancement_accountinglock.html
   ingest-steps: ingest-steps.html
   mapping-rrassler: mapping-rrassler.html
   RRASSLER-format: RRASSLER-format.html
-last_built: 2024-12-06T18:57Z
+last_built: 2024-12-18T16:05Z

@@ -31,7 +31,7 @@
 #' @export
 #' @importFrom stringr str_sub
 #' @importFrom aws.s3 get_bucket save_object delete_object put_object
-#' @importFrom data.table as.data.table fwrite rbindlist
+#' @importFrom data.table ":=" "%like%" "%between%" as.data.table fwrite rbindlist
 #' @importFrom readr read_csv
 #' @importFrom utils glob2rx
 #' @importFrom glue glue
@@ -39,7 +39,6 @@
 #' @importFrom arrow read_parquet write_parquet
 #' @importFrom sfheaders sf_linestring
 #' @importFrom tools file_path_sans_ext
-
 refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite = TRUE) {
   # sinew::moga(file.path(getwd(),"R/refresh_master_files.R"),overwrite = TRUE)
   # devtools::document()
@@ -122,7 +121,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
 
     if(is_verbose) { message("Merging catalog") }
     disk_rrassler_records <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_metadata.csv$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE)
-    full_accounting <- rbindlist(lapply(disk_rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
+    full_accounting <- data.table::rbindlist(lapply(disk_rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
 
     if(is_verbose) { message("Writing catalog") }
     if(!(nrow(list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('accounting.csv'),]) == 0)) {
@@ -267,7 +266,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
     rrassler_records <- massive_file_list[grepl("*RRASSLER_metadata.csv$", massive_file_list)] %>% sort()
 
     if(is_verbose) { message("Merging catalog") }
-    full_accounting <- rbindlist(lapply(rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
+    full_accounting <- data.table::rbindlist(lapply(rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
 
     if(is_verbose) { message("Writing catalog") }
     if(!overwrite) {

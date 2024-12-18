@@ -3,7 +3,7 @@
 #' @param path_to_ras_dbase the path to the folder in which you are building your catalog, Default: NULL
 #' @param out_name the name of the csv you want to generate, Default: NULL
 #' @param overwrite flag to dictate whether or not to overwrite the out_name, should it exist. set to TRUE to delete and (re)generate, FALSE to safely exit, Default: FALSE
-#' @param is_verbose flag to determine whether print statements are suppressed, TRUE to show messages and FALSE to surpress them, Default: TRUE
+#' @param is_verbose flag to determine whether print statements are suppressed, TRUE to show messages and FALSE to suppress them, Default: TRUE
 #' @param HUC8_override a path to the spatial key if you need to run this over a temp dir for eg ras2fim, Default: NULL
 #' @return a new csv with helper columns
 #' @family post-process

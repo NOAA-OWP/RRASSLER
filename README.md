@@ -1,12 +1,10 @@
 
-# pkgdown <img src="man/figures/logo.png" align="right" />
-
 ![](https://github.com/NOAA-OWP/RRASSLER/blob/dev/man/figures/_rassler_key_image.png?raw=true)
 
 <!-- badges: start -->
 
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://choosealicense.com/licenses/mit/)
 [![Project Status:
@@ -179,13 +177,10 @@ in Windows.
 ## Credits and references
 
 Credit to the packages used in the development, testing, and deployment
-of RRASSLER including but not exclusive of the following: *AOI, arrow,
-cowplot, data.table, dplyr, ggplot2, glue, gmailr, httr, leafem,
-leaflet, leafpop, lubridate, lwgeom, mapview, nhdplusTools, sf,
-sfheaders, stringi, stringr, tidyr, unglue, units, utils, and rhdf5*. We
-are appreciative of the [FEMA region 6 group and the BLE
-data](https://webapps.usgs.gov/infrm/estBFE/) they make publicly
-available. Built copying patterns from
+of RRASSLER including but not exclusive of the packages listed in the
+[DESCRIPTION]() file. We are appreciative of the [FEMA region 6 group
+and the BLE data](https://webapps.usgs.gov/infrm/estBFE/) they make
+publicly available. Built copying patterns from
 [RAS2FIM](https://github.com/NOAA-OWP/ras2fim/blob/dev/src/create_shapes_from_hecras.py).
 
 ### For questions

@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A package for making HEC-RAS data more FAIR by cataloging models, cross sections, and points for accounting, interoperability, and reuse in RAS and other applications. These tools are experimental, preliminary or provisional and are subject to revision. They are being provided to meet the need for timely better science and emergency response.
+A package for making HEC-RAS data more FAIR by cataloging models, cross sections, and points for accounting, interoperability, and reuse in RAS and other applications
 }
 \seealso{
 Useful links:

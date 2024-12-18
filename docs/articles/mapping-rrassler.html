@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -219,64 +219,56 @@ so:</p>
 <span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a><span class="dv">8</span><span class="sc">:</span>       <span class="dv">7242581</span>        <span class="dv">7242531</span>    g01    <span class="dv">1634841246</span>   test<span class="sc">:</span> IFC      SI Units EPSG<span class="sc">:</span><span class="dv">26915</span>        <span class="dv">7242581</span>_7242531_g01_1634841246        <span class="dv">7242581</span>_7242531_g01_1634841246    <span class="sc">*</span> profiles normalized by<span class="sc">:-</span><span class="fl">11.2094011902594</span> <span class="sc">*</span> G parsed</span>
 <span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a><span class="dv">9</span><span class="sc">:</span>       <span class="dv">7242581</span>        <span class="dv">7242581</span>    g01    <span class="dv">1634841246</span>   test<span class="sc">:</span> IFC      SI Units EPSG<span class="sc">:</span><span class="dv">26915</span>        <span class="dv">7242581</span>_7242581_g01_1634841246        <span class="dv">7242581</span>_7242581_g01_1634841246    <span class="sc">*</span> profiles normalized by<span class="sc">:-</span><span class="fl">29.0414282453886</span> <span class="sc">*</span> G parsed                                                                                                                     </span></code></pre></div>
 <p>or like so if python is your preferred tooling:</p>
-<p>```{{python, eval=FALSE}} import os import pandas import geopandas
-import pyarrow.parquet</p>
-<p>cat_path = path/to/catalog points =
-pandas.read_parquet(os.path.join(cat_path, ‘point_database.parquet’),
-engine=‘pyarrow’) points xid xid_length xid_d relative_dist x y z n
-source master_id 0 1 282.819375 0.00000 0.000000 -97.228405 30.209038
-180.481224 0.16 3.0 1.0 1 1 282.819375 1.92024 0.006790 -97.228416
-30.209023 180.206904 0.16 3.0 1.0 2 1 282.819375 3.99288 0.014118
--97.228428 30.209007 180.161184 0.16 3.0 1.0 3 1 282.819375 5.76072
-0.020369 -97.228438 30.208994 179.947824 0.16 3.0 1.0 4 1 282.819375
-8.74776 0.030931 -97.228454 30.208971 179.767992 0.16 3.0 1.0</p>
-<p>cross_sections = geopandas.read_file(os.path.join(cat_path,
-‘model_footprints.fgb’)) cross_sections master_id geometry 0 38.0
-LINESTRING (-96.00866 43.37436, -96.00866 43.3… 1 85.0 LINESTRING
-(-96.00866 43.37436, -96.00866 43.3… 2 86.0 LINESTRING (-96.01016
-43.37394, -96.01017 43.3… 3 39.0 LINESTRING (-96.01016 43.37394,
--96.01017 43.3… 4 87.0 LINESTRING (-96.01221 43.37459, -96.01222
-43.3…</p>
-<p>footprints = geopandas.read_file(os.path.join(cat_path,
-‘model_footprints.fgb’)) footprints id start_master_id model_name crs
-units final_name_key source end_master_id geometry 0 1 38.0 7242449
-EPSG:26915 SI Units 7242483_7242449_g01_1634841246 test: IFC 49.0
-POLYGON ((-96.00866 43.37436, -96.00866 43.374… 1 1 50.0 7242483
-EPSG:26915 SI Units 7242511_7242483_g01_1634841246 test: IFC 71.0
-POLYGON ((-96.02147 43.37233, -96.02148 43.372… 2 1 85.0 10170204000897
-EPSG:26915 SI Units 7242581_10170204000897_g01_1616607646 test: IFC
-146.0 POLYGON ((-96.00866 43.37436, -96.00866 43.374… 3 1 72.0 7242511
-EPSG:26915 SI Units 7242531_7242511_g01_1634841246 test: IFC 84.0
-POLYGON ((-96.04800 43.35928, -96.04802 43.359… 4 1 147.0 7242531
-EPSG:26915 SI Units 7242581_7242531_g01_1634841246 test: IFC 158.0
-POLYGON ((-96.05628 43.35093, -96.05632 43.350… 5 1 159.0 7242581
-EPSG:26915 SI Units 7242581_7242581_g01_1634841246 test: IFC 177.0
-POLYGON ((-96.06632 43.34152, -96.06633 43.341…</p>
-<p>accounting =
-pandas.read_csv(os.path.join(ras_dbase,“accounting.csv”)) accounting
-nhdplus_comid model_name g_file last_modified source units crs
-initial_scrape_name final_name_key notes 0 5789080 ALUM 107 g01
-1691071096 test: FEMA6 English Units EPSG:2277 5789080_ALUM
-107_g01_1691071096 5789080_ALUM 107_g01_1691071096 * profiles normalized
-by:7.091436580325 * G pa… 1 5789080 ALUM 114 g01 1691071096 test: FEMA6
-English Units EPSG:2277 5789080_ALUM 114_g01_1691071096 5789080_ALUM
-114_g01_1691071096 * profiles normalized by:5.65206610852312 * GH… 2
-5790952 ALUM 006 g01 1691071095 test: FEMA6 English Units EPSG:2277
-5790952_ALUM 006_g01_1691071095 5790952_ALUM 006_g01_1691071095 *
-profiles normalized by:3.9480012459621 * GHD… 3 7242483 7242449 g01
-1634841246 test: IFC SI Units EPSG:26915 7242483_7242449_g01_1634841246
-7242483_7242449_g01_1634841246 * profiles normalized
-by:0.317587652014083 * G… 4 7242511 7242483 g01 1634841246 test: IFC SI
-Units EPSG:26915 7242511_7242483_g01_1634841246
-7242511_7242483_g01_1634841246 * profiles normalized
-by:-18.1052610894281 * G…</p>
-<pre><code>
-If you need a refresher on what those field mean, check back on the [Data Model](https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html) page.
-
-3) Create a handy map to view
-
-```{{r, eval=FALSE}}
-RRASSLER::map_library(path_to_ras_dbase = ras_dbase,AOI_to_map = NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>import os</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>import pandas</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>import geopandas</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>import pyarrow.parquet</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>cat_path = path/to/catalog</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>points = pandas.read_parquet(os.path.join(cat_path, 'point_database.parquet'), engine='pyarrow')</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>points</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    xid     xid_length  xid_d   relative_dist   x   y   z   n   source  master_id</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>0   1   282.819375  0.00000     0.000000    -97.228405  30.209038   180.481224  0.16    3.0     1.0</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>1   1   282.819375  1.92024     0.006790    -97.228416  30.209023   180.206904  0.16    3.0     1.0</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>2   1   282.819375  3.99288     0.014118    -97.228428  30.209007   180.161184  0.16    3.0     1.0</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>3   1   282.819375  5.76072     0.020369    -97.228438  30.208994   179.947824  0.16    3.0     1.0</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>4   1   282.819375  8.74776     0.030931    -97.228454  30.208971   179.767992  0.16    3.0     1.0</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>cross_sections = geopandas.read_file(os.path.join(cat_path, 'model_footprints.fgb'))</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>cross_sections</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>master_id   geometry</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>0   38.0    LINESTRING (-96.00866 43.37436, -96.00866 43.3...</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>1   85.0    LINESTRING (-96.00866 43.37436, -96.00866 43.3...</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>2   86.0    LINESTRING (-96.01016 43.37394, -96.01017 43.3...</span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>3   39.0    LINESTRING (-96.01016 43.37394, -96.01017 43.3...</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>4   87.0    LINESTRING (-96.01221 43.37459, -96.01222 43.3...</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>footprints = geopandas.read_file(os.path.join(cat_path, 'model_footprints.fgb'))</span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a>footprints</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>id  start_master_id     model_name  crs     units   final_name_key  source  end_master_id   geometry</span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>0   1   38.0    7242449     EPSG:26915  SI Units    7242483_7242449_g01_1634841246  test: IFC   49.0    POLYGON ((-96.00866 43.37436, -96.00866 43.374...</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>1   1   50.0    7242483     EPSG:26915  SI Units    7242511_7242483_g01_1634841246  test: IFC   71.0    POLYGON ((-96.02147 43.37233, -96.02148 43.372...</span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a>2   1   85.0    10170204000897  EPSG:26915  SI Units    7242581_10170204000897_g01_1616607646   test: IFC   146.0   POLYGON ((-96.00866 43.37436, -96.00866 43.374...</span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a>3   1   72.0    7242511     EPSG:26915  SI Units    7242531_7242511_g01_1634841246  test: IFC   84.0    POLYGON ((-96.04800 43.35928, -96.04802 43.359...</span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a>4   1   147.0   7242531     EPSG:26915  SI Units    7242581_7242531_g01_1634841246  test: IFC   158.0   POLYGON ((-96.05628 43.35093, -96.05632 43.350...</span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a>5   1   159.0   7242581     EPSG:26915  SI Units    7242581_7242581_g01_1634841246  test: IFC   177.0   POLYGON ((-96.06632 43.34152, -96.06633 43.341...</span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>accounting = pandas.read_csv(os.path.join(ras_dbase,"accounting.csv"))</span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>accounting</span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>    nhdplus_comid   model_name  g_file  last_modified   source  units   crs     initial_scrape_name     final_name_key  notes</span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>0   5789080     ALUM 107    g01     1691071096  test: FEMA6     English Units   EPSG:2277   5789080_ALUM 107_g01_1691071096     5789080_ALUM 107_g01_1691071096     * profiles normalized by:7.091436580325 * G pa...</span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a>1   5789080     ALUM 114    g01     1691071096  test: FEMA6     English Units   EPSG:2277   5789080_ALUM 114_g01_1691071096     5789080_ALUM 114_g01_1691071096     * profiles normalized by:5.65206610852312 * GH...</span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a>2   5790952     ALUM 006    g01     1691071095  test: FEMA6     English Units   EPSG:2277   5790952_ALUM 006_g01_1691071095     5790952_ALUM 006_g01_1691071095     * profiles normalized by:3.9480012459621 * GHD...</span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a>3   7242483     7242449     g01     1634841246  test: IFC   SI Units    EPSG:26915  7242483_7242449_g01_1634841246  7242483_7242449_g01_1634841246  * profiles normalized by:0.317587652014083 * G...</span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a>4   7242511     7242483     g01     1634841246  test: IFC   SI Units    EPSG:26915  7242511_7242483_g01_1634841246  7242511_7242483_g01_1634841246  * profiles normalized by:-18.1052610894281 * G...</span></code></pre></div>
+<p>If you need a refresher on what those field mean, check back on the
+<a href="https://NOAA-OWP.github.io/RRASSLER/articles/RRASSLER-format.html" class="external-link">RRASSLER
+Data Model</a> page.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Create a handy map to view</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu">map_library</span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,AOI_to_map <span class="op">=</span> <span class="cn">NULL</span>,name <span class="op">=</span> <span class="st">"model_map"</span>,plot_lines <span class="op">=</span> <span class="cn">TRUE</span>,chart_lines <span class="op">=</span> <span class="cn">FALSE</span>,refresh <span class="op">=</span> <span class="cn">FALSE</span>,quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>This function will create a stand alone leaflet map which is useful
 in “interactively” exploring the data, facilitating simple queries, and
 inspirational presentations. Just double click on the generated html
@@ -290,7 +282,8 @@ document (model_map.html) to view it in your web browser</p>
 <p>RAS2FIM pipelines are looking for a few extra helpers in order to
 pipeline these models through the workflow. To generate the needed
 catalog, use the following function.</p>
-<p><code>{{r, eval=FALSE}} RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)</code></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/append_catalog_fields.html">append_catalog_fields</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,out_name <span class="op">=</span> <span class="st">"OWP_ras_model_catalog.csv"</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,is_quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Congratulations! You now have a RRASSLER catalog and all the pieces
 needed to make HEC-RAS model data more FAIR and amenable to operational
 accounting and use.</p>
@@ -303,7 +296,7 @@ accounting and use.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="reference/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-spatial.com/" class="external-link"><img src="reference/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
+  <p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-spatial.com/" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

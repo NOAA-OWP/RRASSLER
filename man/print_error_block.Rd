@@ -13,7 +13,7 @@ print output
 A error block helper
 }
 \details{
-line art to draw eyes to printing notices
+line art to draw eyes to printing notices.  Used when a catastrophic failure or critical logic error was encountered.
 }
 \examples{
 RRASSLER::print_error_block()
