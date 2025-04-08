@@ -2,7 +2,7 @@
 #' @description helper to transform points into linestrings
 #' @param dat The dataframe of points, Default: NULL
 #' @param path_to_ras_dbase  The path to the folder in which you are building your catalog, is also location agnostic (disk or cloud), Default: NULL
-#' @param is_quiet PARAM_DESCRIPTION, Default: FALSE
+#' @param is_quiet flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE
 #' @return linestrings
 #' @details DETAILS
 #' @examples

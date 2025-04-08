@@ -37,9 +37,9 @@ ingest_FEMA6_BLE(
 
 \item{free_treads}{number of threads to leave free if parallel processing, Default: 2}
 
-\item{clean}{number of threads to leave free if parallel processing, Default: 2}
+\item{clean}{flag to erase directory after processing, Default: FALSE}
 
-\item{opt_local_path}{PARAM_DESCRIPTION, Default: NULL}
+\item{opt_local_path}{temp directory used in cloud processing path, Default: NULL}
 }
 \value{
 a RRASSLE'd catalog of models or added desired HUC8 models

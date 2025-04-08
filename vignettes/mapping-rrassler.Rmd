@@ -21,18 +21,23 @@ Users may look at the _model_catalog.csv_'s, and the models underneath, but shou
 
 There is not really a delineation between processing steps within RRASSLER, ones the files have been placed into the RRASSL'd structure the bulk of the work is done but it would be nice if we could put a spatial index and tracking sheet together programatically.  That is what these final steps accomplish, parsing out the different units and RRASSL'd metadata and placing them in single files which makes them more findable.  There are two primary parts to post-processing: Generating catalog indicies and mapping utilities.
 
-### 1A) If you need to pick up after a previous run make sure you set your catalog location appropritly
-## Internal to the package
+### 1A) If you need to pick up after a previous run make sure you set your catalog location appropriately:
+#### A) Internal to the package
 ```{r, eval = FALSE}
-ras_dbase <- "/inst/extdata/sample_output/ras_catalog/"
+ras_dbase <- fs::path_package("/extdata/sample_output/ras_catalog/", package = "RRASSLER")
 ```
 
-## A Local path
+#### B) As a developer using a rockerd docker setup
+```{r, eval = FALSE}
+ras_dbase <- "../inst/extdata/sample_output/ras_catalog/"
+```
+
+#### C) A Local path
 ```{r, eval = FALSE}
 ras_dbase <- file.path("~/data/ras_catalog/")
 ```
 
-## Or set a cloud account and path up like so:
+#### D) Or set a cloud account and path up like so:
 ```{r, eval = FALSE}
 Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "evenmoresecret","AWS_DEFAULT_REGION" = "us-also-secret")
 ras_dbase <- "s3://ras-models/"
@@ -191,7 +196,7 @@ This function will create a stand alone leaflet map which is useful in "interact
 RAS2FIM pipelines are looking for a few extra helpers in order to pipeline these models through the workflow.  To generate the needed catalog, use the following function.
 
 ```{r, eval=FALSE}
-RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_quiet = TRUE)
+RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_verbose = TRUE)
 ```
 
 Congratulations!  You now have a RRASSLER catalog and all the pieces needed to make HEC-RAS model data more FAIR and amenable to operational accounting and use.

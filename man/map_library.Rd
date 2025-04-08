@@ -25,12 +25,12 @@ map_library(
 
 \item{chart_lines}{Add cross section click graphs to the plot lines.  Will break if area is too large, Default: FALSE}
 
-\item{refresh}{flag to dictate whether or not to recollate spatial database prior to mapping.  FALSE to skip, TRUE to regenerate, Default: TRUE}
+\item{refresh}{flag to dictate whether or not to recollate spatial database prior to mapping.  FALSE to skip, TRUE to regenerate, Default: FALSE}
 
 \item{quiet}{flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE}
 }
 \value{
-OUTPUT_DESCRIPTION
+writes out html for leaflet map
 }
 \description{
 a function to help apply geographic context to the RRASSLED catalog

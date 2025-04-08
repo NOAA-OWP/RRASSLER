@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A package for making HEC-RAS data more FAIR by cataloging models, cross sections, and points for accounting, interoperability, and reuse in RAS and other applications
+A package for making HEC-RAS data more FAIR by cataloging models, cross sections, and points for accounting, interoperability, and reuse in RAS and other applications.
 }
 \seealso{
 Useful links:
@@ -21,11 +21,14 @@ Useful links:
 \author{
 \strong{Maintainer}: Jim Coll \email{james.coll@noaa.gov} (\href{https://orcid.org/0000-0002-6994-6668}{ORCID})
 
+Authors:
+\itemize{
+  \item Mike Johnson \email{mike.johnson@noaa.gov} (\href{https://orcid.org/0000-0002-5288-8350}{ORCID})
+}
+
 Other contributors:
 \itemize{
-  \item Mike Johnson \email{mike.johnson@noaa.gov} (\href{https://orcid.org/0000-0002-5288-8350}{ORCID}) [contributor]
   \item Laura Keys (\href{https://orcid.org/0000-0003-1470-5215}{ORCID}) [contributor]
-  \item Andy Carter [contributor, translator]
   \item NOAA [funder]
   \item Lynker [funder]
 }

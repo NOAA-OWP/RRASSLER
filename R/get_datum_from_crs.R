@@ -2,7 +2,7 @@
 #' @description attempts to parse datum and datum unit from file based on WKT
 #' @param x either the string or the sf crs
 #' @return list of CRS and vertical unit
-#' @details DETAILS
+#' @details A helper function to strip strings out of the proj like a heathen
 #' @examples
 #' \dontrun{
 #' if(interactive()){

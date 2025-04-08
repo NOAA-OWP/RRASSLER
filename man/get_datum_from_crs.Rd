@@ -16,7 +16,7 @@ list of CRS and vertical unit
 attempts to parse datum and datum unit from file based on WKT
 }
 \details{
-DETAILS
+A helper function to strip strings out of the proj like a heathen
 }
 \examples{
 \dontrun{

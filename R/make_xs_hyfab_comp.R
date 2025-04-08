@@ -1,11 +1,11 @@
 #' @title make_xs_hyfab_comp
-#' @description FUNCTION_DESCRIPTION
-#' @param path_to_ras_dbase PARAM_DESCRIPTION, Default: NULL
-#' @param line_select_subset PARAM_DESCRIPTION, Default: NULL
-#' @param hf_lines PARAM_DESCRIPTION
-#' @param overwrite PARAM_DESCRIPTION, Default: FALSE
-#' @param is_verbose PARAM_DESCRIPTION, Default: TRUE
-#' @returns OUTPUT_DESCRIPTION
+#' @description testing function to crosswalk cross sections to flowline distance
+#' @param path_to_ras_dbase A path to a RRASSLED directory to, Default: NULL
+#' @param line_select_subset A subset of the lines you want to crosswalk, Default: NULL
+#' @param hf_lines the hydrofabric network you want to crosswalk to
+#' @param overwrite overwrite outputs, Default: FALSE
+#' @param is_verbose flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: TRUE
+#' @returns testing
 #' @details DETAILS
 #' @examples
 #' \dontrun{

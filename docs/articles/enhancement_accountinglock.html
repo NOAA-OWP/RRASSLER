@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RRASSLER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,12 +102,14 @@ sample data!</p>
 </blockquote>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">ras_dbase</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpxYyPVj/temp_libpathb1a7524a0e0/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpXqhFjT/temp_libpathe6aa134c1f/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">HUC8.fgb</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">OWP_ras_model_catalog.csv</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">XS.fgb</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">accounting.csv</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">model_footprints.fgb</span></span></span>
+<span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">model_map.html</span></span></span>
+<span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">model_map_files</span></span></span>
 <span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">models</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">point_database.parquet</span></span></span>
 <span><span class="co">## └── <span style="color: #0000BB; font-weight: bold;">stac</span></span></span></code></pre>
@@ -117,20 +119,22 @@ sample data!</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/refresh_master_files.html">refresh_master_files</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Writing layer `XS' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpxYyPVj/temp_libpathb1a7524a0e0/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpXqhFjT/temp_libpathe6aa134c1f/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 177 features with 1 fields and geometry type Line String.</span></span>
 <span><span class="co">## Writing layer `model_footprints' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpxYyPVj/temp_libpathb1a7524a0e0/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpXqhFjT/temp_libpathe6aa134c1f/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 9 features with 8 fields and geometry type Polygon.</span></span></code></pre>
 <pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">ras_dbase</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpxYyPVj/temp_libpathb1a7524a0e0/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpXqhFjT/temp_libpathe6aa134c1f/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">HUC8.fgb</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">OWP_ras_model_catalog.csv</span></span></span>
 <span><span class="co">## ├── XS.fgb</span></span>
 <span><span class="co">## ├── accounting.csv</span></span>
 <span><span class="co">## ├── model_footprints.fgb</span></span>
+<span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">model_map.html</span></span></span>
+<span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">model_map_files</span></span></span>
 <span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">models</span></span></span>
 <span><span class="co">## ├── point_database.parquet</span></span>
 <span><span class="co">## └── <span style="color: #0000BB; font-weight: bold;">stac</span></span></span></code></pre>
@@ -140,21 +144,23 @@ sample data!</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/refresh_master_files.html">refresh_master_files</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Writing layer `XS' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpxYyPVj/temp_libpathb1a7524a0e0/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpXqhFjT/temp_libpathe6aa134c1f/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 177 features with 1 fields and geometry type Line String.</span></span>
 <span><span class="co">## Writing layer `model_footprints' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpxYyPVj/temp_libpathb1a7524a0e0/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpXqhFjT/temp_libpathe6aa134c1f/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 9 features with 8 fields and geometry type Polygon.</span></span></code></pre>
 <pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">ras_dbase</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpxYyPVj/temp_libpathb1a7524a0e0/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpXqhFjT/temp_libpathe6aa134c1f/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">HUC8.fgb</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">OWP_ras_model_catalog.csv</span></span></span>
 <span><span class="co">## ├── XS.fgb</span></span>
 <span><span class="co">## ├── accounting.csv</span></span>
-<span><span class="co">## ├── accounting_20241218160542.csv</span></span>
+<span><span class="co">## ├── accounting_20250408110553.csv</span></span>
 <span><span class="co">## ├── model_footprints.fgb</span></span>
+<span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">model_map.html</span></span></span>
+<span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">model_map_files</span></span></span>
 <span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">models</span></span></span>
 <span><span class="co">## ├── point_database.parquet</span></span>
 <span><span class="co">## └── <span style="color: #0000BB; font-weight: bold;">stac</span></span></span></code></pre>
@@ -169,7 +175,7 @@ backup.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Jim Coll, Mike Johnson, Laura Keys, Andy Carter, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-spatial.com/" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
+  <p>Developed by Jim Coll, Laura Keys, <a href="https://water.noaa.gov/about/nwm" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/noaa-logo.png" height="36" alt="NOAA OWP"></a>, <a href="https://lynker-spatial.com/" class="external-link"><img src="https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/lynker-logo.png" height="36" alt="Lynker"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

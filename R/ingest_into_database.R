@@ -62,7 +62,7 @@ ingest_into_database <- function(path_to_ras_dbase,
                                  free_treads = 2) {
   # sinew::moga(file.path(getwd(),"R/ingest_into_database.R"),overwrite = TRUE)
   # devtools::document()
-  # pkgdown::build_site(new_process=FALSE)
+  # pkgdown::build_site(new_process=TRUE)
   # devtools::load_all()
   #
   # path_to_ras_dbase = "s3://ras-models/"

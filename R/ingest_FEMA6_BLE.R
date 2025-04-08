@@ -9,8 +9,8 @@
 #' @param overwrite overwrite files if we find identical models, Default: FALSE
 #' @param parallel_proc Flag to determine if this should this parallel process, will check for enough free cores and boot this back if it exceeds available resources.  Will suppress all intermediate messages if active, Default: TRUE
 #' @param free_treads number of threads to leave free if parallel processing, Default: 2
-#' @param clean number of threads to leave free if parallel processing, Default: 2
-#' @param opt_local_path PARAM_DESCRIPTION, Default: NULL
+#' @param clean flag to erase directory after processing, Default: FALSE
+#' @param opt_local_path temp directory used in cloud processing path, Default: NULL
 #' @return a RRASSLE'd catalog of models or added desired HUC8 models
 #' @family ingest
 #' @details As one of the best centralized and accessible databases, the FEMA region 6 BLE data are perfect candidates to RRASSL.  This provides a wrapper around BLE scrapers and the ingest_into_database function.

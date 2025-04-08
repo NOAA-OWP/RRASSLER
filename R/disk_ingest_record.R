@@ -187,7 +187,9 @@ disk_ingest_record <- function(in_file = NULL,
         notes <- glue::glue("{notes} * Time added to filename:{time_added_to_unique}")
       }
 
-      if(file.exists())
+      if(file.exists(proj_override)) {
+        current_model_projection <- basebnanme(proj_override)
+      }
 
       new_row <-
         data.table::data.table(

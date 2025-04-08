@@ -44,7 +44,7 @@ Sys.setenv("AWS_ACCESS_KEY_ID" = "AKIASUPERSECRET","AWS_SECRET_ACCESS_KEY" = "ev
 ras_dbase <- "s3://ras-models/"
 ```
 
-## Step 2: Ingest sample data
+# Step 2: Ingest sample data
 
 ```{r, eval = FALSE}
 RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/FEMA-R6-BLE-sample-dataset/",code_to_place_in_source = "test: FEMA6",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
@@ -54,7 +54,7 @@ RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrap
 RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = "../inst/extdata/sample_ras/ras2fim-sample-dataset/output_iowa/05_hecras_output",code_to_place_in_source = "test: RAS2FIM V1 outputs",proj_override = "EPSG:26915",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 ```
 
-### Extra: How to RRASSLE other sample data
+## Extra: How to RRASSLE other sample data
 
 > Note: This is a large dataset and can take upwards of 20 hours to run!
 
@@ -68,6 +68,6 @@ RRASSLER::ingest_FEMA6_BLE(path_to_ras_dbase = ras_dbase,HUCID ="12090301",proj_
 RRASSLER::ingest_into_database(path_to_ras_dbase = ras_dbase,top_of_dir_to_scrape = file.path(ras_dbase,"_temp","BLE","12090301","12090301_models",fsep = .Platform$file.sep),code_to_place_in_source = "FEMA Region 6:12090301",proj_override = "EPSG:2277",apply_vdat_trans = FALSE,is_quiet = FALSE,is_verbose = TRUE,overwrite = FALSE,parallel_proc = FALSE)
 ```
 
-## Next steps
+# Next steps
 
 At this point in your RRASSLER workflow, we've ingested all the models we have on hand.  In a "real world" deployment, you might have hundreds or thousands more to ingest, and so you'd work your way through those before applying the rest of the post-process routines.  However, you can also deploy and redeploy those as needed, so the article on [mapping RRASSLER](https://NOAA-OWP.github.io/RRASSLER/articles/mapping-rrassler.html) will walk you through how to accomplish that and what we generate with those post-processing steps.
