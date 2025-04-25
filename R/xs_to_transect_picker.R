@@ -30,6 +30,7 @@
 #' @importFrom arrow read_parquet open_dataset write_parquet
 #' @importFrom dplyr collect mutate row_number
 #' @importFrom glue glue
+#' @importFrom utils glob2rx read.delim
 xs_to_transect_picker <- function(path_to_ras_dbase = NULL,
                                   line_select_subset = NULL,
                                   hf_lines,
@@ -185,7 +186,7 @@ xs_to_transect_picker <- function(path_to_ras_dbase = NULL,
       # Push point data
       needed_ras_pts <-  sf::st_as_sf(ras_pts[ras_pts$master_id == ras_flowline_crossings[nearest_ras_index,]$master_id,], coords = c("x", "y"), crs = sf::st_crs(ras_xs)) %>%
         sf::st_transform(sf::st_crs(auto_transects))
-      new_point_entry = data.table(
+      new_point_entry = data.table::data.table(
         id = rep(target_flowline$id,nrow(needed_ras_pts)),
         cs_id = rep(point_selection_index,nrow(needed_ras_pts)),
         pt_id = c(1:nrow(needed_ras_pts)),

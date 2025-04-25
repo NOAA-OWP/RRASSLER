@@ -1,7 +1,7 @@
 #' @title disk_ingest_record
 #' @description add a file as a record in the RRASSLED structure
 #' @param in_file the path to the file on disk that we want to ingest, Default: NULL
-#' @param ras_dbase A path to a directory to write your RRASSLED catalog to., Default: NULL
+#' @param path_to_ras_dbase A path to a directory to write your RRASSLED catalog to, Default: NULL
 #' @param code_to_place_in_source a code to place in the metadata as the owner of the model, Default: NULL
 #' @param proj_override a string to override projection information should none be found, Default: NULL
 #' @param apply_vdat_trans Should VDATUM be applied to the HEC-RAS model geometry.  See https://vdatum.noaa.gov/, Default: FALSE
@@ -38,7 +38,7 @@
 #'  \code{\link[arrow]{write_parquet}}
 #' @rdname disk_ingest_record
 #' @export
-#' @importFrom utils glob2rx
+#' @importFrom utils glob2rx read.delim
 #' @importFrom glue glue
 #' @importFrom sf st_crs st_set_crs st_coordinates st_write
 #' @importFrom stringr str_sub str_detect
@@ -83,8 +83,19 @@ disk_ingest_record <- function(in_file = NULL,
   # is_quiet = FALSE
   # is_verbose = TRUE
   # overwrite = FALSE
+  #
+  # ras_dbase <- "./inst/extdata/sample_output/ras_catalog/"
+  # in_file = "/home/rstudio/data/ras_catalog/_temp/M3/M_Willow_FEMA_Effective/HEC-RAS/M102-00-00/M102-00-00.PRJ"
+  # path_to_ras_dbase = ras_dbase
+  # code_to_place_in_source = "test"
+  # proj_override = "ESRI:102740"
+  # apply_vdat_trans = FALSE
+  # is_quiet = FALSE
+  # is_verbose = TRUE
+  # overwrite = FALSE
 
   ## -- Start --
+
   if (!is_quiet) {
     message(paste("Parent proj file:",in_file))
     message(paste("RRASSLING to:",path_to_ras_dbase))
@@ -134,7 +145,7 @@ disk_ingest_record <- function(in_file = NULL,
   # populate what we can from a projection file and project file
   for (potential_file in prj_files) {
     # potential_file <- prj_files[1]
-    file_text <- read.delim(potential_file, header = FALSE)
+    file_text <- readr::read.delim(potential_file, header = FALSE)
 
     if (any(c('PROJCS', 'GEOGCS', 'DATUM', 'PROJECTION') == file_text)) {
       current_model_projection = potential_file
@@ -188,7 +199,7 @@ disk_ingest_record <- function(in_file = NULL,
       }
 
       if(file.exists(proj_override)) {
-        current_model_projection <- basebnanme(proj_override)
+        current_model_projection <- basename(proj_override)
       }
 
       new_row <-
@@ -210,11 +221,7 @@ disk_ingest_record <- function(in_file = NULL,
 
       data.table::fwrite(new_row,file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,"RRASSLER_metadata.csv",fsep = .Platform$file.sep),row.names = FALSE)
 
-      if(cond3) {
-        files_to_copy <- list_of_files
-      } else {
-        files_to_copy <- c(g_files,p_files,f_files,h_files,v_files,prj_files,o_files,r_files,u_files,x_files,rasmap_files)
-      }
+      files_to_copy <- list_of_files
 
       file.copy(
         files_to_copy,
@@ -265,7 +272,7 @@ disk_ingest_record <- function(in_file = NULL,
 
       dir.create(file.path(path_to_ras_dbase,"models","_unprocessed",current_initial_name,fsep = .Platform$file.sep))
       if(file.exists(proj_override)) {
-        current_model_projection <- basebnanme(proj_override)
+        current_model_projection <- basename(proj_override)
       }
       new_row <-
         data.table::data.table(
@@ -345,7 +352,7 @@ disk_ingest_record <- function(in_file = NULL,
       notes <- glue::glue("{extrated_pts[[2]]} * Time added to filename:{time_added_to_unique}")
     }
     if(file.exists(proj_override)) {
-      current_model_projection <- basebnanme(proj_override)
+      current_model_projection <- basename(proj_override)
     }
     new_row <-
       data.table::data.table(
@@ -368,22 +375,27 @@ disk_ingest_record <- function(in_file = NULL,
       row.names = FALSE
     )
 
+    # I should Always get points
     arrow::write_parquet(
       extrated_pts[[1]],
       file.path(path_to_ras_dbase,"models",current_final_name_key,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep)
     )
 
+    # I got a hull of some sort?
     sf::st_write(
       hull,
       file.path(path_to_ras_dbase,"models",current_final_name_key,"RRASSLER_hull.fgb",fsep = .Platform$file.sep),
       quiet = is_verbose
     )
 
-    sf::st_write(
-      extrated_pts[[3]],
-      file.path(path_to_ras_dbase,"models",current_final_name_key,"RRASSLER_river.fgb",fsep = .Platform$file.sep),
-      quiet = is_verbose
-    )
+    # I may or may not have gotten good rivers?
+    try({
+      sf::st_write(
+        extrated_pts[[3]],
+        file.path(path_to_ras_dbase,"models",current_final_name_key,"RRASSLER_river.fgb",fsep = .Platform$file.sep),
+        quiet = is_verbose
+      )
+    })
 
     file.copy(
       list_of_files,

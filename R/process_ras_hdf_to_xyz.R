@@ -43,6 +43,7 @@
 #' @importFrom tidyr fill
 #' @importFrom lwgeom st_linesubstring st_endpoint
 #' @importFrom glue glue
+#' @importFrom utils glob2rx read.delim
 
 process_ras_hdf_to_xyz <- function(geom_path,
                                    units,
@@ -98,7 +99,7 @@ process_ras_hdf_to_xyz <- function(geom_path,
 
     if (length(prj_files) > 0) {
       for (potential_file in prj_files) {
-        file_text <- read.delim(potential_file, header = FALSE)
+        file_text <- utils::read.delim(potential_file, header = FALSE)
 
         if (grepl("SI Units", file_text, fixed = TRUE)) {
           units <- "SI Units"

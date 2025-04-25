@@ -1,10 +1,10 @@
 > All notable changes to this project will be documented in this file.  We attempt to follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 
-# RRASSLER 0.1.4  - 2024-04-08
+# RRASSLER 0.1.4  - 2024-04-22
 
 ## Changes
 
-Merged main branch and documentation refresh, verified `devtools::check()` passes.
+Merged main branch, code spellcheck, package organelles, and documentation refresh; verified `devtools::check()` passes.
 
 # RRASSLER 0.1.3  - 2024-12-18
 

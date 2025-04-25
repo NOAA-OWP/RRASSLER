@@ -51,6 +51,9 @@ make_xs_hyfab_comp <- function(path_to_ras_dbase = NULL,
   # overwrite = TRUE
 
   ## -- Start --
+  # due to NSE notes in R CMD check
+  group = NULL
+
   ## Load catalog
   fn_time_start <- Sys.time()
   if(!file.exists(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))) {
@@ -66,7 +69,7 @@ make_xs_hyfab_comp <- function(path_to_ras_dbase = NULL,
       message("Output already exists and overwrite is set to false")
       return(FALSE)
     }
-    if(verbose) {
+    if(is_verbose) {
       print_warning_block()
       message("Output already exists, overwriting")
     }
@@ -84,7 +87,7 @@ make_xs_hyfab_comp <- function(path_to_ras_dbase = NULL,
 
   # network <- sf::st_read(hf_lines,layer ='flowline_mainstem') # For "Study_Area.gpkg"
   # network <- sf::st_read(hf_lines,layer ='flowlines_subset')
-  # network <- sf::st_read(hf_lines,layer ='flowpaths')
+  network <- sf::st_read(hf_lines,layer ='flowpaths')
 
   # Subset to requested hf intersections
   network_proj <- sf::st_transform(network,sf::st_crs(ras_xs))

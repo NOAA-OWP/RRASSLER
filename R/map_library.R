@@ -36,6 +36,7 @@
 #' @importFrom leafem addFeatures
 #' @importFrom leafpop popupGraph popupTable
 #' @importFrom glue glue
+#' @importFrom grDevices terrain.colors
 #' @importFrom mapview mapshot
 
 map_library <-  function(path_to_ras_dbase,
@@ -62,6 +63,9 @@ map_library <-  function(path_to_ras_dbase,
 
 
   ## -- Start --
+  # due to NSE notes in R CMD check
+  xid_d = z = n = NULL
+
   if(name=="model") {
     print_warning_block()
     print("Can not use 'model' as a name")
@@ -110,7 +114,7 @@ map_library <-  function(path_to_ras_dbase,
         plot <- ggplot2::ggplot(data = database[database$master_id==id,], ggplot2::aes(xid_d, z, color = n)) +
           ggplot2::geom_point() +
           ggplot2::theme_light() +
-          ggplot2::scale_color_gradientn(colors = terrain.colors(10)) +
+          ggplot2::scale_color_gradientn(colors = grDevices::terrain.colors(10)) +
           ggplot2::labs(subtitle = glue::glue("Model: {hull_features[hull_features$end_master_id >= id & id >= hull_features$start_master_id,]$model_name} Cross section ID: {id}"), caption = glue::glue("Model key: {hull_features[hull_features$end_master_id >= id & id >= hull_features$start_master_id,]$final_name_key}"), family = "serif", x = "Distance along profile [m]\n(left to right, looking downstream)", y = "Elevation [m]", color = "Mannings n") +
           cowplot::theme_half_open() +
           cowplot::background_grid()

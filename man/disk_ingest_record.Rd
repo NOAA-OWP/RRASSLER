@@ -18,6 +18,8 @@ disk_ingest_record(
 \arguments{
 \item{in_file}{the path to the file on disk that we want to ingest, Default: NULL}
 
+\item{path_to_ras_dbase}{A path to a directory to write your RRASSLED catalog to, Default: NULL}
+
 \item{code_to_place_in_source}{a code to place in the metadata as the owner of the model, Default: NULL}
 
 \item{proj_override}{a string to override projection information should none be found, Default: NULL}
@@ -29,8 +31,6 @@ disk_ingest_record(
 \item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: FALSE}
 
 \item{overwrite}{overwrite files if we find identical models, Default: FALSE}
-
-\item{ras_dbase}{A path to a directory to write your RRASSLED catalog to., Default: NULL}
 }
 \value{
 a set of files in a newly RRASSLE'd record.

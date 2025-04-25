@@ -187,13 +187,13 @@ If you need a refresher on what those field mean, check back on the [RRASSLER Da
 RRASSLER::map_library(path_to_ras_dbase = ras_dbase,AOI_to_map = NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
 ```
 
-This function will create a stand alone leaflet map which is useful in "interactively" exploring the data, facilitating simple queries, and inspirational presentations.  Just double click on the generated html document (model_map.html) to view it in your web browser
+This function will create a stand alone leaflet map which is useful in "interactively" exploring the data, facilitating simple queries, and inspirational presentations.  Just double click on the generated html document (model_map.html) to view it in your web browser, [as hosted here](https://noaa-owp.github.io/RRASSLER/model_map.html).
 
 ![](../man/figures/map_features.PNG)
 
 ### Extend database for ras2fim deployments
 
-RAS2FIM pipelines are looking for a few extra helpers in order to pipeline these models through the workflow.  To generate the needed catalog, use the following function.
+The operational deployment of [RAS2FIM](https://github.com/NOAA-OWP/ras2fim) pipelines are looking for a few extra helpers in order to guide these models through the workflow.  To generate the needed catalog, use the following function.
 
 ```{r, eval=FALSE}
 RRASSLER::append_catalog_fields(path_to_ras_dbase = ras_dbase,out_name = "OWP_ras_model_catalog.csv",overwrite = FALSE,is_verbose = TRUE)

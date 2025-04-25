@@ -44,11 +44,10 @@
 #' @export
 #' @importFrom glue glue
 #' @importFrom stringr str_sub
+#' @importFrom utils glob2rx
 #' @importFrom parallel detectCores makeCluster stopCluster
 #' @importFrom doParallel registerDoParallel
-#' @importFrom foreach foreach
-#' @importFrom foreach `%do%`
-#' @importFrom foreach `%dopar%`
+#' @importFrom foreach foreach "%do%" "%dopar%"
 
 ingest_into_database <- function(path_to_ras_dbase,
                                  top_of_dir_to_scrape,
@@ -100,7 +99,7 @@ ingest_into_database <- function(path_to_ras_dbase,
   }
 
   # Find a list of all the .prj files
-  list_of_prj_files <- list.files(top_of_dir_to_scrape,pattern = glob2rx("*.prj$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
+  list_of_prj_files <- list.files(top_of_dir_to_scrape,pattern = utils::glob2rx("*.prj$"),full.names = TRUE,ignore.case = TRUE,recursive = TRUE)
   n_files_to_process <- length(list_of_prj_files)
   if (!is_quiet) {
     message(glue::glue("Found {n_files_to_process} potential ras files"))

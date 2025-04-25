@@ -24,7 +24,7 @@
 #' @rdname util_unzip
 #' @export
 #' @importFrom stringr str_sub
-#' @importFrom utils unzip
+#' @importFrom utils glob2rx unzip
 #' @importFrom glue glue
 #' @importFrom dplyr setdiff
 
@@ -52,7 +52,7 @@ util_unzip <- function(zippath, is_quiet = FALSE) {
   files_to_process <-
     list.files(
       zippath,
-      pattern = glob2rx(glue::glue("*.zip$")),
+      pattern = utils::glob2rx(glue::glue("*.zip$")),
       full.names = TRUE,
       ignore.case = TRUE,
       recursive = TRUE
@@ -74,7 +74,7 @@ util_unzip <- function(zippath, is_quiet = FALSE) {
     list_of_all_zips <-
       list.files(
         zippath,
-        pattern = glob2rx(glue::glue("*.zip$")),
+        pattern = utils::glob2rx(glue::glue("*.zip$")),
         full.names = TRUE,
         ignore.case = TRUE,
         recursive = TRUE

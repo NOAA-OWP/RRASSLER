@@ -13,10 +13,10 @@ License: MIT + file LICENSE
 URL: https://github.com/NOAA-OWP/RRASSLER
 BugReports: https://github.com/NOAA-OWP/RRASSLER/issues/new
 Depends: 
-  R (>= 3.5),
-  magrittr, 
-  foreach,
-  data.table
+    R (>= 3.5),
+    magrittr,
+    foreach,
+    data.table
 Imports: 
     AOI,
     arrow,
@@ -41,6 +41,9 @@ Imports:
     unglue,
     utils
 Suggests:
+     grDevices,
+     fs,
+     tibble,
      knitr,
      cowplot,
      DiagrammeR,

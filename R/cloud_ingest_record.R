@@ -36,7 +36,8 @@
 #' @importFrom stringr str_sub str_detect
 #' @importFrom aws.s3 get_bucket_df delete_object put_object
 #' @importFrom glue glue
-#' @importFrom utils glob2rx
+#' @importFrom utils glob2rx read.delim
+#' @importFrom str_sub str_detect
 #' @importFrom sf st_crs st_set_crs st_coordinates st_buffer st_write
 #' @importFrom dplyr select pull
 #' @importFrom data.table data.table fwrite
@@ -71,6 +72,10 @@ cloud_ingest_record <- function(in_file = NULL,
   # quick_check = FALSE
   # quick_hull = FALSE
   # overwrite = FALSE
+
+  ## -- Start --
+  # due to NSE notes in R CMD check
+  Key = NULL
 
   rest_of_bucket_prefix <-
     stringr::str_sub(ras_dbase, nchar(root_bucket), nchar(ras_dbase))
@@ -122,7 +127,7 @@ cloud_ingest_record <- function(in_file = NULL,
 
   # populate what we can from a projection file and project file
   for (potential_file in prj_files) {
-    file_text <- read.delim(potential_file, header = FALSE)
+    file_text <- readr::read.delim(potential_file, header = FALSE)
 
     if (any(c('PROJCS', 'GEOGCS', 'DATUM', 'PROJECTION') == file_text)) {
       if (!is_quiet) { message('found a projection') }

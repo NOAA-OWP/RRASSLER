@@ -21,7 +21,6 @@
 #'  \code{\link[stringr]{str_sub}}
 #'  \code{\link[aws.s3]{get_bucket}}, \code{\link[aws.s3]{get_object}}, \code{\link[aws.s3]{delete_object}}, \code{\link[aws.s3]{put_object}}
 #'  \code{\link[data.table]{as.data.table}}, \code{\link[data.table]{fwrite}}, \code{\link[data.table]{rbindlist}}
-#'  \code{\link[readr]{read_delim}}
 #'  \code{\link[utils]{glob2rx}}
 #'  \code{\link[glue]{glue}}
 #'  \code{\link[sf]{st_read}}, \code{\link[sf]{st_crs}}, \code{\link[sf]{st_write}}
@@ -29,11 +28,11 @@
 #'  \code{\link[sfheaders]{sf_linestring}}
 #' @rdname refresh_master_files
 #' @export
+#' @import data.table
 #' @importFrom stringr str_sub
 #' @importFrom aws.s3 get_bucket save_object delete_object put_object
 #' @importFrom data.table ":=" "%like%" "%between%" as.data.table fwrite rbindlist
-#' @importFrom readr read_csv
-#' @importFrom utils glob2rx
+#' @importFrom utils glob2rx read.delim
 #' @importFrom glue glue
 #' @importFrom sf st_read st_set_crs st_crs st_write
 #' @importFrom arrow read_parquet write_parquet
@@ -53,6 +52,9 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
   # overwrite = TRUE
 
   ## -- Start --
+  # due to NSE notes in R CMD check
+  xid = NULL
+
   fn_time_start <- Sys.time()
   if(is_verbose) { message("(re)merging database outputs") }
 
@@ -249,7 +251,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
 
     if(is_verbose) {
       runtime <- Sys.time() - fn_time_start
-      units(runtime) <- "hours"
+      units::units(runtime) <- "hours"
       message(glue::glue("(re)-Merged {nrow(hull_concat)} models with {nrow(xs_lines)} cross sections and {nrow(point_concat)} points"))
       message(glue::glue("Wall time: {round(runtime, digits = 3)} hours"))
     }
