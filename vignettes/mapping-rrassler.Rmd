@@ -183,7 +183,7 @@ If you need a refresher on what those field mean, check back on the [RRASSLER Da
 
 3) Create a handy map to view
 
-```{r, eval=FALSE}
+```{{r, eval=FALSE}}
 RRASSLER::map_library(path_to_ras_dbase = ras_dbase,AOI_to_map = NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
 ```
 
