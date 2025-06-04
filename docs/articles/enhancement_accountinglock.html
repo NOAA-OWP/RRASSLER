@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>NEWS update (enhancement): accounting lock • RRASSLER</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -74,7 +73,7 @@
 <h2 id="add-overwrite-protection">Add overwrite protection<a class="anchor" aria-label="anchor" href="#add-overwrite-protection"></a>
 </h2>
 <p>A response to <a href="https://github.com/NOAA-OWP/RRASSLER/issues/6" class="external-link uri">https://github.com/NOAA-OWP/RRASSLER/issues/6</a></p>
-<p>Because RRASSLER overwrites data, and databases can get large, it’s
+<p>Because RRASSLER overwrites data and databases can get large, it’s
 desirable to have training wheels (an affectionate term I assure you, I
 don’t know how to ride this bike) on some of the processing steps in
 case a user errantly sets one of the relevant commands off (primarily
@@ -102,7 +101,7 @@ sample data!</p>
 </blockquote>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">ras_dbase</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpHEvGEI/temp_libpath2006d3d584a/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpEB7FiH/temp_libpath40d22c77b526/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">HUC8.fgb</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">OWP_ras_model_catalog.csv</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">XS.fgb</span></span></span>
@@ -119,15 +118,15 @@ sample data!</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/refresh_master_files.html">refresh_master_files</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Writing layer `XS' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpHEvGEI/temp_libpath2006d3d584a/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpEB7FiH/temp_libpath40d22c77b526/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 177 features with 1 fields and geometry type Line String.</span></span>
 <span><span class="co">## Writing layer `model_footprints' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpHEvGEI/temp_libpath2006d3d584a/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpEB7FiH/temp_libpath40d22c77b526/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 9 features with 8 fields and geometry type Polygon.</span></span></code></pre>
 <pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">ras_dbase</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpHEvGEI/temp_libpath2006d3d584a/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpEB7FiH/temp_libpath40d22c77b526/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">HUC8.fgb</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">OWP_ras_model_catalog.csv</span></span></span>
 <span><span class="co">## ├── XS.fgb</span></span>
@@ -144,20 +143,20 @@ sample data!</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/refresh_master_files.html">refresh_master_files</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Writing layer `XS' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpHEvGEI/temp_libpath2006d3d584a/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpEB7FiH/temp_libpath40d22c77b526/RRASSLER/extdata/sample_output/ras_catalog/XS.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 177 features with 1 fields and geometry type Line String.</span></span>
 <span><span class="co">## Writing layer `model_footprints' to data source </span></span>
-<span><span class="co">##   `/tmp/RtmpHEvGEI/temp_libpath2006d3d584a/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
+<span><span class="co">##   `/tmp/RtmpEB7FiH/temp_libpath40d22c77b526/RRASSLER/extdata/sample_output/ras_catalog/model_footprints.fgb' using driver `FlatGeobuf'</span></span>
 <span><span class="co">## Writing 9 features with 8 fields and geometry type Polygon.</span></span></code></pre>
 <pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">ras_dbase</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpHEvGEI/temp_libpath2006d3d584a/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #0000BB; font-weight: bold;">/tmp/RtmpEB7FiH/temp_libpath40d22c77b526/RRASSLER/extdata/sample_output/ras_catalog</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">HUC8.fgb</span></span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">OWP_ras_model_catalog.csv</span></span></span>
 <span><span class="co">## ├── XS.fgb</span></span>
 <span><span class="co">## ├── accounting.csv</span></span>
-<span><span class="co">## ├── accounting_20250422150009.csv</span></span>
+<span><span class="co">## ├── accounting_20250604011801.csv</span></span>
 <span><span class="co">## ├── model_footprints.fgb</span></span>
 <span><span class="co">## ├── <span style="color: #00BB00; font-weight: bold;">model_map.html</span></span></span>
 <span><span class="co">## ├── <span style="color: #0000BB; font-weight: bold;">model_map_files</span></span></span>
@@ -179,7 +178,7 @@ backup.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>

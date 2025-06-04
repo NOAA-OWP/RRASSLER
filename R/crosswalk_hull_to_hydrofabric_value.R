@@ -50,7 +50,7 @@
 crosswalk_hull_to_hydrofabric_value <- function(hull,river) {
   # sinew::moga(file.path(getwd(),"R/crosswalk_hull_to_hydrofabric_value.R"),overwrite = TRUE)
   # devtools::document()
-  # pkgdown::build_site(new_process=FALSE)
+  # pkgdown::build_site(new_process=TRUE)
   # devtools::load_all()
 
   ## -- Start --

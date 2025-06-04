@@ -50,9 +50,11 @@ if(interactive()){
 \code{\link[sf]{st_transform}}, \code{\link[sf]{st_read}}, \code{\link[sf]{st_crs}}, \code{\link[sf]{valid}}
  \code{\link[arrow]{read_parquet}}
  \code{\link[ggplot2]{ggplot}}, \code{\link[ggplot2]{aes}}, \code{\link[ggplot2]{geom_point}}, \code{\link[ggplot2]{ggtheme}}, \code{\link[ggplot2]{scale_colour_gradient}}, \code{\link[ggplot2]{labs}}
+ \code{\link[grDevices]{Palettes}}
+ \code{\link[glue]{glue}}
+ \code{\link[cowplot]{theme_cowplot}}, \code{\link[cowplot]{background_grid}}
  \code{\link[leaflet]{leaflet}}, \code{\link[leaflet]{addProviderTiles}}, \code{\link[leaflet]{addLegend}}, \code{\link[leaflet]{addLayersControl}}
  \code{\link[leafem]{addFeatures}}
  \code{\link[leafpop]{popupGraph}}
- \code{\link[glue]{glue}}
  \code{\link[mapview]{mapshot}}
 }

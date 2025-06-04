@@ -145,7 +145,7 @@ disk_ingest_record <- function(in_file = NULL,
   # populate what we can from a projection file and project file
   for (potential_file in prj_files) {
     # potential_file <- prj_files[1]
-    file_text <- readr::read.delim(potential_file, header = FALSE)
+    file_text <- utils::read.delim(potential_file, header = FALSE)
 
     if (any(c('PROJCS', 'GEOGCS', 'DATUM', 'PROJECTION') == file_text)) {
       current_model_projection = potential_file

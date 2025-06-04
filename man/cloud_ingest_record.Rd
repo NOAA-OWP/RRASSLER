@@ -68,6 +68,7 @@ if(interactive()){
 Other ingest: 
 \code{\link{disk_ingest_record}()},
 \code{\link{ingest_FEMA6_BLE}()},
-\code{\link{ingest_into_database}()}
+\code{\link{ingest_into_database}()},
+\code{\link{insert_manual_record}()}
 }
 \concept{ingest}

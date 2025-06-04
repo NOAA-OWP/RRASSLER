@@ -1,12 +1,12 @@
 > All notable changes to this project will be documented in this file.  We attempt to follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
 
-# RRASSLER 0.1.4  - 2024-04-22
+# RRASSLER 0.1.4  - 2024-06-04
 
 ## Changes
 
-Merged main branch, code spellcheck, package organelles, and documentation refresh; verified `devtools::check()` passes.
+Merged main branch, code spellcheck, package organelles, and documentation refresh; verified `devtools::check()` passes.  One new function addition, [insert_manual_record](https://noaa-owp.github.io/RRASSLER/reference/insert_manual_record.html), which lets you manually place an otherwise unparseable model into a RRASSLER record format.   See the [function references](https://noaa-owp.github.io/RRASSLER/reference/insert_manual_record.html) for more details.
 
-# RRASSLER 0.1.3  - 2024-12-18
+# RRASSLER 0.1.3  - 2024-04-06
 
 ## Changes
 
@@ -23,12 +23,6 @@ More documentation polish and the reintroduction of package heavy functionality 
 ## Changes
 
 Mini-fied and slimmed down the entire package into a hydrofabric-verse compatible format so that it can pass `devtools::check()` for a premier at AGU.  There will be another PR following that re-adds those temporarily lost functions in a more R package appropriate form shortly.
-
-# RRASSLER 0.1.0  - 2024-06-28
-
-## Changes
-
-Mini-fied and slimmed down the entire package into a hydrofabric-verse compatible format so that it can pass `devtools::check()` for a premier at AGU.  There will be another PR following shortly that re-adds those temporarily lost functions in a more R package appropriate form shortly.
 
 # RRASSLER 0.1.0  - 2024-06-28
 

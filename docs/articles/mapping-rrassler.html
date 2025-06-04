@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Mapping RRASSLER • RRASSLER</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -278,16 +277,18 @@ Data Model</a> page.</p>
 <p>This function will create a stand alone leaflet map which is useful
 in “interactively” exploring the data, facilitating simple queries, and
 inspirational presentations. Just double click on the generated html
-document (model_map.html) to view it in your web browser</p>
+document (model_map.html) to view it in your web browser, <a href="https://noaa-owp.github.io/RRASSLER/model_map.html" class="external-link">as hosted
+here</a>.</p>
 <p><img src="../reference/figures/map_features.PNG"></p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="extend-database-for-ras2fim-deployments">Extend database for ras2fim deployments<a class="anchor" aria-label="anchor" href="#extend-database-for-ras2fim-deployments"></a>
 </h3>
-<p>RAS2FIM pipelines are looking for a few extra helpers in order to
-pipeline these models through the workflow. To generate the needed
-catalog, use the following function.</p>
+<p>The operational deployment of <a href="https://github.com/NOAA-OWP/ras2fim" class="external-link">RAS2FIM</a> pipelines are
+looking for a few extra helpers in order to guide these models through
+the workflow. To generate the needed catalog, use the following
+function.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">RRASSLER</span><span class="fu">::</span><span class="fu"><a href="../reference/append_catalog_fields.html">append_catalog_fields</a></span><span class="op">(</span>path_to_ras_dbase <span class="op">=</span> <span class="va">ras_dbase</span>,out_name <span class="op">=</span> <span class="st">"OWP_ras_model_catalog.csv"</span>,overwrite <span class="op">=</span> <span class="cn">FALSE</span>,is_verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Congratulations! You now have a RRASSLER catalog and all the pieces
@@ -306,7 +307,7 @@ accounting and use.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
