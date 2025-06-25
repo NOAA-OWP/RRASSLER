@@ -2,7 +2,7 @@
 #' @description A hello world tester
 #' @return a hello world message (polo!)
 #' @family helper
-#' @details Used to verify that RRASSLER is successfully loaded and test deployment pathways.  Copy-paste-d and not drawn from Google (https://www.asciiart.eu/art-and-design/sculptures)
+#' @details Used to verify that RRASSLER is successfully loaded and test deployment pathways.  Copy-paste-d from Google (https://www.asciiart.eu/art-and-design/sculptures).
 #' @examples
 #' RRASSLER::marco()
 #' @rdname marco

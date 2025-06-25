@@ -33,7 +33,7 @@ scrape_ble_lib <-
            files = "m") {
     # sinew::moga(file.path(getwd(),"R/scrape_ble_lib.R"),overwrite = TRUE)
     # devtools::document()
-    # pkgdown::build_site(new_process=FALSE)
+    # pkgdown::build_site(new_process=TRUE)
     # devtools::load_all()
 
     ## -- Start --

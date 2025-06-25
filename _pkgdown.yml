@@ -4,10 +4,10 @@ template:
   bootswatch: litera
 authors:
    NOAA:
-     html: "<img src='man/figures/noaa-logo.png' height='36' alt='NOAA OWP'/>"
+     html: "<img src='https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/noaa-logo.png' height='36' alt='NOAA OWP'/>"
      href: "https://water.noaa.gov/about/nwm"
    Lynker:
-     html: "<img src='man/figures/lynker-logo.png' height='36' alt='Lynker'/>"
+     html: "<img src='https://raw.githubusercontent.com/NOAA-OWP/RRASSLER/refs/heads/dev/man/figures/lynker-logo.png' height='36' alt='Lynker'/>"
      href: "https://lynker-spatial.com/"
    sidebar:
     roles: [cre, ctb, fnd]
@@ -40,9 +40,13 @@ reference:
 
 articles:
 - title: Articles
-  desc: Tutorials, How-To's, and Snippets
+  desc: Tutorials, How-To's, and References
   contents:
   - RRASSLER-format
   - ingest-steps
   - deploying-rrassler
   - mapping-rrassler
+- title: Explainers
+  desc: Informative updates
+  contents:
+  - enhancement_accountinglock

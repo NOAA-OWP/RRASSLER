@@ -61,6 +61,10 @@ parse_model_to_xyz <- function(geom_path,
   ## -- Start --
   current_g_value <- stringr::str_sub(geom_path,-3,-1)
 
+  if(is.null(units)) {
+    units <- util_units_from_g(geom_path, is_quiet = FALSE)
+  }
+
   # Attempt to parse the g file
   g_pts <- list()
   g_pts[[1]] <- data.frame()

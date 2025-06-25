@@ -13,7 +13,7 @@ print output
 A warning block helper
 }
 \details{
-line art to draw eyes to printing notices
+line art to draw eyes to printing notices.  Used when I want to alert to an uncritical error or trace RRASSLER behavior.
 }
 \examples{
 RRASSLER::print_warning_block()
@@ -23,6 +23,7 @@ Other helper:
 \code{\link{load_catalog_csv_as_DT}()},
 \code{\link{marco}()},
 \code{\link{print_error_block}()},
+\code{\link{process_ras_hdf_to_rasxyz}()},
 \code{\link{url_exists}()},
 \code{\link{util_unzip}()}
 }

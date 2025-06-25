@@ -35,6 +35,7 @@ Other helper:
 \code{\link{marco}()},
 \code{\link{print_error_block}()},
 \code{\link{print_warning_block}()},
+\code{\link{process_ras_hdf_to_rasxyz}()},
 \code{\link{url_exists}()},
 \code{\link{util_unzip}()}
 }

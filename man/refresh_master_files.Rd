@@ -38,7 +38,6 @@ if(interactive()){
 \code{\link[stringr]{str_sub}}
  \code{\link[aws.s3]{get_bucket}}, \code{\link[aws.s3]{get_object}}, \code{\link[aws.s3]{delete_object}}, \code{\link[aws.s3]{put_object}}
  \code{\link[data.table]{as.data.table}}, \code{\link[data.table]{fwrite}}, \code{\link[data.table]{rbindlist}}
- \code{\link[readr]{read_delim}}
  \code{\link[utils]{glob2rx}}
  \code{\link[glue]{glue}}
  \code{\link[sf]{st_read}}, \code{\link[sf]{st_crs}}, \code{\link[sf]{st_write}}

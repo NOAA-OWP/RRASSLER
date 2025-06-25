@@ -13,21 +13,21 @@ make_xs_hyfab_comp(
 )
 }
 \arguments{
-\item{path_to_ras_dbase}{PARAM_DESCRIPTION, Default: NULL}
+\item{path_to_ras_dbase}{A path to a RRASSLED directory to, Default: NULL}
 
-\item{line_select_subset}{PARAM_DESCRIPTION, Default: NULL}
+\item{line_select_subset}{A subset of the lines you want to crosswalk, Default: NULL}
 
-\item{hf_lines}{PARAM_DESCRIPTION}
+\item{hf_lines}{the hydrofabric network you want to crosswalk to}
 
-\item{overwrite}{PARAM_DESCRIPTION, Default: FALSE}
+\item{overwrite}{overwrite outputs, Default: FALSE}
 
-\item{is_verbose}{PARAM_DESCRIPTION, Default: TRUE}
+\item{is_verbose}{flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: TRUE}
 }
 \value{
-OUTPUT_DESCRIPTION
+testing
 }
 \description{
-FUNCTION_DESCRIPTION
+testing function to crosswalk cross sections to flowline distance
 }
 \details{
 DETAILS

@@ -24,7 +24,11 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE1
- RRASSLER::util_unzip(file.path(database_path,"_temp","BLE",HUCID,glue::glue("{HUCID}_models.zip"),fsep = .Platform$file.sep),is_quiet = is_quiet)
+ database_path <- "G:/data/ras_catalog"
+ RRASSLER::util_unzip(file.path(database_path,"_temp","BLE",HUCID,glue::glue("{HUCID}_models.zip"),fsep = .Platform$file.sep),is_quiet = FALSE)
+
+ #EXAMPLE2
+ RRASSLER::util_unzip(file.path(database_path,"_temp","M3","A_Clear_FEMA_Effective.zip",fsep = .Platform$file.sep),is_quiet = FALSE)
  }
 }
 }
@@ -39,6 +43,7 @@ Other helper:
 \code{\link{marco}()},
 \code{\link{print_error_block}()},
 \code{\link{print_warning_block}()},
+\code{\link{process_ras_hdf_to_rasxyz}()},
 \code{\link{url_exists}()}
 }
 \concept{helper}

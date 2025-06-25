@@ -44,6 +44,8 @@ util_g_to_geom_pts <- function(geom_path,
   # quiet = FALSE
 
   ## -- Start --
+  # due to NSE notes in R CMD check
+  first = V3 = NULL
 
   if (!quiet) {
     message('reading geom:')
@@ -62,7 +64,7 @@ util_g_to_geom_pts <- function(geom_path,
 
     if (length(prj_files) > 0) {
       for (potential_file in prj_files) {
-        file_text <- read.delim(potential_file, header = FALSE)
+        file_text <- utils::read.delim(potential_file, header = FALSE)
 
         if (grepl("SI Units", file_text, fixed = TRUE)) {
           units <- "SI Units"

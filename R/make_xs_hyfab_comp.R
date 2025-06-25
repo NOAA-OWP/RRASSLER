@@ -1,11 +1,11 @@
 #' @title make_xs_hyfab_comp
-#' @description FUNCTION_DESCRIPTION
-#' @param path_to_ras_dbase PARAM_DESCRIPTION, Default: NULL
-#' @param line_select_subset PARAM_DESCRIPTION, Default: NULL
-#' @param hf_lines PARAM_DESCRIPTION
-#' @param overwrite PARAM_DESCRIPTION, Default: FALSE
-#' @param is_verbose PARAM_DESCRIPTION, Default: TRUE
-#' @returns OUTPUT_DESCRIPTION
+#' @description testing function to crosswalk cross sections to flowline distance
+#' @param path_to_ras_dbase A path to a RRASSLED directory to, Default: NULL
+#' @param line_select_subset A subset of the lines you want to crosswalk, Default: NULL
+#' @param hf_lines the hydrofabric network you want to crosswalk to
+#' @param overwrite overwrite outputs, Default: FALSE
+#' @param is_verbose flag to determine whether internal print statements (i.e. cross section parsing, vdat trans, file info) are suppressed, TRUE to show these messages and FALSE to suppress them, Default: TRUE
+#' @returns testing
 #' @details DETAILS
 #' @examples
 #' \dontrun{
@@ -51,6 +51,9 @@ make_xs_hyfab_comp <- function(path_to_ras_dbase = NULL,
   # overwrite = TRUE
 
   ## -- Start --
+  # due to NSE notes in R CMD check
+  group = NULL
+
   ## Load catalog
   fn_time_start <- Sys.time()
   if(!file.exists(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))) {
@@ -66,7 +69,7 @@ make_xs_hyfab_comp <- function(path_to_ras_dbase = NULL,
       message("Output already exists and overwrite is set to false")
       return(FALSE)
     }
-    if(verbose) {
+    if(is_verbose) {
       print_warning_block()
       message("Output already exists, overwriting")
     }
@@ -84,7 +87,7 @@ make_xs_hyfab_comp <- function(path_to_ras_dbase = NULL,
 
   # network <- sf::st_read(hf_lines,layer ='flowline_mainstem') # For "Study_Area.gpkg"
   # network <- sf::st_read(hf_lines,layer ='flowlines_subset')
-  # network <- sf::st_read(hf_lines,layer ='flowpaths')
+  network <- sf::st_read(hf_lines,layer ='flowpaths')
 
   # Subset to requested hf intersections
   network_proj <- sf::st_transform(network,sf::st_crs(ras_xs))

@@ -11,7 +11,7 @@ vignette: >
 
 # Making an "RRASSLE'd Catalog"
 
-Despite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the objectives that the archives were aiming to accomplish and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise handle it.  That gives users who need models a standardized starting spot off which to build their own processes.
+Despite our efforts not to recreate an "archive" or "library" of HEC-RAS models, it's clear that wide scale deployment of HEC-RAS models as inputs to other workflows requires some form of tracking if we hope to maintain reproducibility and accountability.  While formal archives from individuals and organizations might internally align, adding models from outside sources is difficult or impossible due to the differences in the objectives that the archives were aiming to accomplish and formats different model producers use.  It's also non-trivial and requires discovery and processing to answer questions like "What models are available for my area of interest?" or "Do we have this model in our catalog?"  This friction gave rise to RRASSLER.  By reducing the form of the HEC-RAS data to a unique catalog entry and adding cloud-accessible data helpers, we can arbitrarily and blindly be handed a HEC-RAS model and place that into the resulting framework or otherwise account it.  This predictable and indexable form gives users who need models a standardized starting spot off which to build their own processes.
 
 ### Ingest logic
 
@@ -120,7 +120,7 @@ Geodetic CRS:  NAD83(2011) + NAVD88 height
 
 or like so if python is your preferred tooling:
 
-```{{python, eval=FALSE}}
+```{md, eval=FALSE}
 import os
 import pandas
 import geopandas

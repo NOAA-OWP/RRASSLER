@@ -13,7 +13,7 @@ a hello world message (polo!)
 A hello world tester
 }
 \details{
-Used to verify that RRASSLER is successfully loaded and test deployment pathways.  Copy-paste-d and not drawn from Google (https://www.asciiart.eu/art-and-design/sculptures)
+Used to verify that RRASSLER is successfully loaded and test deployment pathways.  Copy-paste-d from Google (https://www.asciiart.eu/art-and-design/sculptures).
 }
 \examples{
 RRASSLER::marco()
@@ -23,6 +23,7 @@ Other helper:
 \code{\link{load_catalog_csv_as_DT}()},
 \code{\link{print_error_block}()},
 \code{\link{print_warning_block}()},
+\code{\link{process_ras_hdf_to_rasxyz}()},
 \code{\link{url_exists}()},
 \code{\link{util_unzip}()}
 }

@@ -1,7 +1,7 @@
 #' @title print_warning_block
 #' @description A warning block helper
 #' @return print output
-#' @details line art to draw eyes to printing notices
+#' @details line art to draw eyes to printing notices.  Used when I want to alert to an uncritical error or trace RRASSLER behavior.
 #' @family helper
 #' @examples
 #' RRASSLER::print_warning_block()

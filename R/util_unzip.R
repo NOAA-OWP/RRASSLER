@@ -9,7 +9,11 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
-#'  RRASSLER::util_unzip(file.path(database_path,"_temp","BLE",HUCID,glue::glue("{HUCID}_models.zip"),fsep = .Platform$file.sep),is_quiet = is_quiet)
+#'  database_path <- "G:/data/ras_catalog"
+#'  RRASSLER::util_unzip(file.path(database_path,"_temp","BLE",HUCID,glue::glue("{HUCID}_models.zip"),fsep = .Platform$file.sep),is_quiet = FALSE)
+#'
+#'  #EXAMPLE2
+#'  RRASSLER::util_unzip(file.path(database_path,"_temp","M3","A_Clear_FEMA_Effective.zip",fsep = .Platform$file.sep),is_quiet = FALSE)
 #'  }
 #' }
 #' @seealso
@@ -20,7 +24,7 @@
 #' @rdname util_unzip
 #' @export
 #' @importFrom stringr str_sub
-#' @importFrom utils unzip
+#' @importFrom utils glob2rx unzip
 #' @importFrom glue glue
 #' @importFrom dplyr setdiff
 
@@ -48,7 +52,7 @@ util_unzip <- function(zippath, is_quiet = FALSE) {
   files_to_process <-
     list.files(
       zippath,
-      pattern = glob2rx(glue::glue("*.zip$")),
+      pattern = utils::glob2rx(glue::glue("*.zip$")),
       full.names = TRUE,
       ignore.case = TRUE,
       recursive = TRUE
@@ -70,7 +74,7 @@ util_unzip <- function(zippath, is_quiet = FALSE) {
     list_of_all_zips <-
       list.files(
         zippath,
-        pattern = glob2rx(glue::glue("*.zip$")),
+        pattern = utils::glob2rx(glue::glue("*.zip$")),
         full.names = TRUE,
         ignore.case = TRUE,
         recursive = TRUE

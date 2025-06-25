@@ -5,11 +5,13 @@
 <url><loc>/TERMS.html</loc></url>
 <url><loc>/articles/RRASSLER-format.html</loc></url>
 <url><loc>/articles/deploying-rrassler.html</loc></url>
+<url><loc>/articles/enhancement_accountinglock.html</loc></url>
 <url><loc>/articles/index.html</loc></url>
 <url><loc>/articles/ingest-steps.html</loc></url>
 <url><loc>/articles/mapping-rrassler.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
+<url><loc>/model_map.html</loc></url>
 <url><loc>/news/index.html</loc></url>
 <url><loc>/reference/RRASSLER-package.html</loc></url>
 <url><loc>/reference/append_catalog_fields.html</loc></url>
@@ -20,6 +22,7 @@
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/ingest_FEMA6_BLE.html</loc></url>
 <url><loc>/reference/ingest_into_database.html</loc></url>
+<url><loc>/reference/insert_manual_record.html</loc></url>
 <url><loc>/reference/load_catalog_csv_as_DT.html</loc></url>
 <url><loc>/reference/make_xs_hyfab_comp.html</loc></url>
 <url><loc>/reference/map_library.html</loc></url>
@@ -30,11 +33,13 @@
 <url><loc>/reference/print_error_block.html</loc></url>
 <url><loc>/reference/print_warning_block.html</loc></url>
 <url><loc>/reference/process_ras_g_to_xyz.html</loc></url>
+<url><loc>/reference/process_ras_hdf_to_rasxyz.html</loc></url>
 <url><loc>/reference/process_ras_hdf_to_xyz.html</loc></url>
 <url><loc>/reference/refresh_master_files.html</loc></url>
 <url><loc>/reference/reindex_to_HF.html</loc></url>
 <url><loc>/reference/scrape_ble_lib.html</loc></url>
 <url><loc>/reference/util_g_to_geom_pts.html</loc></url>
+<url><loc>/reference/util_units_from_g.html</loc></url>
 <url><loc>/reference/util_unzip.html</loc></url>
 <url><loc>/reference/util_url.html</loc></url>
 <url><loc>/reference/xs_to_transect_picker.html</loc></url>

@@ -5,9 +5,9 @@
 #' @param name A name for the map files to create, Default: 'model_map'
 #' @param plot_lines draw lines on the map as opposed to just the footprints, Default: FALSE
 #' @param chart_lines Add cross section click graphs to the plot lines.  Will break if area is too large, Default: FALSE
-#' @param refresh flag to dictate whether or not to recollate spatial database prior to mapping.  FALSE to skip, TRUE to regenerate, Default: TRUE
+#' @param refresh flag to dictate whether or not to recollate spatial database prior to mapping.  FALSE to skip, TRUE to regenerate, Default: FALSE
 #' @param quiet flag to determine whether print statements are suppressed, TRUE to suppress messages and FALSE to show them, Default: FALSE
-#' @return OUTPUT_DESCRIPTION
+#' @return writes out html for leaflet map
 #' @details DETAILS
 #' @examples
 #' \dontrun{
@@ -36,6 +36,7 @@
 #' @importFrom leafem addFeatures
 #' @importFrom leafpop popupGraph popupTable
 #' @importFrom glue glue
+#' @importFrom grDevices terrain.colors
 #' @importFrom mapview mapshot
 
 map_library <-  function(path_to_ras_dbase,
@@ -51,20 +52,20 @@ map_library <-  function(path_to_ras_dbase,
   #
   # devtools::load_all()
   #
-  # path_to_ras_dbase = file.path("~/data/ras_catalog/")
-  # path_to_ras_dbase = "./inst/extdata/sample_output/ras_catalog/"
-  # # AOI_to_map="12090301"
+  # path_to_ras_dbase <- "./inst/extdata/sample_output/ras_catalog/"
   # AOI_to_map=NULL
-  # # name="12090301_input_models"
-  # name = "model_map"
+  # name="model_map"
   # plot_lines=TRUE
-  # chart_lines=FALSE
   # chart_lines=TRUE
   # refresh=FALSE
-  # RRASSLER::map_library("/home/rstudio/g/data/ras_dbase",NULL,name="model_map",plot_lines=TRUE,chart_lines=TRUE,refresh=FALSE,quiet=FALSE)
-  # map_library("H:/ras_dbase","12090301","12090301_model_footprints",TRUE,FALSE,FALSE)
+  # quiet=TRUE
+  # map_library(path_to_ras_dbase = ras_dbase,AOI_to_map = NULL,name = "model_map",plot_lines = TRUE,chart_lines = FALSE,refresh = FALSE,quiet = FALSE)
+
 
   ## -- Start --
+  # due to NSE notes in R CMD check
+  xid_d = z = n = NULL
+
   if(name=="model") {
     print_warning_block()
     print("Can not use 'model' as a name")
@@ -77,19 +78,17 @@ map_library <-  function(path_to_ras_dbase,
 
   if(class(AOI_to_map)=="sf") {
     template_hucs <- AOI_to_map
-  } else if(!is.null(AOI_to_map)) {
+  } else {
     template_hucs <- sf::st_transform(sf::st_read(file.path(path_to_ras_dbase,"HUC8.fgb",fsep=.Platform$file.sep),quiet=FALSE),sf::st_crs("EPSG:6349"))
     template_hucs <- template_hucs[template_hucs$huc8 %in% AOI_to_map,]
   }
 
   ras_catalog_dbase = load_catalog_csv_as_DT(file.path(path_to_ras_dbase,"accounting.csv",fsep = .Platform$file.sep))
-  hull_features <- sf::st_read(file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep)) %>% sf::st_make_valid()
-  hull_features <- hull_features[!sf::st_is_empty(hull_features$geometry), ]
+  hull_features <- sf::st_read(file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep)) |> sf::st_make_valid()
 
   if(plot_lines) {
 
     xs_features <- sf::st_read(file.path(path_to_ras_dbase,"XS.fgb",fsep = .Platform$file.sep))
-    xs_features <- xs_features[!sf::st_is_empty(xs_features$geometry), ]
 
     if(!is.null(AOI_to_map)){
       valid_xs_range <- c()
@@ -115,8 +114,10 @@ map_library <-  function(path_to_ras_dbase,
         plot <- ggplot2::ggplot(data = database[database$master_id==id,], ggplot2::aes(xid_d, z, color = n)) +
           ggplot2::geom_point() +
           ggplot2::theme_light() +
-          ggplot2::scale_color_gradientn(colors = terrain.colors(10)) +
-          ggplot2::labs(x = "Distance along profile [m] (left to right, looking downstream)", y = "Elevation [m]", color = "Mannings n")
+          ggplot2::scale_color_gradientn(colors = grDevices::terrain.colors(10)) +
+          ggplot2::labs(subtitle = glue::glue("Model: {hull_features[hull_features$end_master_id >= id & id >= hull_features$start_master_id,]$model_name} Cross section ID: {id}"), caption = glue::glue("Model key: {hull_features[hull_features$end_master_id >= id & id >= hull_features$start_master_id,]$final_name_key}"), family = "serif", x = "Distance along profile [m]\n(left to right, looking downstream)", y = "Elevation [m]", color = "Mannings n") +
+          cowplot::theme_half_open() +
+          cowplot::background_grid()
         return(plot)
       }
       popup_charts_for_lines <- lapply(1:nrow(xs_features), function(i) {
@@ -139,44 +140,37 @@ map_library <-  function(path_to_ras_dbase,
       #   create_xs_plot(unique(xs_lines_to_map$master_id)[i])
       # })
 
-      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
-        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
-        # leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") %>%
-        # leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") %>%
-        # leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") %>%
-        # leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") %>%
-        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") %>%
-        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
-        leafem::addFeatures(sf::st_transform(xs_features,"EPSG:4326"),
+      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) |>
+        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") |>
+        leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") |>
+        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") |>
+        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") |>
+        leafem::addFeatures(sf::st_transform(xs_features,sf::st_crs("EPSG:4326")),
+                            color = 'black',
                             fillColor = 'black',
                             popup = leafpop::popupGraph(popup_charts_for_lines,
                                                         width = 400,
                                                         height = 300,
                                                         type = "png"),
-                            group = "XS") %>%
-        leafem::addFeatures(sf::st_transform(hull_features,"EPSG:4326"),opacity = 1,fillOpacity = 0.3,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") %>%
+                            group = "XS") |>
+        leafem::addFeatures(sf::st_transform(hull_features,sf::st_crs("EPSG:4326")),opacity = 1,fillOpacity = 0.3,weight = 2,color = 'red', popup = leafpop::popupTable(hull_features),group = "Footprints") |>
         leaflet::addLegend("bottomright",colors = c("black","red"),
-                           labels = c(paste0("Cross sections (click for chart)"), paste0("Model footprints")),
-                           title = "RAS model database",opacity = 1) %>%
+                           labels = c(paste0("Cross sections (click for chart)"), paste0("Model footprints (click for info)")),
+                           title = "RAS model database",opacity = 1) |>
         leaflet::addLayersControl(
           baseGroups = c(
-            # "OpenStreetMap",
-            # "Stamen.Toner", "Stamen.Terrain", "Esri.WorldStreetMap","Wikimedia",
-            "CartoDB.Positron", "Esri.WorldImagery"
+            "OpenStreetMap", "Esri.WorldStreetMap", "CartoDB.Positron", "Esri.WorldImagery"
           ),
           position = "topleft",
-          overlayGroups = c("Footprints","XS")
+          overlayGroups = c("Footprints","Cross Sections")
         )
     } else {
-      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
-        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
-        # leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") %>%
-        # leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") %>%
-        # leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") %>%
-        # leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") %>%
-        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") %>%
-        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
-        leafem::addFeatures(sf::st_transform(xs_features,"EPSG:4326"),
+      m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) |>
+        leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") |>
+        leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") |>
+        leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") |>
+        leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") |>
+        leafem::addFeatures(sf::st_transform(xs_features,sf::st_crs("EPSG:4326")),
                             Color = 'black',
                             stroke = TRUE,
                             weight = 1.25,
@@ -184,40 +178,33 @@ map_library <-  function(path_to_ras_dbase,
                             fill = TRUE,
                             # fillColor = 'black',
                             fillOpacity = 0,
-                            group = "XS") %>%
-        leafem::addFeatures(sf::st_transform(hull_features,"EPSG:4326"),opacity = 1,fillOpacity = 0,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") %>%
+                            group = "XS") |>
+        leafem::addFeatures(sf::st_transform(hull_features,sf::st_crs("EPSG:4326")),opacity = 1,fillOpacity = 0,weight = 2,color = 'red', popup = leafpop::popupTable(hull_features),group = "Footprints") |>
         # leafgl::addGlPolygons(ahulls,fillOpacity = 0,stroke = TRUE,color = 'black',popup="huc10", group = "huc") %>%
-        leaflet::addLegend("bottomright",colors = c("black","black"),
-                           labels = c(paste0("Cross sections"), paste0("Model footprints")),
-                           title = "RAS model database",opacity = 1) %>%
+        leaflet::addLegend("bottomright",colors = c("black","red"),
+                           labels = c(paste0("Cross sections (click for chart)"), paste0("Model footprints")),
+                           title = "RAS model database",opacity = 1) |>
         leaflet::addLayersControl(
           baseGroups = c(
-            # "OpenStreetMap",
-            # "Stamen.Toner", "Stamen.Terrain", "Esri.WorldStreetMap","Wikimedia",
-            "CartoDB.Positron", "Esri.WorldImagery"
+            "OpenStreetMap", "Esri.WorldStreetMap", "CartoDB.Positron", "Esri.WorldImagery"
           ),
           position = "topleft",
-          overlayGroups = c("Footprints","XS")
+          overlayGroups = c("Footprints","Cross Sections")
         )
     }
   } else {
-    m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) %>%
-      leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") %>%
-      # leaflet::addProviderTiles("Stamen.Toner",group = "Stamen.Toner") %>%
-      # leaflet::addProviderTiles("Stamen.Terrain",group = "Stamen.Terrain") %>%
-      # leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") %>%
-      # leaflet::addProviderTiles("Wikimedia",group = "Wikimedia") %>%
-      leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") %>%
-      leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") %>%
-      leafem::addFeatures(sf::st_transform(hull_features,"EPSG:4326"),opacity = 1,fillOpacity = 0,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") %>%
+    m <- leaflet::leaflet(options = leaflet::leafletOptions(preferCanvas = TRUE)) |>
+      leaflet::addProviderTiles("OpenStreetMap",group = "OpenStreetMap") |>
+      leaflet::addProviderTiles("Esri.WorldStreetMap",group = "Esri.WorldStreetMap") |>
+      leaflet::addProviderTiles("CartoDB.Positron",group = "CartoDB.Positron") |>
+      leaflet::addProviderTiles("Esri.WorldImagery",group = "Esri.WorldImagery") |>
+      leafem::addFeatures(hull_features,opacity = 1,fillOpacity = 0,weight = 2,color = 'black', popup = leafpop::popupTable(hull_features),group = "Footprints") |>
       leaflet::addLegend("bottomright",colors = c("black"),
                          labels = c(paste0("Model footprints")),
-                         title = "RAS model database",opacity = 1) %>%
+                         title = "RAS model database",opacity = 1) |>
       leaflet::addLayersControl(
         baseGroups = c(
-          # "OpenStreetMap",
-          # "Stamen.Toner", "Stamen.Terrain", "Esri.WorldStreetMap","Wikimedia",
-          "CartoDB.Positron", "Esri.WorldImagery"
+          "OpenStreetMap", "Esri.WorldStreetMap", "CartoDB.Positron", "Esri.WorldImagery"
         ),
         position = "topleft",
         overlayGroups = c("Footprints")
