@@ -1,4 +1,5 @@
 > All notable changes to this project will be documented in this file.  We attempt to follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
+
 # RRASSLER 0.1.5  - 2024-06-17
 
 ## Changes
