@@ -380,6 +380,11 @@ disk_ingest_record <- function(in_file = NULL,
       extrated_pts[[1]],
       file.path(path_to_ras_dbase,"models",current_final_name_key,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep)
     )
+    ## Write cross section station data to file (station number/bank locations)
+   arrow::write_parquet(
+      extrated_pts[[4]],
+      file.path(path_to_ras_dbase,"models",current_final_name_key,"RRASSLER_cs_station_data.parquet",fsep = .Platform$file.sep)
+    )
 
     # I got a hull of some sort?
     sf::st_write(

@@ -85,7 +85,7 @@ process_ras_g_to_xyz <- function(geom_path,
       message(glue::glue("In time: {in_epoch_override} / out time:{out_epoch_override}"))
     }
   }
-
+  
   if (!file.exists(geom_path)) {
     print_error_block()
     print("404 - File not found")
@@ -99,7 +99,6 @@ process_ras_g_to_xyz <- function(geom_path,
     if (length(prj_files) > 0) {
       for (potential_file in prj_files) {
         file_text <- utils::read.delim(potential_file, header = FALSE)
-
         if (grepl("SI Units", file_text, fixed = TRUE)) {
           units <- "SI Units"
         } else if (grepl("English Units", file_text, fixed = TRUE)) {
@@ -125,8 +124,31 @@ process_ras_g_to_xyz <- function(geom_path,
   # reach info
   reach_info = data.frame(reach_number = numeric(0), reach_name = character(), reach_line_start = numeric(0))
   reach_number <- 0
-  file_text <-  utils::read.delim(geom_path, sep = '\n', header = FALSE, comment.char = "") |>
+  file_text <-  utils::read.delim(geom_path, sep = '\n', quote = "", header = FALSE, comment.char = "") |>
     data.table::as.data.table()
+  file_text <- file_text %>% filter(!apply(., 1, function(row) all(trimws(row) == "")))
+  # Find all standard xs rows
+  xs_station_rows <- which(grepl('Type RM Length L Ch R = 1', file_text$V1, fixed = TRUE))
+  if(length(xs_station_rows) == 0) {
+    print("There were no XS in geometry file. Checking for alternative geometry file...")
+    g_files <- grep(".g[0-9]", list.files(dirname(geom_path), full.names = FALSE), value = TRUE)
+    for (file in g_files){
+      alt_geom_path = paste(dirname(geom_path), file, sep = "/")
+      if (alt_geom_path != geom_path){
+        file_text <-  utils::read.delim(alt_geom_path, sep = '\n', quote = "", header = FALSE, comment.char = "") |>
+          data.table::as.data.table()
+        xs_station_rows <- which(grepl('Type RM Length L Ch R = 1', file_text$V1, fixed = TRUE))
+        if (length(xs_station_rows) != 0){
+          geom_path <- alt_geom_path
+          print(paste('Alternative geometry file found: ', alt_geom_path))
+        }
+      }
+    }
+  }
+  ## Find xs rows of all types (including culverts, bridges etc)
+  xs_rows <-which(grepl('Type RM Length L Ch R =', file_text$V1, fixed = TRUE))
+  xs_rows <- append(xs_rows, nrow(file_text) + 1)
+
   for(row in 1:nrow(file_text)) {
     if(grepl("River Reach", file_text[row], fixed = TRUE)) {
       reach_number = reach_number + 1
@@ -138,22 +160,14 @@ process_ras_g_to_xyz <- function(geom_path,
 
   riv_xy_heads <-  which(grepl('River Reach', file_text$V1, fixed = TRUE))
   xs_xy_row_heads <- which(grepl('XS GIS Cut Line', file_text$V1, fixed = TRUE))
-  xs_statele_row_heads <- which(grepl('Sta/Elev=', file_text$V1, fixed = TRUE))
-  xs_mann_row_heads <- which(grepl('Mann=', file_text$V1, fixed = TRUE))
+  # xs_statele_row_heads <- which(grepl('Sta/Elev=', file_text$V1, fixed = TRUE))
+  # xs_mann_row_heads <- which(grepl('Mann=', file_text$V1, fixed = TRUE))
   non_numeric_rows <- append(grep("^[A-Za-z]", file_text$V1),grep("^#", file_text$V1)) |> sort()
 
   # Quick logic check
   if(length(xs_xy_row_heads) == 0) {
     print_error_block()
     message("There were no 'XS GIS Cut Line', this may not be a 'spatial' model")
-    return(FALSE)
-  }
-
-  if(!all.equal(length(xs_xy_row_heads),
-                length(xs_statele_row_heads),
-                length(xs_mann_row_heads))) {
-    print_error_block()
-    message("An oddly formatted g file was found (lines did not match up)")
     return(FALSE)
   }
 
@@ -188,30 +202,44 @@ process_ras_g_to_xyz <- function(geom_path,
   # next we'll pull xs
   sf_xs_lines <- c()
   point_database <- c()
-  for (i in 1:length(xs_xy_row_heads)) {
+  station_database <- c()
+  # Iterate through each cross-section defined by station number for cross-section type 1.
+  for (i in 1:length(xs_station_rows)){
+    xs_station_start <- xs_station_rows[i]
+    xs_station_end <- xs_rows[which(xs_rows == xs_station_start) + 1] - 1
+    station_text <- file_text[xs_station_start:xs_station_end, ]
+    
+    xs_xy_row_heads <- which(grepl('XS GIS Cut Line', station_text$V1, fixed = TRUE))
+    xs_statele_row_heads <- which(grepl('Sta/Elev=', station_text$V1, fixed = TRUE))
+    xs_mann_row_heads <- which(grepl('Mann=', station_text$V1, fixed = TRUE))
+    xs_bankst_row_heads <- which(grepl('Bank Sta=', station_text$V1, fixed = TRUE))
+    xs_station_row <- which(grepl('Type RM Length L Ch R = 1', station_text$V1, fixed = TRUE))
+    non_numeric_rows <- append(grep("[A-Za-z]", station_text$V1),grep("^#", station_text$V1)) |> sort()
+    
     # Cross section planform
-    xs_xy_start <- xs_xy_row_heads[i] + 1
-    while (xs_xy_start %in% non_numeric_rows) {
-      xs_xy_start <- xs_xy_start + 1
+    if(length(xs_xy_row_heads) != 0) {
+      xs_xy_start <- xs_xy_row_heads + 1
+      while (xs_xy_start %in% non_numeric_rows) {
+        xs_xy_start <- xs_xy_start + 1
+      }
+      xs_xy_end <- non_numeric_rows[first(which(non_numeric_rows > xs_xy_start))] - 1
+      raw_file <- station_text[xs_xy_start:xs_xy_end, ]
+      for(row in 1:nrow(raw_file)) {
+        raw_file[row] <- gsub("(.{16})", "\\1, ",raw_file[row])
+      }
+  
+      xs_xy_dat <- raw_file$V1 %>% noquote() %>% trimws()
+      xs_xy_dat <- strsplit(stringr::str_flatten(xs_xy_dat), ",")
+      xs_xy_dat <- data.frame(X = as.numeric(xs_xy_dat[[1]][c(TRUE,FALSE)]),Y = as.numeric(xs_xy_dat[[1]][c(FALSE,TRUE)]))
     }
-    xs_xy_end <- non_numeric_rows[first(which(non_numeric_rows > xs_xy_start))] - 1
-
-    raw_file <- file_text[xs_xy_start:xs_xy_end, ]
-    for(row in 1:nrow(raw_file)) {
-      raw_file[row] <- gsub("(.{16})", "\\1, ",raw_file[row])
-    }
-    xs_xy_dat <- raw_file$V1 %>% noquote() %>% trimws()
-    xs_xy_dat <- strsplit(stringr::str_flatten(xs_xy_dat), ",")
-    xs_xy_dat <- data.frame(X = as.numeric(xs_xy_dat[[1]][c(TRUE,FALSE)]),Y = as.numeric(xs_xy_dat[[1]][c(FALSE,TRUE)]))
-
     # Cross section station elevation
-    xs_sz_start <- xs_statele_row_heads[i] + 1
+    xs_sz_start <- xs_statele_row_heads + 1
     while (xs_sz_start %in% non_numeric_rows) {
       xs_sz_start <- xs_sz_start + 1
     }
     xs_sz_end <- non_numeric_rows[first(which(non_numeric_rows > xs_sz_start))] - 1
 
-    raw_file <- file_text[xs_sz_start:xs_sz_end, ]
+    raw_file <- station_text[xs_sz_start:xs_sz_end, ]
     for(row in 1:nrow(raw_file)) {
       raw_file[row] <- gsub("(.{8})", "\\1, ",raw_file[row])
     }
@@ -221,14 +249,39 @@ process_ras_g_to_xyz <- function(geom_path,
 
     # Cross section n
     # TODO: Figure out what that 3rd row is supposed to mean
-    xs_n_start <- xs_mann_row_heads[i] + 1
+    xs_n_start <- xs_mann_row_heads + 1
     while (xs_n_start %in% non_numeric_rows) {
       xs_n_start <- xs_n_start + 1
     }
     xs_n_end <- non_numeric_rows[first(which(non_numeric_rows > xs_n_start))] - 1
-    xs_n_dat <- gsub("[[:blank:]]+",",",do.call(paste, c(file_text[xs_n_start:xs_n_end, ], collapse = "")) %>% noquote() %>% trimws())
+    xs_n_dat <- gsub("[[:blank:]]+",",",do.call(paste, c(station_text[xs_n_start:xs_n_end, ], collapse = "")) %>% noquote() %>% trimws())
+    
+    # Handle mann N data storage error of "missing" 0 values between mann N and xs distances
+    new_val <- c()
+    for (value in strsplit(xs_n_dat, ",")[[1]]){
+      if (grepl("^0[1-9]", value)){
+        new_val <- c(new_val, "0", substring(value, 2))
+      }
+      else {
+        new_val <- c(new_val, value)
+      }
+      xs_n_dat <- paste(new_val,collapse =",")
+    }
+    if (length(strsplit(xs_n_dat, ",")[[1]])%%3 != 0){
+      xs_n_dat <- "NaN"
+    }
     xs_n_dat <- matrix(as.numeric(strsplit(xs_n_dat, ",")[[1]]), ncol = 3, byrow = TRUE) %>% as.data.frame() %>% subset(select = -c(V3))
     colnames(xs_n_dat) <- c('stn', 'n')
+
+    ## River Station
+    xs_station_start <- xs_station_row
+    xs_station_id <- strsplit(sub(".*=", "",station_text[xs_station_start, ]), ",")[[1]][2]
+
+    ## Bank Points
+    xs_bank_start <- xs_bankst_row_heads
+    xs_bank_dat <- gsub("[[:blank:]]+",",",do.call(paste, c(station_text[xs_bank_start, ], collapse = "")) %>% noquote() %>% trimws())
+    left_bank_pt <- as.double(strsplit(sub(".*=", "",xs_bank_dat), ",")[[1]][1])
+    right_bank_pt <- as.double(strsplit(sub(".*=", "",xs_bank_dat), ",")[[1]][2])
 
     # merge them into lines
     xs_lines <- sfheaders::sf_linestring(
@@ -246,7 +299,13 @@ process_ras_g_to_xyz <- function(geom_path,
     xs_point_data <- xs_point_data %>%
       tidyr::fill("n", .direction = "down")
     xs_point_data$xid <- i
+    # xs_point_data$river_station <- xs_station_id
+    # xs_point_data$left_bank <- left_bank_pt
+    # xs_point_data$right_bank <- right_bank_pt
     point_database <- rbind(point_database, xs_point_data)
+
+    xs_station_data <- data.frame(xid = i, river_station = xs_station_id, left_bank = left_bank_pt, right_bank = right_bank_pt)
+    station_database <- rbind(station_database, xs_station_data)
   }
 
   # Add projection info to planform lines
@@ -343,7 +402,6 @@ process_ras_g_to_xyz <- function(geom_path,
       }
 
       pt_n <- point_slice[point_index, ]$n
-      pt_b <- "test"
       normalized_point_database <- rbind(
         normalized_point_database,
         data.frame(
@@ -359,6 +417,16 @@ process_ras_g_to_xyz <- function(geom_path,
         )
       )
     }
+    # station_slice <- station_database[station_database$xid == t, ]
+    # xs_station_database <- rbind(
+    # xs_station_database,
+    # data.frame(
+    #   xid = t,
+    #   river_station = station_slice$river_station,
+    #   left_bank = station_slice$left_bank,
+    #   right_bank = station_slice$right_bank,
+    #   )
+    # )
   }
 
   if (vdat) {
@@ -371,7 +439,19 @@ process_ras_g_to_xyz <- function(geom_path,
     message(geom_path)
     message(notes)
   }
+# write_parquet(station_database, "C:/Users/rdp-user/Documents/test_xs_point_att.parquet")
+# write_parquet(point_database, "C:/Users/rdp-user/Documents/test_xs_point_database.parquet")
+# st_write(sf_xs_lines, dsn ="C:/Users/rdp-user/Documents/test_xs.gpkg")
 
-  return(list(normalized_point_database, notes,sf_reach_lines))
+  return(list(normalized_point_database, notes, sf_reach_lines, station_database))
 }
+# process_ras_g_to_xyz(geom_path = "C:\\Users\\rdp-user\\Downloads\\test_one_m3_model\\A_Clear_FEMA_Effective\\HEC-RAS\\A120-00-00\\A120-00-00.g01",
+# units = "English Units",
+# proj_string = "ESRI:102740",
+# in_epoch_override = as.integer(as.POSIXct(Sys.time())),
+# out_epoch_override = as.integer(as.POSIXct(Sys.time())),
+# vdat=FALSE,
+# quiet=FALSE)
+
+
 

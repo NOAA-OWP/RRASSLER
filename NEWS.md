@@ -1,4 +1,14 @@
 > All notable changes to this project will be documented in this file.  We attempt to follow the [Semantic Versioning 2.0.0](http://semver.org/) format.
+# RRASSLER 0.1.5  - 2024-06-17
+
+## Changes
+
+Improved geometry parsing by updating `/R/process_ras_g_to_xyz.R`:
+ - Scrape geometry by iterating through cross-sections of type 1 (normal cross-sections) to find manning's n and other attributes rather than globally searching the file.
+ - Added extra processing to manning's n value extraction to ensure data is read in correctly.
+ - Added parsing to extract bank points.
+ - Added parsing to extract river station values.
+
 
 # RRASSLER 0.1.4  - 2024-06-04
 
