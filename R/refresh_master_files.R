@@ -85,6 +85,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
     xyz_files <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('RRASSLER_cs_pts.parquet'),]
     hull_files <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('RRASSLER_hull.fgb'),]
     meta_files <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('RRASSLER_metadata.csv'),]
+    xs_station_files <- list_bucket_data_dt[list_bucket_data_dt$list_bucket_data %like% c('RRASSLER_cs_station_data.parquet'),]
 
     if(is_verbose) { message(glue::glue("Quick unit test")) }
     if(!(length(xyz_files)==length(hull_files))) {
@@ -112,6 +113,14 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
     }
     for(index in 1:nrow(meta_files)) {
       file_to_move <- meta_files[index][[1]]
+      aws.s3::save_object(
+        object = file_to_move,
+        bucket = path_to_root_bucket,
+        file = file.path(process_dir,file_to_move,fsep = .Platform$file.sep)
+      )
+    }
+    for(index in 1:nrow(xs_station_files)) {
+      file_to_move <- xs_station_files[index][[1]]
       aws.s3::save_object(
         object = file_to_move,
         bucket = path_to_root_bucket,
@@ -159,10 +168,12 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
 
     disk_xyz_files <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_cs_pts.parquet$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
     disk_hull_files <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_hull.fgb$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
-
+    disk_xs_station_files <- list.files(process_dir, pattern = utils::glob2rx("*RRASSLER_cs_station_data.parquet$"), full.names=TRUE, ignore.case=TRUE, recursive=TRUE) %>% sort()
+    
     point_concat <- c()
     xs_concat <- c()
     hull_concat <- c()
+    station_concat <- c()
     master_id <- 0
     rows_in_table <- length(disk_hull_files)
     for(index in 1:rows_in_table) {
@@ -176,10 +187,15 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
       hull <- sf::st_read(file.path(process_dir,"models",final_folder_name,"RRASSLER_hull.fgb",fsep = .Platform$file.sep),quiet = TRUE)
       point_data <- arrow::read_parquet(file.path(process_dir,"models",final_folder_name,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep),as_data_frame = TRUE) %>%
         data.table::as.data.table()
+      station_data <- arrow::read_parquet(file.path(process_dir,"models",final_folder_name,"RRASSLER_cs_station_data.parquet",fsep = .Platform$file.sep),as_data_frame = TRUE) %>%
+        data.table::as.data.table()
+      station_data$model_name <- final_folder_name
 
       hull$start_master_id <- master_id + 1
       point_data[, master_id := xid + master_id]
       point_concat <- data.table::rbindlist(list(point_concat, point_data))
+      station_data[, master_id := xid + master_id]
+      station_concat <- data.table::rbindlist(list(station_concat, station_data))
       master_id <- max(point_data[,master_id])
 
       hull$Name <- row$model_name
@@ -266,6 +282,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
     xyz_files <- massive_file_list[grepl("*RRASSLER_cs_pts.parquet$", massive_file_list)] %>% sort()
     hull_files <- massive_file_list[grepl("*RRASSLER_hull.fgb$", massive_file_list)] %>% sort()
     rrassler_records <- massive_file_list[grepl("*RRASSLER_metadata.csv$", massive_file_list)] %>% sort()
+    xs_station_files <- massive_file_list[grepl("*RRASSLER_cs_station_data.parquet$", massive_file_list)] %>% sort()
 
     if(is_verbose) { message("Merging catalog") }
     full_accounting <- data.table::rbindlist(lapply(rrassler_records, function(x) data.table::fread(x, colClasses = c("nhdplus_comid" = "character","model_name" = "character","units" = "character","crs" = "character","final_name_key" = "character"))))
@@ -287,10 +304,10 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
     point_concat <- c()
     xs_concat <- c()
     hull_concat <- c()
+    station_concat <- c()
     master_id <- 0
     rows_in_table <- length(hull_files)
     for(index in 1:rows_in_table) {
-      # index = 9488
       final_folder_name <- basename(dirname(hull_files[index]))
       if(is_verbose) { message(glue::glue("Processing {index} of {rows_in_table}:{final_folder_name}")) }
 
@@ -307,10 +324,15 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
       hull <- sf::st_read(file.path(path_to_ras_dbase,"models",final_folder_name,"RRASSLER_hull.fgb",fsep = .Platform$file.sep),quiet = TRUE)
       point_data <- arrow::read_parquet(file.path(path_to_ras_dbase,"models",final_folder_name,"RRASSLER_cs_pts.parquet",fsep = .Platform$file.sep),as_data_frame = TRUE) %>%
         data.table::as.data.table()
+      station_data <- arrow::read_parquet(file.path(path_to_ras_dbase,"models",final_folder_name,"RRASSLER_cs_station_data.parquet",fsep = .Platform$file.sep),as_data_frame = TRUE) %>%
+        data.table::as.data.table()
+      station_data$model_name <- final_folder_name
 
       hull$start_master_id <- master_id + 1
       point_data[, master_id := xid + master_id]
       point_concat <- data.table::rbindlist(list(point_concat, point_data))
+      station_data[, master_id := xid + master_id]
+      station_concat <- data.table::rbindlist(list(station_concat, station_data))
       master_id <- max(point_data[,master_id])
 
       hull$model_name <- row$model_name
@@ -337,6 +359,7 @@ refresh_master_files <- function(path_to_ras_dbase,is_verbose = TRUE, overwrite 
     unlink(file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep))
 
     arrow::write_parquet(point_concat,file.path(path_to_ras_dbase,"point_database.parquet",fsep = .Platform$file.sep))
+    arrow::write_parquet(station_concat, file.path(path_to_ras_dbase,"cs_station_database.parquet",fsep = .Platform$file.sep))
     sf::st_write(xs_lines,file.path(path_to_ras_dbase,"XS.fgb",fsep = .Platform$file.sep),append=FALSE)
     sf::st_write(hull_concat,file.path(path_to_ras_dbase,"model_footprints.fgb",fsep = .Platform$file.sep),append=FALSE)
 

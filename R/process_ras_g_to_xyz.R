@@ -299,6 +299,9 @@ process_ras_g_to_xyz <- function(geom_path,
     xs_point_data <- xs_point_data %>%
       tidyr::fill("n", .direction = "down")
     xs_point_data$xid <- i
+    # Caclulate relative distance of bank points
+    left_bank_pt <- (left_bank_pt - min(xs_point_data$stn))* stn_unit_norm
+    right_bank_pt <- (right_bank_pt - min(xs_point_data$stn)) * stn_unit_norm
     # xs_point_data$river_station <- xs_station_id
     # xs_point_data$left_bank <- left_bank_pt
     # xs_point_data$right_bank <- right_bank_pt
