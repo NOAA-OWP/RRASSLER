@@ -89,25 +89,25 @@ parse_model_to_xyz <- function(geom_path,
   # Attempt to parse the ghdf file, if it exists
   ghdf_pts <- list()
   ghdf_pts[[1]] <- data.frame()
-  if(file.exists(paste0(geom_path,".hdf"))) {
-    ghdf_pts = process_ras_hdf_to_xyz(
-      geom_path = paste0(geom_path,".hdf"),
-      units = units,
-      proj_string = proj_string,
-      in_epoch_override = as.integer(as.POSIXct(file.info(geom_path)$mtime)),
-      vdat = vdat_trans,
-      quiet = !is_verbose)
+  # if(file.exists(paste0(geom_path,".hdf"))) {
+  #   ghdf_pts = process_ras_hdf_to_xyz(
+  #     geom_path = paste0(geom_path,".hdf"),
+  #     units = units,
+  #     proj_string = proj_string,
+  #     in_epoch_override = as.integer(as.POSIXct(file.info(geom_path)$mtime)),
+  #     vdat = vdat_trans,
+  #     quiet = !is_verbose)
 
-    # Was it successful?
-    if(nrow(ghdf_pts[[1]]) > 0) {
-      if(vdat_trans) {
-        ghdf_ptserr <- unglue::unglue_vec(ghdf_pts[[2]], "{}:{}:{x}") %>% as.numeric()
-      } else {
-        ghdf_ptserr <- unglue::unglue_vec(ghdf_pts[[2]],"{}:{x}") %>% as.numeric()
-      }
-      if(is.na(ghdf_ptserr)) { ghdf_ptserr = -1000000 } # A very large number, I did something wrong here
-    }
-  }
+  #   # Was it successful?
+  #   if(nrow(ghdf_pts[[1]]) > 0) {
+  #     if(vdat_trans) {
+  #       ghdf_ptserr <- unglue::unglue_vec(ghdf_pts[[2]], "{}:{}:{x}") %>% as.numeric()
+  #     } else {
+  #       ghdf_ptserr <- unglue::unglue_vec(ghdf_pts[[2]],"{}:{x}") %>% as.numeric()
+  #     }
+  #     if(is.na(ghdf_ptserr)) { ghdf_ptserr = -1000000 } # A very large number, I did something wrong here
+  #   }
+  # }
 
   # What was successful?
   cond4 = tryCatch({
